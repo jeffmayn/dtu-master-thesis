@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 import Index from "../views/index.vue"
 import Create from "../views/Create.vue"
 import Canvas from "../views/CanvasView.vue"
+import Database from "../views/DatabaseView.vue"
 
 const routes = [
   {
@@ -18,6 +19,11 @@ const routes = [
     name: "Create",
     path: "/create",
     component: Create
+  },
+  {
+    name: "Database",
+    path: "/database",
+    component: Database
   },
   {
     path: '/about',

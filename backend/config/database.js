@@ -5,7 +5,7 @@ const db = mysql.createConnection({
    host: "localhost",
    user: "root",
    password: "",
-   database: "tir_db"
+   database: "mydb"
 });
 
 export default db;

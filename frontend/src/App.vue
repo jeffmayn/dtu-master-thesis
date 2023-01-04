@@ -1,58 +1,41 @@
 <template>
-  <div id ="nav" class="container is-max-desktop"></div>
-  <router-view/>
+  <div id="nav" class="container is-max-desktop"></div>
+  <router-view />
 
 
-  <DockMenu
-    :items="items"
-    :on-selected="handleSelected"
-    :theme="{
-      primary: '#7F939D',
-      secondary: '#607A87',
-      tertiary: '#4B5C65',
-      textColor: '#FFFFFF',
-      textHoverColor: '#FFFFFF',
-    }"
-  />
-
-  <!DOCTYPE html>
-   <html lang="en">
-   <head>
-      <meta charset="UTF-8" />
-      <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
-         integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
-      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-      <title>TIR - Threat Identification & Response</title>
-   </head>
-
-   <body>
-      <div id="app"></div>
-      <div class="container-fluid">
-         <div class="column">
-            <div id="topbar"></div>
-            <div class="row">
-               <div class="col-md-6">
-                  <div id="model">
-                  </div>
-               </div>
-               <div class="col-md-6">
-                  <div id="response">
-                  </div>
-               </div>
-            </div>
-         </div>
-      </div>
-   </body>
-   </html>
+  <DockMenu :items="items" :on-selected="handleSelected" :theme="{
+  primary: '#7F939D',
+  secondary: '#607A87',
+  tertiary: '#4B5C65',
+  textColor: '#FFFFFF',
+  textHoverColor: '#FFFFFF',
+}" />
 
 
+<!--
+<table class="tg">
+<thead>
+  <tr>
+    <th id="stencil"></th>
+    <th id="model"></th>    
+    <th id="response"></th>
+  </tr>
+</thead>
+<tbody>
+  <tr>
+    <td id="inumeration" colspan="3">f</td>
+  </tr>
+</tbody>
+</table>
 
+-->
 
 
 </template>
 
 <style>
 @import "~bulma/css/bulma.css";
+
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -61,14 +44,6 @@
   color: #2c3e50;
 }
 
-#model, #response {
-  background-color: white;
-  margin: 20px 0;
-  border-width: 1px;
-  border-style: solid;
-  border-color: black;
-  height: 100vh;
-}
 
 nav {
   padding: 30px;
@@ -91,29 +66,37 @@ import router from "@/router";
 
 
 
+
+
 export default {
   name: "App",
   components: {
     DockMenu,
   },
   setup() {
+
+    
     const handleSelected = (val) => {
 
-      
 
-  
+
+
 
       if (val.name == "Database") {
         router.push("/database");
-       
-       // <router-link :to="{ name: 'Canvas' }" class="button is-success mt-5">Create new model</router-link>
-      } 
 
-      if (val.name == "Main Canvas") {
-        router.push("/canvas");
+        // <router-link :to="{ name: 'Canvas' }" class="button is-success mt-5">Create new model</router-link>
       }
 
-      
+      if (val.name == "Main Canvas") {
+        router.push("/");
+      }
+
+      if (val.name == "About") {
+        router.push("/about");
+      }
+
+
     };
 
     return {
@@ -136,7 +119,6 @@ export default {
             { name: "Save As..." },
             { isDivider: true },
             { name: "Close" },
-            { name: "Exit" },
           ],
         },
         {
@@ -153,7 +135,7 @@ export default {
         { //  <router-link :to="{ name: 'Canvas' }" class="button is-success mt-5">Create new model</router-link>
           name: "View",
           menu: [
-            { name: "Main Canvas"},
+            { name: "Main Canvas" },
             { name: "Database" },/*
             { isDivider: true },
             {
@@ -164,7 +146,7 @@ export default {
         },
         {
           name: "Help",
-          menu: [{ name: "About" }, { name: "Guide" }],
+          menu: [{ name: "About" }],
         },
       ],
     };

@@ -1,8 +1,8 @@
 <template>
-   <div>
+   <div><br>
      <!--  <router-link :to="{ name: 'Canvas' }" class="button is-success mt-5">Create new model</router-link>&nbsp;&nbsp;
       <router-link :to="{ name: 'Create' }" class="button is-success mt-5">Add new</router-link>-->
-   
+      <router-link :to="{ name: 'Create' }" class="button is-success mt-5">Add new item</router-link>
       <table class="table is-striped is-bordered mt-2 is-fullwidth">
          <thead>
             <tr>
