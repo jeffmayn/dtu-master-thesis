@@ -1,15 +1,15 @@
 import express from "express";
 import {
-   showProducts,
-   showProductById,
-   createProduct
-} from "../controllers/product.js";
+   showComponents,
+   showComponentById,
+   createComponent
+} from "../controllers/component.js";
 
 const router = express.Router();
 
 router.get("/");
-router.get("/products", showProducts);
-router.get("/products:id", showProductById);
-router.post("/products", createProduct);
+router.get("/components", showComponents);
+router.get("/components:id", showComponentById);
+router.post("/components", createComponent);
 
 export default router;

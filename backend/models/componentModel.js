@@ -1,7 +1,7 @@
 import db from "../config/database.js";
 
-export const getProducts = (result) => {
-   db.query("SELECT * FROM product", (err, results) => {
+export const getComponents = (result) => {
+   db.query("SELECT * FROM components", (err, results) => {
       if (err) {
          console.log(err);
          result(err, null);
@@ -11,8 +11,8 @@ export const getProducts = (result) => {
    });
 };
 
-export const getProductById = (id, result) => {
-   db.query("SELECT * FROM PRODUCT WHERE product_id = ?", [id], (err, results) => {
+export const getComponentById = (id, result) => {
+   db.query("SELECT * FROM PRODUCT WHERE component_id = ?", [id], (err, results) => {
       if (err) {
          console.log(err);
          result(err, null);
@@ -22,8 +22,8 @@ export const getProductById = (id, result) => {
    });
 };
 
-export const insertProduct = (data, result) => {
-   db.query("INSERT INTO product SET ?", [data], (err, results) => {
+export const insertComponent = (data, result) => {
+   db.query("INSERT INTO components SET ?", [data], (err, results) => {
       if (err) {
          console.log(err);
          result(err, null);

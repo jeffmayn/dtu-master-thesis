@@ -1,16 +1,29 @@
 <template>
+   <br><br>
    <div>
       <div class="field"><label class="label">Product name</label></div>
       <div class="control">
-         <input class="input" type="text" placeholder="Product name" v-model="productName"/>
+         <input class="input" type="text" placeholder="Product name" v-model="componentName" />
       </div>
    </div>
    <div>
-      <div class="field"><label class="label">Price</label></div>
+      <div class="field"><label class="label">Category</label></div>
       <div class="control">
-         <input class="input" type="text" placeholder="Price" v-model="productPrice"/>
+         <input class="input" type="text" placeholder="input, output, state or control " v-model="componentCategory" />
       </div>
    </div>
+   <div>
+      <div class="field"><label class="label">Description</label></div>
+      <div class="control">
+         <input class="input" type="text" placeholder="Product description" v-model="componentDescription" />
+      </div>
+   </div>
+   <div>
+      <div class="field"><label class="label">CVE URL</label></div>
+      <div class="control">
+         <input class="input" type="text" placeholder="Link to the CVE database of the product" v-model="componentCVE" />
+      </div>
+   </div><br>
    <div class="control">
       <button class="button is-success" @click="saveProduct">SAVE</button>
    </div>
@@ -22,19 +35,22 @@ export default {
 
    data() {
       return {
-         productName: "",
-         productPrice: "",
+         componentName: "",
+         componentCategory: "",
+         componentDescription: "",
+         componentCVE: "",
       }
    },
    methods: {
       async saveProduct() {
          try {
-         await axios.post("http://localhost:5002/products", {
-            product_name: this.productName,
-            product_price: this.productPrice
-         });
-         (this.productName = ""),
-            (this.productPrice = "");
+            await axios.post("http://localhost:5002/components", {
+               component_name: this.componentName,
+               component_category: this.componentCategory,
+               component_description: this.componentDescription,
+               component_cve_url: this.componentCVE
+            });
+            (this.componentName = ""),(this.componentCategory = ""),(this.componentDescription = ""),(this.componentCVE = "");
             this.$router.push("/");
          } catch (err) {
             console.log(err);
@@ -45,4 +61,5 @@ export default {
 </script>
 
 <style>
+
 </style>

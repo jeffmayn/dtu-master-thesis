@@ -6,19 +6,21 @@
       <table class="table is-striped is-bordered mt-2 is-fullwidth">
          <thead>
             <tr>
-               <th>
-                  product name
-               </th>
-               <th class="has-text-centered">Price</th>
+               <th class="has-text-centered">Name</th>
+               <th class="has-text-centered">Description</th>
+               <th class="has-text-centered">Category</th>
             </tr>
          </thead>
          <tbody>
-            <tr v-for="item in items" :key = "item.product_id">
+            <tr v-for="item in items" :key = "item.component_id">
                <td>
-                  {{ item.product_name }}
+                  {{ item.component_name }}
                </td>
                <td>
-                  {{ item.product_price }}
+                  {{ item.component_description }}
+               </td>
+               <td>
+                  {{ item.component_category }}
                </td>
             </tr>
          </tbody>
@@ -43,7 +45,7 @@ export default {
    methods: {
       async getProducts() {
          try {
-            const response = await axios.get("http://localhost:5002/products");
+            const response = await axios.get("http://localhost:5002/components");
             this.items = response.data;
             console.log(this.items);
          } catch (err) {
