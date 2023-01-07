@@ -1,8 +1,10 @@
 import {
    getComponents,
    getComponentById,
-   insertComponent
+   insertComponent,
 } from "../models/componentModel.js";
+
+
 
 // get all
 export const showComponents = (req, res) => {

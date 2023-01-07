@@ -45,7 +45,7 @@ export default {
    methods: {
       async getProducts() {
          try {
-            const response = await axios.get("http://localhost:5002/components");
+            const response = await axios.get("http://localhost:5003/components");
             this.items = response.data;
             console.log(this.items);
          } catch (err) {

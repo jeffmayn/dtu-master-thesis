@@ -44,7 +44,7 @@ export default {
    methods: {
       async saveProduct() {
          try {
-            await axios.post("http://localhost:5002/components", {
+            await axios.post("http://localhost:5003/components", {
                component_name: this.componentName,
                component_category: this.componentCategory,
                component_description: this.componentDescription,
