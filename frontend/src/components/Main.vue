@@ -4,7 +4,7 @@
       <thead>
          <tr>
             <th id="stencil" ref="stencil_ref"></th>
-            <th id="model" ref="model_ref"></th>
+         <th id="model" ref="model_ref"></th>
          </tr>
          <button @click="getJson" id="btn" class="button is-success mt-5">►</button>
       </thead>
@@ -37,6 +37,7 @@
 
 
 
+
 </template>
 
 <script>
@@ -50,26 +51,43 @@ import { useNotification } from '@kyvg/vue3-notification';
 const notification = useNotification();
 
 
-let myList = [];
+let myList = ['bob'];
+
+
 
 
 
 
 export default {
    components: { Stencil, GraphComponent },
+
    data() {
       return {
          items: [],
-         graphJson: []
+         graphJson: [],
+         graf: myList
+
       };
    },
    created() {
+
       this.setup();
-   },
+   },   
 
    methods: {
-      getJson() {
-         console.log("ff");
+      async getJson() {
+       
+     console.log(this.graphJson.length);
+         try {
+            await axios.post("http://localhost:5003/model", {
+               graph: this.graphJson,
+
+            });
+         
+
+         } catch (err) {
+            console.log(err);
+         }
       },
       async setup() {
          try {
@@ -78,10 +96,14 @@ export default {
             myList = response.data;
             //  console.log(response.data);
 
-            const graph = new Graph({
+
+
+            let graph = new Graph({
                container: this.$refs.model_ref,
                grid: true,
                height: 600,
+         
+         
                connecting: {
                   allowBlank: false,
                   snap: true,
@@ -119,7 +141,6 @@ export default {
                   {
                      name: 'group2',
                      title: 'OUTPUT',
-                     collapsed: true
                   },
                   {
                      name: 'group3',
@@ -137,6 +158,10 @@ export default {
 
             const inputComponents = [];
             const outputComponents = [];
+
+   
+       
+    
 
             this.items.forEach((item) => {
                if (item.component_category == "input") {
@@ -332,6 +357,7 @@ export default {
             const state = graph.addNode({
                shape: 'rect',
                label: 'STATE',
+               id: 'state',
                x: 215,
                y: 340,
                width: 200,
@@ -344,8 +370,10 @@ export default {
             });
 
             const system = graph.addNode({
+               
                shape: 'rect',
                label: 'SYSTEM',
+               id: 'system',
                x: 215,
                y: 140,
                width: 200,
@@ -358,8 +386,11 @@ export default {
             });
 
 
-            console.log(graph.toJSON());
+         //   console.log(graph.toJSON());
+            this.graphJson = graph.parseJSON(graph.toJSON());
 
+        
+         
 
 
             /*
@@ -381,12 +412,25 @@ export default {
             });
 
             graph.on("node:mouseenter", ({ node }) => {
-               node.addTools({
+               if (
+                  node.id == "ctrl" ||
+                  node.id == "system" ||
+                  node.id == "inpt" ||
+                  node.id == "outpt" ||
+                  node.id == "state") {
+
+                     // we dont want user to be able to delete these nodes
+   
+               } else {
+                  node.addTools({
                   name: 'button-remove',
                   args: {
                      offset: { x: 10, y: 10 }
                   }
                })
+               }
+
+         
             });
 
             graph.on("node:mouseleave", ({ node }) => {
@@ -400,8 +444,28 @@ export default {
             });
 
             graph.on("edge:mouseleave", ({ edge }) => {
+
                edge.removeTools();
             });
+
+            // listen for changes on the graph and create json object of it
+            graph.on("cell:changed", ({ cell }) => {
+               this.graphJson = graph.parseJSON(graph.toJSON());
+               //    console.log(this.graphJson);
+            });
+
+            graph.on("edge:removed", ({ edge }) => {
+               this.graphJson = graph.parseJSON(graph.toJSON());
+               //    console.log(this.graphJson);
+            });
+
+            graph.on("node:removed", ({ node }) => {
+               this.graphJson = graph.parseJSON(graph.toJSON());
+               //    console.log(this.graphJson);
+            });
+
+
+
 
 
          } catch (err) {
@@ -415,7 +479,7 @@ export default {
    mounted() {
 
 
-      console.log(this.items);
+      //console.log(this.items);
 
 
 
@@ -423,7 +487,7 @@ export default {
 
 
 
-      console.log(this.$refs.sten)
+    //  console.log(this.$refs.sten)
 
 
    },
