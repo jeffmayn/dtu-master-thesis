@@ -2,6 +2,7 @@ import {
    getComponents,
    getComponentById,
    insertComponent,
+   deleteComponentById
 } from "../models/componentModel.js";
 
 
@@ -34,6 +35,18 @@ export const createComponent = (req, res) => {
    const data = req.body;
 
    insertComponent(data, (err, results) => {
+      if (err) {
+         res.send(err);
+      } else {
+         res.json(results);
+      }
+   });
+};
+
+// delete a component
+export const deleteComponent = (req, res) => {
+   const id = req.params.id;
+   deleteComponentById(id, (err, results) => {
       if (err) {
          res.send(err);
       } else {

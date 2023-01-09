@@ -24,6 +24,10 @@
                </td>
                <td>
                   {{ item.component_category }}
+                  
+               </td>
+               <td>
+                  <a class="button is-danger is-small" @click="deleteComponent(item.component_id)">X</a>
                </td>
             </tr>
          </tbody>
@@ -47,6 +51,15 @@ export default {
       this.getProducts();
    },
    methods: {
+      async deleteComponent(id) {
+         try {
+            const response = await axios.delete(`http://localhost:5003/delete/${id}`);
+            console.log(response.data);
+            this.getProducts();
+         } catch (err) {
+            console.log(err);
+         }
+      },
       async getProducts() {
          try {
             const response = await axios.get("http://localhost:5003/components");

@@ -104,6 +104,7 @@ export default {
    },
 
    methods: {
+   
       graphToJson() {
 
          
@@ -167,11 +168,13 @@ export default {
 
 
          try {
-            await axios.post("http://localhost:5003/model", {
+            const response = await axios.post("http://localhost:5003/model", {
                nodes: this.nodes,
                edges: this.edges
 
             });
+
+            console.log(response.data);
 
 
          } catch (err) {

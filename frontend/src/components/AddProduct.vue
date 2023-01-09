@@ -19,8 +19,8 @@
                <option value="control">Control</option>
             </select>
          </div>
-         
-        <!-- <div class="control">
+
+         <!-- <div class="control">
             <input class="input" type="text" placeholder="input, output, state or control "
                v-model="componentCategory" />
          </div>-->
@@ -33,12 +33,6 @@
          </div>
       </div>
       <div>
-         <br>
-         <div class="field"><label class="label">CVE URL</label></div>
-         <div class="control">
-            <input class="input" type="text" placeholder="Link to the CVE database of the product"
-               v-model="componentCVE" />
-         </div>
       </div><br>
       <div class="control">
          <button class="button is-success" @click="saveProduct">SAVE</button>
@@ -54,8 +48,7 @@ export default {
       return {
          componentName: "",
          categories: "input",
-         componentDescription: "",
-         componentCVE: "",
+         componentDescription: ""
       }
    },
    methods: {
@@ -63,11 +56,10 @@ export default {
          try {
             await axios.post("http://localhost:5003/components", {
                component_name: this.componentName,
-               component_category: this.categories.toString(),
-               component_description: this.componentDescription,
-               component_cve_url: this.componentCVE
+               component_category: this.categories,
+               component_description: this.componentDescription
             });
-            (this.componentName = ""), (this.componentCategory = ""), (this.componentDescription = ""), (this.componentCVE = "");
+            (this.componentName = ""), (this.componentDescription = "");
             this.$router.push("/");
          } catch (err) {
             console.log(err);
@@ -78,7 +70,6 @@ export default {
 </script>
 
 <style>
-
 form {
    max-width: 420px;
    margin: 30px auto;
@@ -88,7 +79,8 @@ form {
    border-radius: 10px;
 }
 
-input, select {
+input,
+select {
    display: block;
    padding: 10px 6px;
    width: 100%;
@@ -97,7 +89,8 @@ input, select {
 
 
 }
-input[type="checkbox"]{
+
+input[type="checkbox"] {
    display: inline-block;
    width: 16px;
    margin: 0 10px 0 0;
@@ -105,5 +98,4 @@ input[type="checkbox"]{
    top: 2px;
 
 }
-
 </style>
