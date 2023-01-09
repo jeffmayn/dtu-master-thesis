@@ -52,8 +52,8 @@ export default {
    },
    methods: {
       async deleteComponent(id) {
-         try {
-            const response = await axios.delete(`http://localhost:5003/delete/${id}`);
+         try { //http://localhost:5003
+            const response = await axios.delete(`https://dtu-master-thesis-tir.herokuapp.com/delete/${id}`);
             console.log(response.data);
             this.getProducts();
          } catch (err) {
@@ -62,7 +62,7 @@ export default {
       },
       async getProducts() {
          try {
-            const response = await axios.get("http://localhost:5003/components");
+            const response = await axios.get("https://dtu-master-thesis-tir.herokuapp.com/components");
             this.items = response.data;
             console.log(this.items);
          } catch (err) {

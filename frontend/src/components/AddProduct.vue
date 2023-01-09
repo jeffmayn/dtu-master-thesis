@@ -54,7 +54,9 @@ export default {
    methods: {
       async saveProduct() {
          try {
-            await axios.post("http://localhost:5003/components", {
+          //  await axios.post("http://localhost:5003/components", {
+            await axios.post("https://dtu-master-thesis-tir.herokuapp.com/components", {
+            
                component_name: this.componentName,
                component_category: this.categories,
                component_description: this.componentDescription

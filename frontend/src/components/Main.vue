@@ -185,8 +185,8 @@ export default {
                   */
 
 
-         try {
-            const response = await axios.post("http://localhost:5003/model", {
+         try { // http://localhost:5003
+            const response = await axios.post("https://dtu-master-thesis-tir.herokuapp.com/model", {
                nodes: this.nodes,
                edges: this.edges
 
@@ -201,7 +201,7 @@ export default {
       },
       async setup() {
          try {
-            const response = await axios.get("http://localhost:5003/components");
+            const response = await axios.get("https://dtu-master-thesis-tir.herokuapp.com/components");
             this.items = response.data;
             myList = response.data;
             //  console.log(response.data);
