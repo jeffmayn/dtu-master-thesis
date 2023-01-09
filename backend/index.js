@@ -11,6 +11,8 @@ app.use(express.json());
 app.use(cors());
 app.use(Router);
 
+app.get('/', (req, res) => res.send("Server is up and running!"));
+
 app.listen(5003, () => {
    console.log("Server is running ..");
 });
