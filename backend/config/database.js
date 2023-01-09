@@ -11,10 +11,10 @@ const db = mysql.createConnection({
 */
 
 const db = mysql.createConnection({
-   host: "eu-cdbr-west-03.cleardb.net",
-   user: "ba3a97cc9ab551",
-   password: "68060962",
-   database: "heroku_d089aa07e0c2400"
+   host: process.env.DB_HOST,
+   user: process.env.DB_USER,
+   password: process.env.DB_PASSWORD,
+   database: process.env.DB_NAME
 });
 
 export default db;
