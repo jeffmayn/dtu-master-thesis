@@ -4,11 +4,31 @@
       <thead>
          <tr>
             <th id="stencil" ref="stencil_ref"></th>
-         <th id="model" ref="model_ref"></th>
+            <th id="model" ref="model_ref"></th>
          </tr>
          <button @click="getJson" id="btn" class="button is-success mt-5">►</button>
       </thead>
    </table>
+
+   <div v-if="showMenu" id="menu" style="left: {{y}}px">
+      <div id="losForm">
+         <br>
+         <div id="menu-title">You are about to add a child component to: keyboard</div>
+         <hr>
+         <div class="field"><label class="label">Name</label></div>
+         <div class="control">
+            <input class="input" type="text" placeholder="Provide a name identifier" />
+         </div>
+         <br>
+         <div class="field"><label class="label">Description</label></div>
+         <div class="control">
+            <input class="input" type="text" placeholder="Provide a short description" />
+         </div>
+         <br>
+         <button @click="getJson" class="button is-success is-small">Add</button>&nbsp;&nbsp;
+         <button @click="toggleMenu" class="button is-danger is-small">Cancel</button>
+      </div>
+   </div>
 
    <table class="table is-striped is-bordered mt-2 is-fullwidth">
       <thead>
@@ -38,17 +58,21 @@
 
 
 
+
+
 </template>
 
 <script>
 import { assertExpressionStatement } from '@babel/types';
-import { Addon, Graph, Node, Shape, Edge } from '@antv/x6'
+import { Addon, Graph, Node, Shape, Edge } from '@antv/x6';
+
+
+
 import Stencil from './Stencil.vue';
 import GraphComponent from './Graph.vue';
 import axios from "axios";
-import { useNotification } from '@kyvg/vue3-notification';
-// MAYBE REMOVE
-const notification = useNotification();
+
+
 
 
 let myList = ['bob'];
@@ -65,25 +89,90 @@ export default {
       return {
          items: [],
          graphJson: [],
-         graf: myList
+         nodes: [],
+         edges: [],
+         graf: myList,
+         showMenu: false,
+         childComponentName: "",
+         childComponentDescr: "",
 
       };
    },
    created() {
 
       this.setup();
-   },   
+   },
 
    methods: {
+      graphToJson() {
+
+         
+
+       //  console.log(this.graphJson.cells.length);
+
+    
+         let nodes = [];
+         let edges = [];
+
+         this.graphJson.cells.forEach((cell) => {
+
+            //  console.log(cell);
+
+            if (cell.shape == 'edge') {
+               let edge = {
+                  id: cell.id,
+                  source: cell.source.cell,
+                  target: cell.target.cell
+               };
+               edges.push(edge);
+            } else {
+               let node = {
+                  id: cell.id,
+                  text: cell.attrs.text.text
+               };
+               nodes.push(node);
+            }
+         });
+
+
+         console.log(nodes);
+         console.log(edges);
+
+   
+
+         this.nodes = nodes;
+         this.edges = edges;
+      
+
+     
+         
+      },
+      setCoordinates(x,y) {
+         this.x = x;
+         this.y = y;
+      },
+      toggleMenu() {
+         this.showMenu = !this.showMenu;
+      },
       async getJson() {
-       
-     console.log(this.graphJson.length);
+
+         
+         this.graphToJson();
+       //  console.log(this.graphJson);
+         /*
+                  this.graphJson.forEach((element) => {
+                     console.log(element);
+                  });
+                  */
+
+
          try {
             await axios.post("http://localhost:5003/model", {
-               graph: this.graphJson,
+               nodes: this.nodes,
+               edges: this.edges
 
             });
-         
+
 
          } catch (err) {
             console.log(err);
@@ -98,15 +187,22 @@ export default {
 
 
 
+
+
             let graph = new Graph({
                container: this.$refs.model_ref,
                grid: true,
                height: 600,
-         
-         
+               resizing: false,
+
+
+
                connecting: {
                   allowBlank: false,
-                  snap: true,
+
+                  snap: {
+                     radius: 500,
+                  },
                   validateConnection: function (args) {
                      //console.log(args.sourcePort);
                      if (args.sourcePort == "input") {
@@ -159,9 +255,9 @@ export default {
             const inputComponents = [];
             const outputComponents = [];
 
-   
-       
-    
+
+
+
 
             this.items.forEach((item) => {
                if (item.component_category == "input") {
@@ -274,7 +370,7 @@ export default {
                shape: 'rect',
                label: 'INPUT',
                id: 'inpt',
-               nodeMovable: true,
+               nodeMovable: false,
                /*
                ports: {
                   groups: {
@@ -309,6 +405,16 @@ export default {
                width: 70,
                height: 200,
                attrs: {
+                  /*
+                  tools: [
+                     {
+                        name: 'contextmenu',
+                        args: {
+                           menu,
+                        }
+                     }
+                  ],
+                  */
                   body: {
                      fill: '#83E397',
                   }
@@ -370,7 +476,7 @@ export default {
             });
 
             const system = graph.addNode({
-               
+
                shape: 'rect',
                label: 'SYSTEM',
                id: 'system',
@@ -386,11 +492,12 @@ export default {
             });
 
 
-         //   console.log(graph.toJSON());
-            this.graphJson = graph.parseJSON(graph.toJSON());
+            //   console.log(graph.toJSON());
+            this.graphJson = graph.toJSON();
+               //graph.parseJSON(graph.toJSON());
 
-        
-         
+
+
 
 
             /*
@@ -406,10 +513,46 @@ export default {
                target: 'inpt'
             });
             */
+           /*
+            document.onmousedown = function (event) {
+
+            //   this.setCoordinates(event.clientX, event.clientY);
+
+          //  this.toggleMenu();
+
+
+            } 
+            */
+
+            
 
             graph.on("node:contextmenu", ({ node }) => {
+            //   console.log(node);
+               if (!this.showMenu) {
 
+
+               
+
+
+
+
+
+
+
+                  this.toggleMenu();
+               }
+
+               /*
+               node.addTools({
+                     name: 'contextmenu',
+                     args: {
+                        menu
+                     }
+               })
+                  */
             });
+
+
 
             graph.on("node:mouseenter", ({ node }) => {
                if (
@@ -419,18 +562,18 @@ export default {
                   node.id == "outpt" ||
                   node.id == "state") {
 
-                     // we dont want user to be able to delete these nodes
-   
+                  // we dont want user to be able to delete these nodes
+
                } else {
                   node.addTools({
-                  name: 'button-remove',
-                  args: {
-                     offset: { x: 10, y: 10 }
-                  }
-               })
+                     name: 'button-remove',
+                     args: {
+                        offset: { x: 10, y: 10 }
+                     }
+                  })
                }
 
-         
+
             });
 
             graph.on("node:mouseleave", ({ node }) => {
@@ -450,19 +593,23 @@ export default {
 
             // listen for changes on the graph and create json object of it
             graph.on("cell:changed", ({ cell }) => {
-               this.graphJson = graph.parseJSON(graph.toJSON());
-               //    console.log(this.graphJson);
+               //   this.graphJson = graph.parseJSON(graph.toJSON());
+               this.graphJson = graph.toJSON();
+
             });
 
             graph.on("edge:removed", ({ edge }) => {
-               this.graphJson = graph.parseJSON(graph.toJSON());
-               //    console.log(this.graphJson);
+               //  this.graphJson = graph.parseJSON(graph.toJSON());
+
             });
 
             graph.on("node:removed", ({ node }) => {
-               this.graphJson = graph.parseJSON(graph.toJSON());
-               //    console.log(this.graphJson);
+               //  this.graphJson = graph.parseJSON(graph.toJSON());
+
             });
+
+            graph.center;
+           
 
 
 
@@ -487,7 +634,7 @@ export default {
 
 
 
-    //  console.log(this.$refs.sten)
+      //  console.log(this.$refs.sten)
 
 
    },
@@ -500,6 +647,30 @@ export default {
 <style>
 #space {
    height: 3.3vh;
+}
+
+#losForm {
+   max-width: 300px;
+   margin-left: 10px;
+   margin-right: 10px;
+   background-color: #E7E7E7;
+   text-align: left;
+   padding: 10px;
+   border-radius: 10px;
+   border-color: black;
+   border-style: solid;
+   border-width: 1px;
+}
+
+#menu {
+   position: absolute;
+   left: 400px;
+   top: 100px;
+   z-index: 11;
+}
+
+#menu-title {
+   text-align: center;
 }
 
 
@@ -520,7 +691,7 @@ export default {
 
 #model {
    background-color: white;
-   width: 100%;
+   width: 500px;
    height: 50vh;
    margin: 2px 0;
    position: relative;

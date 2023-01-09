@@ -6,7 +6,13 @@ export const modelJson = (req, res) => {
 
    const data = req.body;
 
-   console.log(data);
+
+   const nodes = data.nodes;
+   const edges = data.edges;
+   
+
+   console.log(nodes);
+   console.log(edges);
    res.send("finno");
 
 };
