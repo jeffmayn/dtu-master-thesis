@@ -1,7 +1,7 @@
 import express from "express";
 import cors from "cors";
 import Router from "./routes/routes.js";
-require("dotenv").config(); 
+
 /*
 import {
    createTable
@@ -13,8 +13,8 @@ app.use(cors());
 app.use(Router);
 
 app.get('/', (req, res) => res.send("Server is up and running!"));
-
-app.listen(5003, () => {
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
    console.log("Server is running ..");
 });
 
