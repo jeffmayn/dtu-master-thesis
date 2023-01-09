@@ -10,7 +10,7 @@
       </thead>
    </table>
 
-   <div v-if="showMenu" id="menu" style="left: {{y}}px">
+   <div v-if="showMenu" id="menu">
       <div id="losForm">
          <br>
          <div id="menu-title">You are about to add a child component to: keyboard</div>
@@ -29,25 +29,43 @@
          <button @click="toggleMenu" class="button is-danger is-small">Cancel</button>
       </div>
    </div>
-
+   <div id="threat-list-title">
+      Threat list
+   </div>
    <table class="table is-striped is-bordered mt-2 is-fullwidth">
       <thead>
-         <tr>
-            <th class="has-text-centered">Name</th>
+         <tr id="response-title">
+            <th class="has-text-centered">#</th>
+            <th class="has-text-centered">Expand</th>
+            <th class="has-text-centered">Title</th>
+            <th class="has-text-centered">STRIDE Category</th>
             <th class="has-text-centered">Description</th>
-            <th class="has-text-centered">Category</th>
+            <th class="has-text-centered">Possible mitigation</th>
+            <th class="has-text-centered">Severity</th>
          </tr>
       </thead>
       <tbody>
          <tr v-for="item in items" :key="item.component_id">
             <td>
-               {{ item.component_name }}
+               {{ item.component_id }}
             </td>
             <td>
-               {{ item.component_description }}
+               <button @click="getJson" class="button is-success is-small">↓</button>
             </td>
             <td>
-               {{ item.component_category }}
+               An adversary can leverage the weak scalab...
+            </td>
+            <td>
+               Denial of Service
+            </td>
+            <td>
+               The default cache is ...
+            </td>
+            <td>
+               Override the default identification prot...
+            </td>
+            <td id="severity-bg-color">
+               High
             </td>
          </tr>
       </tbody>
@@ -674,6 +692,22 @@ export default {
 
 #menu-title {
    text-align: center;
+}
+
+#response-title {
+   background-color: #83E397;
+}
+
+#severity-bg-color {
+   background-color: #FF9494;
+}
+
+#threat-list-title {
+   text-align: left;
+   padding-left: 5px;
+   font-size: 20px;
+   font-weight: bold;
+
 }
 
 
