@@ -1,6 +1,7 @@
 import express from "express";
 import cors from "cors";
 import Router from "./routes/routes.js";
+require("dotenv").config(); 
 /*
 import {
    createTable
