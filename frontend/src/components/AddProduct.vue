@@ -62,7 +62,7 @@ export default {
                component_description: this.componentDescription
             });
             (this.componentName = ""), (this.componentDescription = "");
-            this.$router.push("/");
+            this.$router.push({path: '/'});
          } catch (err) {
             console.log(err);
          }
