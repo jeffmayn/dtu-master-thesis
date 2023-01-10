@@ -10,25 +10,8 @@
       </thead>
    </table>
 
-   <div v-if="showMenu" id="menu">
-      <div id="losForm">
-         <br>
-         <div id="menu-title">You are about to add a child component to: keyboard</div>
-         <hr>
-         <div class="field"><label class="label">Name</label></div>
-         <div class="control">
-            <input class="input" type="text" placeholder="Provide a name identifier" />
-         </div>
-         <br>
-         <div class="field"><label class="label">Description</label></div>
-         <div class="control">
-            <input class="input" type="text" placeholder="Provide a short description" />
-         </div>
-         <br>
-         <button @click="getJson" class="button is-success is-small">Add</button>&nbsp;&nbsp;
-         <button @click="toggleMenu" class="button is-danger is-small">Cancel</button>
-      </div>
-   </div>
+  
+
    <div id="threat-list-title">
       Threat list
    </div>
@@ -71,6 +54,8 @@
       </tbody>
    </table>
 
+   <!-- display menu when right clicking nodes -->
+   <div v-if="showMenu" id="menu"><CVE /></div>
 
 
 
@@ -83,12 +68,16 @@
 <script>
 import { assertExpressionStatement } from '@babel/types';
 import { Addon, Graph, Node, Shape, Edge } from '@antv/x6';
+import CVE from '@/components/SearchCVE.vue'
 
 
 
 import Stencil from './Stencil.vue';
 import GraphComponent from './Graph.vue';
 import axios from "axios";
+import url from "../config/settings.js";
+
+
 
 
 
@@ -101,7 +90,7 @@ let myList = ['bob'];
 
 
 export default {
-   components: { Stencil, GraphComponent },
+   components: { Stencil, GraphComponent, CVE },
 
    data() {
       return {
@@ -110,13 +99,14 @@ export default {
          nodes: [],
          edges: [],
          graf: myList,
-         showMenu: false,
+         showMenu: true,
          childComponentName: "",
          childComponentDescr: "",
 
       };
    },
    created() {
+
 
       this.setup();
    },
@@ -186,7 +176,7 @@ export default {
 
 
          try { // http://localhost:5003
-            const response = await axios.post("https://dtu-master-thesis-tir.herokuapp.com/model", {
+            const response = await axios.post(url + "model", {
                nodes: this.nodes,
                edges: this.edges
 
@@ -201,7 +191,7 @@ export default {
       },
       async setup() {
          try {
-            const response = await axios.get("https://dtu-master-thesis-tir.herokuapp.com/components");
+            const response = await axios.get(url + "components");
             this.items = response.data;
             myList = response.data;
             //  console.log(response.data);
@@ -670,29 +660,7 @@ export default {
    height: 3.3vh;
 }
 
-#losForm {
-   max-width: 300px;
-   margin-left: 10px;
-   margin-right: 10px;
-   background-color: #E7E7E7;
-   text-align: left;
-   padding: 10px;
-   border-radius: 10px;
-   border-color: black;
-   border-style: solid;
-   border-width: 1px;
-}
 
-#menu {
-   position: absolute;
-   left: 400px;
-   top: 100px;
-   z-index: 11;
-}
-
-#menu-title {
-   text-align: center;
-}
 
 #response-title {
    background-color: #83E397;

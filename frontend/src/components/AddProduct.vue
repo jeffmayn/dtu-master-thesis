@@ -42,6 +42,9 @@
 
 <script>
 import axios from "axios";
+import url from "../config/settings.js";
+
+
 export default {
 
    data() {
@@ -54,8 +57,7 @@ export default {
    methods: {
       async saveProduct() {
          try {
-          //  await axios.post("http://localhost:5003/components", {
-            await axios.post("https://dtu-master-thesis-tir.herokuapp.com/components", {
+            await axios.post(url + "components", {
             
                component_name: this.componentName,
                component_category: this.categories,
