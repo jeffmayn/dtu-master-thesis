@@ -13,7 +13,7 @@
 
 
    <div id="threat-list-title">
-      Threat list
+      Threat list x:{{ mousePosX }}, y: {{ mousePosY }}
    </div>
    <table class="table is-striped is-bordered mt-2 is-fullwidth">
       <thead>
@@ -57,14 +57,19 @@
    <!-- display menu when right clicking nodes -->
 
    <div v-if="displaySearchWindow" id="menu_search">
-   <SearchCVE @close="toggleSearchWindow" />
+      <SearchCVE :node_title="focused_node_title" @close="toggleSearchWindow" @data="get_child_nodes" />
    </div>
 
    <div v-if="displayMenu" id="menu_rcm" ref="menu_ref" style="left:99999px">
-      <RightClickMenu :rightClickMenuTitle="rcn_title" @openSearchWindow="toggleSearchWindow"/>
+      <RightClickMenu :rightClickMenuTitle="focused_node_title" @openSearchWindow="toggleSearchWindow" @openNodeWindow="toggleNodeWindow"/>
    </div>
 
- 
+   <div v-if="displayNodeWindow" id="menu_node">
+      <DisplayNode :title="focused_node_title" @close="toggleNodeWindow" />
+   </div>
+
+   
+
 
 
 
@@ -89,8 +94,8 @@ import GraphComponent from './Graph.vue';
 import axios from "axios";
 import url from "../config/settings.js";
 import RightClickMenu from './RightClickMenu.vue';
-import { getMousePosition } from '../utils/utils.js';
 import SearchCVE from '@/components/SearchCVE.vue';
+import DisplayNode from '@/components/DisplayNode.vue';
 
 
 
@@ -105,7 +110,15 @@ let myList = ['bob'];
 
 
 export default {
-   components: { Stencil, GraphComponent, CVE, RightClickMenu, SearchCVE },
+   components: {
+      Stencil,
+      GraphComponent,
+      CVE,
+      RightClickMenu,
+      SearchCVE,
+      DisplayNode
+
+   },
    props: {
       rightClickMenuTitle: String
    },
@@ -119,21 +132,30 @@ export default {
          graf: myList,
          displayMenu: true,
          displaySearchWindow: false,
-         rcn_title: "to",
+         displayNodeWindow: false,
+         focused_node_title: "",
+         focused_node_id: "",
+         focused_node_children: [],
          childComponentName: "",
          childComponentDescr: "",
          x: 0,
-         y: 0
+         y: 0,
+         mousePosX: 0,
+         mousePosY: 0,
 
       };
    },
    created() {
-  
+
       this.setup();
    },
 
 
    methods: {
+      get_child_nodes(value) {
+         this.displaySearchWindow = false;
+         console.log(value)
+      },
       graphToJson() {
          let nodes = [];
          let edges = [];
@@ -173,6 +195,9 @@ export default {
       },
       toggleMenu() {
          this.showMenu = !this.displayMenu;
+      },
+      toggleNodeWindow() {
+         this.displayNodeWindow = !this.displayNodeWindow;
       },
       toggleSearchWindow() {
          this.displaySearchWindow = !this.displaySearchWindow;
@@ -557,12 +582,16 @@ export default {
 
 
 
+            graph.on("node:mousedown", ({ node }) => {
 
-            graph.on("node:contextmenu", ({ node }) => {
+            
 
                let menuref = this.$refs.menu_ref;
-               this.rcn_title = node.id;
+               menuref.style["left"] = "99999px";
+               menuref.style["top"] =  "999999px";
+               
 
+/*
                document.onmousedown = function (zoom) {
 
                   let x = (zoom.clientX);
@@ -575,11 +604,44 @@ export default {
 
                   }
                }
+               */
+
+            });
+            
+
+            graph.on("node:contextmenu", ({ node }) => {
+
+               let menuref = this.$refs.menu_ref;
+
+               this.focused_node_title = node.store.data.attrs.text.text;
+               this.focused_node_id = node.id;
+
+               menuref.style["left"] = this.mousePosX + "px";
+               menuref.style["top"] = this.mousePosY + "px";
+
+
+/*
+               document.onmousedown = function (zoom) {
+
+                  let x = (zoom.clientX);
+                  let y = (zoom.clientY);
+
+                  if (zoom.button == "2") {
+                     menuref.style["left"] = x + "px";
+                     menuref.style["top"] = y + "px";
+                  } else {
+
+                  }
+               }
+               */
+
+
             });
 
 
 
             graph.on("node:mouseenter", ({ node }) => {
+
                if (
                   node.id == "ctrl" ||
                   node.id == "system" ||
@@ -610,6 +672,7 @@ export default {
             });
 
             graph.on("edge:mouseenter", ({ edge }) => {
+
                edge.addTools({
                   name: "button-remove"
                })
@@ -653,6 +716,11 @@ export default {
 
 
    mounted() {
+
+      document.addEventListener("mousemove", (event) => {
+      this.mousePosX = event.clientX;
+      this.mousePosY = event.clientY;
+    });
 
 
 

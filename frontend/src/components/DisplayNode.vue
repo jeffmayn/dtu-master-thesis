@@ -1,9 +1,30 @@
 <template>
-   <div id="rcm_form">
-      <p><div @click="openNodeWindow">Open {{ rightClickMenuTitle }}</div></p>
-      <p><div @click="openSearchWindow">Add child product
-      </div></p>
+   <div id="node_form">
+      <div id="node-title">{{ title }}</div>
+      <div id="response-frame">
+         <table class="table is-striped is-bordered mt-2 is-fullwidth">
+            <thead>
+               <tr id="response-title">
 
+                  <th class="">Child products:</th>
+                  <th class="has-text-centered"></th>
+               </tr>
+            </thead>
+            <tbody>
+               <tr v-for="product in result" :key="product.id">
+
+                  <td>
+                     {{ product }}
+                  </td>
+                  <td>
+                     <a class="button is-success is-small" @click="deleteComponent(item.component_id)">Add</a>
+                  </td>
+               </tr>
+            </tbody>
+         </table>
+      </div>
+      <br>
+      <button @click="closeWindow" class="button is-danger is-normal">Close</button>
    </div>
 
 
@@ -17,7 +38,7 @@ import url from "../config/settings.js";
 
 
 export default {
-   props: ['rightClickMenuTitle'],
+   props: ['title'],
    mounted() {
 
    },
@@ -36,22 +57,19 @@ export default {
    created() {
    },
    methods: {
-      openNodeWindow() {
-         this.$emit('openNodeWindow');
-      },
-      openSearchWindow() {
-         this.$emit('openSearchWindow');
+      closeWindow() {
+         this.$emit('close');
       },
       prev() {
          if (this.page > 1) {
-            this.page = this.page - 1; 
+            this.page = this.page - 1;
             this.paginator();
          }
-         
-        
 
-       },
-      next() { 
+
+
+      },
+      next() {
          if (this.page < this.response.length / 5) {
             this.page = this.page + 1;
             this.paginator();
@@ -66,31 +84,31 @@ export default {
 
          let myList = [];
 
-         for (let i = 0; i < this.response.length; i++){
+         for (let i = 0; i < this.response.length; i++) {
             myList.push(this.response[i].cpeTitle);
          }
 
 
 
-         
+
 
 
          this.result = myList.slice((this.page - 1) * page_size, this.page * page_size);
 
-         
+
          this.page_viewing = (0).toString() + " - " + (page_size * this.page).toString();
-      
-
-       
-
-       //  this.result = 
 
 
 
 
+         //  this.result = 
 
 
-         
+
+
+
+
+
       },
       async searchByID(id) {
          try {
@@ -100,10 +118,10 @@ export default {
             console.log(response.data);
 
             this.response = response.data;
-         
+
          } catch (err) {
             console.log(err);
-        } 
+         }
       },
 
       async searchProduct() {
@@ -118,10 +136,10 @@ export default {
 
             this.response = response.data;
             this.paginator();
-         
+
          } catch (err) {
             console.log(err);
-        } 
+         }
       },
 
    }
@@ -130,7 +148,6 @@ export default {
 </script>
    
 <style>
-
 #pagination {
    margin-top: 5px;
    text-align: right;
@@ -138,32 +155,37 @@ export default {
 }
 
 
+#response-frame {
+   background-color: white;
+   width: 100%;
+   height: 275px;
 
-#rcm_form {
-   position: absolute;
-   width: 175px;
-   max-width: 175px;
-   min-width: 175px;
+}
+
+#node_form {
+   width: 600px;
+   max-width: 600px;
+   margin-left: 10px;
+   margin-right: 10px;
    background-color: #E7E7E7;
    text-align: left;
    padding: 10px;
-   border-radius: 3px;
+   border-radius: 10px;
    border-color: black;
    border-style: solid;
    border-width: 1px;
+
 }
 
-p:hover{
-   background-color: #D6D6D6;
-   cursor: pointer;
-}
-
-#menu_rcm {
+#menu_node {
    position: absolute;
    left: 340px;
    top: 80px;
-   z-index: 11;
+   z-index: 12;
 }
 
-
+#node-title {
+   text-align: center;
+   font-size: 30px;
+}
 </style>

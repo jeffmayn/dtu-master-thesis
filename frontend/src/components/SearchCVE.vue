@@ -1,7 +1,7 @@
 <template>
    <div id="search_form">
       <br>
-      <div id="menu-title">You are about to add a child component to: keyboard</div>
+      <div id="menu-title">You are about to add a child component to: {{ node_title }}</div>
       <hr>
       <table>
          <thead>
@@ -39,10 +39,10 @@
             <tr v-for="product in result" :key = "product.id">
    
                <td>
-                  {{ product }}
+                  {{ product.title }}
                </td>
-               <td>
-                  <a class="button is-success is-small" @click="deleteComponent(item.component_id)">Add</a>
+               <td style="width: 20px;">
+                  <a class="button is-success is-small" @click="add(product)">Add</a>
                </td>
             </tr>
          </tbody>
@@ -54,9 +54,15 @@
       <button @click="prev" class="button is-success is-small">←</button>&nbsp;
       <button @click="next" class="button is-success is-small">→</button>
       </div>
+      <div v-if="picked_products != 0">Added:</div>
+      <tr v-for="(product, index) in picked_products">
+        <div id="added-list-spacer"> <a class="button is-danger is-small" @click="remove(index)">x</a> {{ product.title }}</div>
+   
+      </tr>
+      
       <br>
       <br>
-      <button @click="getJson" class="button is-success is-normal">Save</button>&nbsp;&nbsp;
+      <button @click="save" class="button is-success is-normal">Save</button>&nbsp;&nbsp;
       <button @click="closeWindow" class="button is-danger is-normal">Cancel</button>
    </div>
 
@@ -71,6 +77,7 @@ import url from "../config/settings.js";
 
 
 export default {
+   props: ['node_title'],
    mounted() {
 
    },
@@ -79,7 +86,8 @@ export default {
       return {
          items: [],
          vendor: "",
-         product: "",
+         product: [],
+         picked_products: [],
          response: [],
          result: [],
          page: 1,
@@ -89,6 +97,18 @@ export default {
    created() {
    },
    methods: {
+      save() {
+         this.$emit("data", this.picked_products);
+      },
+      remove(index) {
+
+         this.picked_products.splice(index, 1);
+         
+      },
+      add(product) {
+         //console.log(product.title + "\n" + product.name);
+         this.picked_products.push(product);
+      },
       closeWindow() {
          this.$emit('close');
       },
@@ -99,6 +119,7 @@ export default {
          }
          
         
+   
 
        },
       next() { 
@@ -117,7 +138,10 @@ export default {
          let myList = [];
 
          for (let i = 0; i < this.response.length; i++){
-            myList.push(this.response[i].cpeTitle);
+            myList.push({
+               title: this.response[i].cpeTitle,
+               name: this.response[i].cpeName,
+            });
          }
 
 
@@ -180,6 +204,10 @@ export default {
 </script>
    
 <style>
+
+#added-list-spacer{
+   margin-top: 2px;
+}
 
 #pagination {
    margin-top: 5px;
