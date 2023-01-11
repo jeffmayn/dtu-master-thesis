@@ -10,7 +10,7 @@
       </thead>
    </table>
 
-  
+
 
    <div id="threat-list-title">
       Threat list
@@ -55,7 +55,18 @@
    </table>
 
    <!-- display menu when right clicking nodes -->
-   <div v-if="showMenu" id="menu"><CVE /></div>
+
+   <div v-if="displaySearchWindow" id="menu_search">
+   <SearchCVE @close="toggleSearchWindow" />
+   </div>
+
+   <div v-if="displayMenu" id="menu_rcm" ref="menu_ref" style="left:99999px">
+      <RightClickMenu :rightClickMenuTitle="rcn_title" @openSearchWindow="toggleSearchWindow"/>
+   </div>
+
+ 
+
+
 
 
 
@@ -66,9 +77,10 @@
 </template>
 
 <script>
-import { assertExpressionStatement } from '@babel/types';
+import { assertExpressionStatement, throwStatement } from '@babel/types';
 import { Addon, Graph, Node, Shape, Edge } from '@antv/x6';
 import CVE from '@/components/SearchCVE.vue'
+import { useMouse } from '@vueuse/core'
 
 
 
@@ -76,6 +88,9 @@ import Stencil from './Stencil.vue';
 import GraphComponent from './Graph.vue';
 import axios from "axios";
 import url from "../config/settings.js";
+import RightClickMenu from './RightClickMenu.vue';
+import { getMousePosition } from '../utils/utils.js';
+import SearchCVE from '@/components/SearchCVE.vue';
 
 
 
@@ -90,7 +105,10 @@ let myList = ['bob'];
 
 
 export default {
-   components: { Stencil, GraphComponent, CVE },
+   components: { Stencil, GraphComponent, CVE, RightClickMenu, SearchCVE },
+   props: {
+      rightClickMenuTitle: String
+   },
 
    data() {
       return {
@@ -99,27 +117,24 @@ export default {
          nodes: [],
          edges: [],
          graf: myList,
-         showMenu: true,
+         displayMenu: true,
+         displaySearchWindow: false,
+         rcn_title: "to",
          childComponentName: "",
          childComponentDescr: "",
+         x: 0,
+         y: 0
 
       };
    },
    created() {
-
-
+  
       this.setup();
    },
 
+
    methods: {
-   
       graphToJson() {
-
-         
-
-       //  console.log(this.graphJson.cells.length);
-
-    
          let nodes = [];
          let edges = [];
 
@@ -144,30 +159,29 @@ export default {
          });
 
 
-         console.log(nodes);
-         console.log(edges);
-
-   
 
          this.nodes = nodes;
          this.edges = edges;
-      
 
-     
-         
+
+
+
       },
-      setCoordinates(x,y) {
+      setCoordinates(x, y) {
          this.x = x;
          this.y = y;
       },
       toggleMenu() {
-         this.showMenu = !this.showMenu;
+         this.showMenu = !this.displayMenu;
+      },
+      toggleSearchWindow() {
+         this.displaySearchWindow = !this.displaySearchWindow;
       },
       async getJson() {
 
-         
+
          this.graphToJson();
-       //  console.log(this.graphJson);
+         //  console.log(this.graphJson);
          /*
                   this.graphJson.forEach((element) => {
                      console.log(element);
@@ -195,6 +209,10 @@ export default {
             this.items = response.data;
             myList = response.data;
             //  console.log(response.data);
+
+
+
+
 
 
 
@@ -505,7 +523,7 @@ export default {
 
             //   console.log(graph.toJSON());
             this.graphJson = graph.toJSON();
-               //graph.parseJSON(graph.toJSON());
+            //graph.parseJSON(graph.toJSON());
 
 
 
@@ -524,43 +542,39 @@ export default {
                target: 'inpt'
             });
             */
-           /*
-            document.onmousedown = function (event) {
+            /*
+             document.onmousedown = function (event) {
+ 
+             //   this.setCoordinates(event.clientX, event.clientY);
+ 
+           //  this.toggleMenu();
+ 
+ 
+             } 
+             */
 
-            //   this.setCoordinates(event.clientX, event.clientY);
-
-          //  this.toggleMenu();
 
 
-            } 
-            */
 
-            
+
 
             graph.on("node:contextmenu", ({ node }) => {
-            //   console.log(node);
-               if (!this.showMenu) {
 
+               let menuref = this.$refs.menu_ref;
+               this.rcn_title = node.id;
 
-               
+               document.onmousedown = function (zoom) {
 
+                  let x = (zoom.clientX);
+                  let y = (zoom.clientY);
 
+                  if (zoom.button == "2") {
+                     menuref.style["left"] = x + "px";
+                     menuref.style["top"] = y + "px";
+                  } else {
 
-
-
-
-
-                  this.toggleMenu();
+                  }
                }
-
-               /*
-               node.addTools({
-                     name: 'contextmenu',
-                     args: {
-                        menu
-                     }
-               })
-                  */
             });
 
 
@@ -587,7 +601,11 @@ export default {
 
             });
 
+
+
             graph.on("node:mouseleave", ({ node }) => {
+
+
                node.removeTools();
             });
 
@@ -620,7 +638,7 @@ export default {
             });
 
             graph.center;
-           
+
 
 
 
@@ -635,6 +653,10 @@ export default {
 
 
    mounted() {
+
+
+
+
 
 
       //console.log(this.items);

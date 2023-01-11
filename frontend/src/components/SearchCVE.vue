@@ -1,5 +1,5 @@
 <template>
-   <div id="losForm">
+   <div id="search_form">
       <br>
       <div id="menu-title">You are about to add a child component to: keyboard</div>
       <hr>
@@ -31,7 +31,7 @@
             <thead>
                <tr id="response-title">
 
-                  <th class="has-text-centered">Product</th>
+                  <th class="">Results: {{ response.length }}</th>
                   <th class="has-text-centered"></th>
                </tr>
             </thead>
@@ -49,19 +49,22 @@
          </table>
       </div>
       <div id="pagination">
-      <button @click="prev" class="button is-success is-small">←</button>
-       <b> {{ page_viewing }}</b> (of {{ response.length }}) <button @click="next" class="button is-success is-small">→</button>
+         page {{ page }} / {{ Math.floor(response.length / 5)+1 }} 
+      <br>
+      <button @click="prev" class="button is-success is-small">←</button>&nbsp;
+      <button @click="next" class="button is-success is-small">→</button>
       </div>
       <br>
       <br>
       <button @click="getJson" class="button is-success is-normal">Save</button>&nbsp;&nbsp;
-      <button @click="toggleMenu" class="button is-danger is-normal">Cancel</button>
+      <button @click="closeWindow" class="button is-danger is-normal">Cancel</button>
    </div>
 
 
 </template>
    
 <script>
+import { toInteger } from "@antv/x6/lib/util/number/number";
 import axios from "axios";
 import url from "../config/settings.js";
 
@@ -86,6 +89,9 @@ export default {
    created() {
    },
    methods: {
+      closeWindow() {
+         this.$emit('close');
+      },
       prev() {
          if (this.page > 1) {
             this.page = this.page - 1; 
@@ -188,7 +194,7 @@ export default {
    height: 275px;
 
 }
-#losForm {
+#search_form {
    width: 600px;
    max-width: 600px;
    margin-left: 10px;
@@ -200,13 +206,14 @@ export default {
    border-color: black;
    border-style: solid;
    border-width: 1px;
+ 
 }
 
-#menu {
+#menu_search {
    position: absolute;
-   left: 400px;
-   top: 100px;
-   z-index: 11;
+   left: 340px;
+   top: 80px;
+   z-index: 12;
 }
 
 #menu-title {

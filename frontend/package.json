@@ -9,6 +9,7 @@
   "dependencies": {
     "@antv/x6": "^1.32.7",
     "@kyvg/vue3-notification": "^2.7.0",
+    "@vueuse/core": "^9.10.0",
     "axios": "^1.2.1",
     "bulma": "^0.9.4",
     "core-js": "^3.8.3",
