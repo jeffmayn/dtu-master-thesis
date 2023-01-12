@@ -15,7 +15,7 @@
                <th>
                   Product
                   <div class="control">
-                     <input class="input" v-model="product" type="text" placeholder="E.g office" />
+                     <input class="input" v-model="product" type="text" placeholder="E.g windows 10" />
                   </div>
                </th>
                <th>
@@ -183,9 +183,17 @@ export default {
       async searchProduct() {
          try {
 
+            // replace white space with underscore
+            let new_product = "";
+            
+            if (this.product.length > 0) {
+               new_product = this.product.replace(/\s/g, '_');
+            }
+            
+
             const response = await axios.post(url + "searchProduct", {
                vendor: this.vendor,
-               product: this.product,
+               product: new_product
             });
 
             console.log(response.data);

@@ -11,13 +11,13 @@
                </tr>
             </thead>
             <tbody>
-               <tr v-for="product in result" :key="product.id">
+               <tr v-for="(node, index) in nodes">
 
                   <td>
-                     {{ product }}
+                     {{ node.title }}
                   </td>
-                  <td>
-                     <a class="button is-success is-small" @click="deleteComponent(item.component_id)">Add</a>
+                  <td style="width: 20px;">
+                     <a class="button is-danger is-small" @click="remove(index)">x</a>
                   </td>
                </tr>
             </tbody>
@@ -38,7 +38,7 @@ import url from "../config/settings.js";
 
 
 export default {
-   props: ['title'],
+   props: ['title', 'nodes'],
    mounted() {
 
    },
@@ -57,6 +57,11 @@ export default {
    created() {
    },
    methods: {
+      remove(index) {
+
+this.nodes.splice(index, 1);
+
+},
       closeWindow() {
          this.$emit('close');
       },

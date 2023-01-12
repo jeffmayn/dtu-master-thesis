@@ -57,18 +57,19 @@
    <!-- display menu when right clicking nodes -->
 
    <div v-if="displaySearchWindow" id="menu_search">
-      <SearchCVE :node_title="focused_node_title" @close="toggleSearchWindow" @data="get_child_nodes" />
+      <SearchCVE :node_title="focused_node_title" @close="toggleSearchWindow" @data="add_child_nodes_to_graph" />
    </div>
 
    <div v-if="displayMenu" id="menu_rcm" ref="menu_ref" style="left:99999px">
-      <RightClickMenu :rightClickMenuTitle="focused_node_title" @openSearchWindow="toggleSearchWindow" @openNodeWindow="toggleNodeWindow"/>
+      <RightClickMenu :rightClickMenuTitle="focused_node_title" @openSearchWindow="toggleSearchWindow"
+         @openNodeWindow="toggleNodeWindow" />
    </div>
 
    <div v-if="displayNodeWindow" id="menu_node">
-      <DisplayNode :title="focused_node_title" @close="toggleNodeWindow" />
+      <DisplayNode :title="focused_node_title" :nodes="focused_node_children" @close="toggleNodeWindow" />
    </div>
 
-   
+
 
 
 
@@ -83,7 +84,7 @@
 
 <script>
 import { assertExpressionStatement, throwStatement } from '@babel/types';
-import { Addon, Graph, Node, Shape, Edge } from '@antv/x6';
+import { Addon, Graph, Node, Shape, Edge, Cell } from '@antv/x6';
 import CVE from '@/components/SearchCVE.vue'
 import { useMouse } from '@vueuse/core'
 
@@ -133,6 +134,7 @@ export default {
          displayMenu: true,
          displaySearchWindow: false,
          displayNodeWindow: false,
+         focused_node_object: [],
          focused_node_title: "",
          focused_node_id: "",
          focused_node_children: [],
@@ -142,19 +144,53 @@ export default {
          y: 0,
          mousePosX: 0,
          mousePosY: 0,
+         graph: []
 
       };
    },
-   created() {
+   async created() {
 
-      this.setup();
+      await this.setup();
+
    },
 
 
    methods: {
-      get_child_nodes(value) {
+      get_child_nodes() { 
+
+         this.graph.model.collection.cells.forEach((node) => {
+
+            if (node.id == this.focused_node_id) {
+               this.focused_node_children = node.getAttrByPath('children');
+            }
+
+         });
+
+      },
+   
+      add_child_nodes_to_graph(value) {
          this.displaySearchWindow = false;
-         console.log(value)
+ 
+         this.graph.model.collection.cells.forEach((node) => {
+            if (node.id == this.focused_node_id) {
+               console.log(node);
+
+               let finalList = [];
+
+               let children = node.getAttrByPath('children');
+
+               children.forEach((child) => {
+                  finalList.push(child);
+               });
+
+               value.forEach((child) => {
+                  finalList.push(child);
+               });
+               
+               node.setAttrByPath('children', finalList);
+
+            }
+         });
       },
       graphToJson() {
          let nodes = [];
@@ -197,7 +233,15 @@ export default {
          this.showMenu = !this.displayMenu;
       },
       toggleNodeWindow() {
-         this.displayNodeWindow = !this.displayNodeWindow;
+         if (this.displayNodeWindow == false) {
+
+            this.get_child_nodes();
+            this.displayNodeWindow = true;
+
+         } else {
+            this.displayNodeWindow = false;
+         }
+        
       },
       toggleSearchWindow() {
          this.displaySearchWindow = !this.displaySearchWindow;
@@ -331,7 +375,6 @@ export default {
                y: 50,
                width: 100,
                height: 25,
-
                ports: {
                   groups: {
                      in: {
@@ -354,6 +397,9 @@ export default {
                   ]
                },
                attrs: {
+                  children: [
+                     {}
+                  ],
                   body: {
                      strokeWidth: 1,
                      fill: '#83E397',
@@ -372,7 +418,8 @@ export default {
                y: 50,
                width: 100,
                height: 25,
-
+               children: [
+               ],
                ports: {
                   groups: {
                      in: {
@@ -395,6 +442,9 @@ export default {
                   ]
                },
                attrs: {
+                  children: [
+                     {}
+                  ],
                   body: {
                      strokeWidth: 1,
                      fill: '#93CEFE',
@@ -408,6 +458,8 @@ export default {
 
             stencil.load(inputs, 'group1');
             stencil.load(outputs, 'group2');
+
+
 
 
 
@@ -538,12 +590,23 @@ export default {
                y: 140,
                width: 200,
                height: 200,
+               meta: {
+                  id: "bobby"
+               },
                attrs: {
                   body: {
                      fill: '#D7D7D7',
-                  }
+                  },
+                  children: [
+                  ]
                }
             });
+
+            //this.nodes.push(system);
+
+
+
+
 
 
             //   console.log(graph.toJSON());
@@ -582,32 +645,39 @@ export default {
 
 
 
+
+
+
+
+
             graph.on("node:mousedown", ({ node }) => {
 
-            
+               console.log(node);
+
+
 
                let menuref = this.$refs.menu_ref;
                menuref.style["left"] = "99999px";
-               menuref.style["top"] =  "999999px";
+               menuref.style["top"] = "999999px";
+
+
+               /*
+                              document.onmousedown = function (zoom) {
                
-
-/*
-               document.onmousedown = function (zoom) {
-
-                  let x = (zoom.clientX);
-                  let y = (zoom.clientY);
-
-                  if (zoom.button == "2") {
-                     menuref.style["left"] = x + "px";
-                     menuref.style["top"] = y + "px";
-                  } else {
-
-                  }
-               }
-               */
+                                 let x = (zoom.clientX);
+                                 let y = (zoom.clientY);
+               
+                                 if (zoom.button == "2") {
+                                    menuref.style["left"] = x + "px";
+                                    menuref.style["top"] = y + "px";
+                                 } else {
+               
+                                 }
+                              }
+                              */
 
             });
-            
+
 
             graph.on("node:contextmenu", ({ node }) => {
 
@@ -620,20 +690,20 @@ export default {
                menuref.style["top"] = this.mousePosY + "px";
 
 
-/*
-               document.onmousedown = function (zoom) {
-
-                  let x = (zoom.clientX);
-                  let y = (zoom.clientY);
-
-                  if (zoom.button == "2") {
-                     menuref.style["left"] = x + "px";
-                     menuref.style["top"] = y + "px";
-                  } else {
-
-                  }
-               }
-               */
+               /*
+                              document.onmousedown = function (zoom) {
+               
+                                 let x = (zoom.clientX);
+                                 let y = (zoom.clientY);
+               
+                                 if (zoom.button == "2") {
+                                    menuref.style["left"] = x + "px";
+                                    menuref.style["top"] = y + "px";
+                                 } else {
+               
+                                 }
+                              }
+                              */
 
 
             });
@@ -703,6 +773,10 @@ export default {
             graph.center;
 
 
+            this.graph = graph;
+
+
+
 
 
 
@@ -718,9 +792,9 @@ export default {
    mounted() {
 
       document.addEventListener("mousemove", (event) => {
-      this.mousePosX = event.clientX;
-      this.mousePosY = event.clientY;
-    });
+         this.mousePosX = event.clientX;
+         this.mousePosY = event.clientY;
+      });
 
 
 
