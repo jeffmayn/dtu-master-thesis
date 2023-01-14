@@ -30,8 +30,9 @@
          <table class="table is-striped is-bordered mt-2 is-fullwidth">
             <thead>
                <tr id="response-title">
-
-                  <th class="">Results: {{ response.length }}</th>
+                  <th class="" v-if="searching">Searching ...</th>
+                  <th class="" v-if="no_result">No match</th>
+                  <th class="" v-if='response.length != 0'>Results: {{ response.length }}</th>
                   <th class="has-text-centered"></th>
                </tr>
             </thead>
@@ -91,7 +92,9 @@ export default {
          response: [],
          result: [],
          page: 1,
-         page_viewing: ""
+         page_viewing: "",
+         searching: false,
+         no_result: false
       };
    },
    created() {
@@ -181,7 +184,12 @@ export default {
       },
 
       async searchProduct() {
+         this.response = [];
+         this.no_result = false;
+         this.searching = true;
          try {
+
+            
 
             // replace white space with underscore
             let new_product = "";
@@ -198,12 +206,17 @@ export default {
 
             console.log(response.data);
 
+            if (response.data.length < 1) {
+               this.no_result = true;
+            }
+
             this.response = response.data;
             this.paginator();
          
          } catch (err) {
             console.log(err);
-        } 
+         } 
+         this.searching = false;
       },
 
    }

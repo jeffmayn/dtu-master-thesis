@@ -1,7 +1,7 @@
 import {
    searchByID,
    searchByKeywords,
-   searchProductByVendorAndProductNames
+   searchProductByVendorAndProductNames,
 } from "../models/cveModel.js";
 
 export const searchSpecificCVE = async (req, res) => {
@@ -19,6 +19,11 @@ export const searchSpecificCVE = async (req, res) => {
    });
 
 };
+
+
+
+
+
 
 
 export const searchCVEMentioningKeywords = async (req, res) => {
@@ -53,3 +58,18 @@ export const searchProducts = async (req, res) => {
 
 
 };
+
+/*
+export const trold = async (cpeName) => {
+
+   await trold2(cpeName, (err, results) => {
+      if (err) {
+         console.log(err);
+      } else {
+         console.log(results);
+      }
+   });
+
+
+};
+*/

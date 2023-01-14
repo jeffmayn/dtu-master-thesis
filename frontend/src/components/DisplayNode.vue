@@ -59,9 +59,9 @@ export default {
    methods: {
       remove(index) {
 
-this.nodes.splice(index, 1);
+         this.nodes.splice(index, 1);
 
-},
+      },
       closeWindow() {
          this.$emit('close');
       },
