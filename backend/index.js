@@ -4,6 +4,7 @@ import Router from "./routes/routes.js";
 
 const PORT = process.env.PORT || 3030;
 
+// todo: needs fixing
 
 let origin = "";
 if (process.env.MODE == "dev") {
