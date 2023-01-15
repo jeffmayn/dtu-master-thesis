@@ -23,7 +23,20 @@ var corsOption = {
    optionSuccessStatus: 200
 };
  
+
+
+
 const app = express();
+
+app.options("/*", function (req, res, next) {
+   console.log("Got an options request yo");
+   res.header('Access-Control-Allow-Origin', '*');
+   res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS');
+   res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization, Content-Length, X-Requested-With');
+   res.send(200);
+});
+
+
 app.use(cors(corsOption));
 app.use(express.json());
 app.use(Router);
