@@ -3,8 +3,6 @@
    DATABASE
    <div>
       <form>
-     <!--  <router-link :to="{ name: 'Canvas' }" class="button is-success mt-5">Create new model</router-link>&nbsp;&nbsp;
-      <router-link :to="{ name: 'Create' }" class="button is-success mt-5">Add new</router-link>-->
       <router-link :to="{ name: 'Create' }" class="button is-success mt-5">Add new component</router-link>
       <table class="table is-striped is-bordered mt-2 is-fullwidth">
          <thead>
@@ -24,7 +22,6 @@
                </td>
                <td>
                   {{ item.component_category }}
-                  
                </td>
                <td>
                   <a class="button is-danger is-small" @click="deleteComponent(item.component_id)">X</a>
@@ -42,7 +39,6 @@ import axios from "axios";
 import url from "../config/settings.js";
 
 export default {
-
    data() {
       return {
          items: [],
@@ -71,12 +67,8 @@ export default {
          }
       }
    }
-
 };
 </script>
-
-
-
 <style>
 form {
    max-width: 700px;
@@ -87,4 +79,3 @@ form {
    border-radius: 10px;
 }
 </style>
-

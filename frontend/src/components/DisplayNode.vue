@@ -26,23 +26,16 @@
       <br>
       <button @click="closeWindow" class="button is-danger is-normal">Close</button>
    </div>
-
-
 </template>
-   
 <script>
 import { toInteger } from "@antv/x6/lib/util/number/number";
 import axios from "axios";
 import url from "../config/settings.js";
 
-
-
 export default {
    props: ['title', 'nodes'],
    mounted() {
-
    },
-
    data() {
       return {
          items: [],
@@ -58,72 +51,42 @@ export default {
    },
    methods: {
       remove(index) {
-
          this.nodes.splice(index, 1);
-
       },
+
       closeWindow() {
          this.$emit('close');
       },
+
       prev() {
          if (this.page > 1) {
             this.page = this.page - 1;
             this.paginator();
          }
-
-
-
       },
+
       next() {
          if (this.page < this.response.length / 5) {
             this.page = this.page + 1;
             this.paginator();
          }
       },
+
       paginator() {
-
-         // array.slice((page_number - 1) * page_size, page_number * page_size);
-
          const page_size = 5;
-         console.log(this.response.length);
 
          let myList = [];
-
          for (let i = 0; i < this.response.length; i++) {
             myList.push(this.response[i].cpeTitle);
          }
-
-
-
-
-
-
          this.result = myList.slice((this.page - 1) * page_size, this.page * page_size);
-
-
          this.page_viewing = (0).toString() + " - " + (page_size * this.page).toString();
-
-
-
-
-         //  this.result = 
-
-
-
-
-
-
-
       },
+
       async searchByID(id) {
          try {
-
             const response = await axios.get(url + `cve/${id}`);
-
-            console.log(response.data);
-
             this.response = response.data;
-
          } catch (err) {
             console.log(err);
          }
@@ -131,27 +94,19 @@ export default {
 
       async searchProduct() {
          try {
-
             const response = await axios.post(url + "searchProduct", {
                vendor: this.vendor,
                product: this.product,
             });
-
-            console.log(response.data);
-
             this.response = response.data;
             this.paginator();
-
          } catch (err) {
             console.log(err);
          }
       },
-
    }
-
 };
 </script>
-   
 <style>
 #pagination {
    margin-top: 5px;
@@ -159,12 +114,10 @@ export default {
    line-height: 32px;
 }
 
-
 #response-frame {
    background-color: white;
    width: 100%;
    height: 275px;
-
 }
 
 #node_form {
@@ -179,7 +132,6 @@ export default {
    border-color: black;
    border-style: solid;
    border-width: 1px;
-
 }
 
 #menu_node {

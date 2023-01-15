@@ -1,8 +1,6 @@
 <template>
   <div id="nav" class="container is-max-desktop"></div>
   <router-view />
-
-
   <DockMenu :items="items" :on-selected="handleSelected" :theme="{
   primary: '#7F939D',
   secondary: '#607A87',
@@ -10,27 +8,6 @@
   textColor: '#FFFFFF',
   textHoverColor: '#FFFFFF',
 }" />
-
-
-<!--
-<table class="tg">
-<thead>
-  <tr>
-    <th id="stencil"></th>
-    <th id="model"></th>    
-    <th id="response"></th>
-  </tr>
-</thead>
-<tbody>
-  <tr>
-    <td id="inumeration" colspan="3">f</td>
-  </tr>
-</tbody>
-</table>
-
--->
-
-
 </template>
 
 <style>
@@ -43,7 +20,6 @@
   text-align: center;
   color: #2c3e50;
 }
-
 
 nav {
   padding: 30px;
@@ -64,28 +40,16 @@ import { DockMenu } from "vue-dock-menu";
 import "vue-dock-menu/dist/vue-dock-menu.css";
 import router from "@/router";
 
-
-
-
-
 export default {
   name: "App",
   components: {
     DockMenu,
   },
+
   setup() {
-
-    
     const handleSelected = (val) => {
-
-
-
-
-
       if (val.name == "Database") {
         router.push("/database");
-
-        // <router-link :to="{ name: 'Canvas' }" class="button is-success mt-5">Create new model</router-link>
       }
 
       if (val.name == "Main Canvas") {
@@ -96,9 +60,14 @@ export default {
         router.push("/about");
       }
 
+      if (val.name == "Load demo") {
 
+        console.log("loading..");
+       
+        
+        
+      }
     };
-
     return {
       handleSelected,
     };

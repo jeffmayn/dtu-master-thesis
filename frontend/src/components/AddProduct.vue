@@ -19,11 +19,6 @@
                <option value="control">Control</option>
             </select>
          </div>
-
-         <!-- <div class="control">
-            <input class="input" type="text" placeholder="input, output, state or control "
-               v-model="componentCategory" />
-         </div>-->
       </div>
       <div>
          <br>
@@ -39,14 +34,11 @@
       </div>
    </form>
 </template>
-
 <script>
 import axios from "axios";
 import url from "../config/settings.js";
 
-
 export default {
-
    data() {
       return {
          componentName: "",
@@ -82,7 +74,6 @@ form {
    padding: 40px;
    border-radius: 10px;
 }
-
 input,
 select {
    display: block;
@@ -90,16 +81,12 @@ select {
    width: 100%;
    box-sizing: border-box;
    border: none;
-
-
 }
-
 input[type="checkbox"] {
    display: inline-block;
    width: 16px;
    margin: 0 10px 0 0;
    position: relative;
    top: 2px;
-
 }
 </style>

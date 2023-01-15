@@ -8,17 +8,9 @@ import axios from "axios";
 import GraphComponent from './Graph.vue';
 import { Addon, Graph, Node, Shape, Edge } from '@antv/x6'
 
-
-
-
 export default {
    components: { GraphComponent },
    props: ['graph'],
-   mounted() {
-      // this.$refs.container.focus()
-
-   },
-
    data() {
       return {
          items: [],
@@ -28,9 +20,7 @@ export default {
       this.displayStencil();
    },
    methods: {
-
       async displayStencil() {
-         
          const stencil = new Addon.Stencil({
                title: 'Components',
                target: this.graph,
@@ -64,15 +54,10 @@ export default {
                      collapsed: true
                   },
                ],
-         });
-            
+         });   
       }
-
    }
-
 };
 </script>
-   
 <style>
-
 </style>

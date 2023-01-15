@@ -38,7 +38,6 @@
             </thead>
             <tbody>
             <tr v-for="product in result" :key = "product.id">
-   
                <td>
                   {{ product.title }}
                </td>
@@ -58,16 +57,12 @@
       <div v-if="picked_products != 0">Added:</div>
       <tr v-for="(product, index) in picked_products">
         <div id="added-list-spacer"> <a class="button is-danger is-small" @click="remove(index)">x</a> {{ product.title }}</div>
-   
       </tr>
-      
       <br>
       <br>
       <button @click="save" class="button is-success is-normal">Save</button>&nbsp;&nbsp;
       <button @click="closeWindow" class="button is-danger is-normal">Cancel</button>
    </div>
-
-
 </template>
    
 <script>
@@ -75,14 +70,8 @@ import { toInteger } from "@antv/x6/lib/util/number/number";
 import axios from "axios";
 import url from "../config/settings.js";
 
-
-
 export default {
    props: ['node_title'],
-   mounted() {
-
-   },
-
    data() {
       return {
          items: [],
@@ -103,41 +92,35 @@ export default {
       save() {
          this.$emit("data", this.picked_products);
       },
-      remove(index) {
 
+      remove(index) {
          this.picked_products.splice(index, 1);
-         
       },
+
       add(product) {
-         //console.log(product.title + "\n" + product.name);
          this.picked_products.push(product);
       },
+
       closeWindow() {
          this.$emit('close');
       },
+
       prev() {
          if (this.page > 1) {
             this.page = this.page - 1; 
             this.paginator();
          }
-         
-        
-   
-
-       },
+      },
+       
       next() { 
          if (this.page < this.response.length / 5) {
             this.page = this.page + 1;
             this.paginator();
          }
       },
+
       paginator() {
-
-         // array.slice((page_number - 1) * page_size, page_number * page_size);
-
          const page_size = 5;
-         console.log(this.response.length);
-
          let myList = [];
 
          for (let i = 0; i < this.response.length; i++){
@@ -146,38 +129,14 @@ export default {
                name: this.response[i].cpeName,
             });
          }
-
-
-
-         
-
-
          this.result = myList.slice((this.page - 1) * page_size, this.page * page_size);
-
-         
          this.page_viewing = (0).toString() + " - " + (page_size * this.page).toString();
-      
-
-       
-
-       //  this.result = 
-
-
-
-
-
-
-         
       },
+
       async searchByID(id) {
          try {
-
             const response = await axios.get(url + `cve/${id}`);
-
-            console.log(response.data);
-
             this.response = response.data;
-         
          } catch (err) {
             console.log(err);
         } 
@@ -188,44 +147,32 @@ export default {
          this.no_result = false;
          this.searching = true;
          try {
-
-            
-
             // replace white space with underscore
             let new_product = "";
-            
+
             if (this.product.length > 0) {
                new_product = this.product.replace(/\s/g, '_');
             }
-            
-
             const response = await axios.post(url + "searchProduct", {
                vendor: this.vendor,
                product: new_product
             });
 
-            console.log(response.data);
-
             if (response.data.length < 1) {
                this.no_result = true;
             }
-
             this.response = response.data;
             this.paginator();
-         
          } catch (err) {
             console.log(err);
          } 
          this.searching = false;
       },
-
    }
-
 };
 </script>
    
 <style>
-
 #added-list-spacer{
    margin-top: 2px;
 }
@@ -236,13 +183,12 @@ export default {
    line-height: 32px;
 }
 
-
 #response-frame {
    background-color: white;
    width: 100%;
    height: 275px;
-
 }
+
 #search_form {
    width: 600px;
    max-width: 600px;
@@ -255,7 +201,6 @@ export default {
    border-color: black;
    border-style: solid;
    border-width: 1px;
- 
 }
 
 #menu_search {

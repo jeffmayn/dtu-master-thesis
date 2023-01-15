@@ -2,10 +2,6 @@
    <div>
      <Canvas />
    </div>
-
-
-
-
  </template>
  
  <script>
@@ -13,12 +9,6 @@
 import Canvas from '@/components/Canvas.vue'
 import { Graph, Node, Shape, Edge } from '@antv/x6'
 
-
-
-
-
-
- 
  export default {
    name: 'CanvasView',
    components: {

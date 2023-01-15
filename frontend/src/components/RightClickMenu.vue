@@ -1,12 +1,18 @@
 <template>
    <div id="rcm_form">
-      <p><div @click="openNodeWindow">Open {{ rightClickMenuTitle }}</div></p>
-      <p><div @click="openSearchWindow">Add child product
-      </div></p>
-
+      <p>
+      <div @click="openNodeWindow">Open {{ rightClickMenuTitle }}</div>
+      </p>
+      <p>
+      <div @click="openSearchWindow">Add child product
+      </div>
+      </p>
+      <hr>
+      <p>
+      <div @click="openLoadModelsWindow">Open demo models
+      </div>
+      </p>
    </div>
-
-
 </template>
    
 <script>
@@ -14,14 +20,8 @@ import { toInteger } from "@antv/x6/lib/util/number/number";
 import axios from "axios";
 import url from "../config/settings.js";
 
-
-
 export default {
    props: ['rightClickMenuTitle'],
-   mounted() {
-
-   },
-
    data() {
       return {
          items: [],
@@ -39,105 +39,70 @@ export default {
       openNodeWindow() {
          this.$emit('openNodeWindow');
       },
+      openLoadModelsWindow() {
+         this.$emit('openLoadModelsWindow');
+      },
+
       openSearchWindow() {
          this.$emit('openSearchWindow');
       },
+
       prev() {
          if (this.page > 1) {
-            this.page = this.page - 1; 
+            this.page = this.page - 1;
             this.paginator();
          }
-         
-        
+      },
 
-       },
-      next() { 
+      next() {
          if (this.page < this.response.length / 5) {
             this.page = this.page + 1;
             this.paginator();
          }
       },
+
       paginator() {
-
-         // array.slice((page_number - 1) * page_size, page_number * page_size);
-
          const page_size = 5;
-         console.log(this.response.length);
-
          let myList = [];
 
-         for (let i = 0; i < this.response.length; i++){
+         for (let i = 0; i < this.response.length; i++) {
             myList.push(this.response[i].cpeTitle);
          }
-
-
-
-         
-
-
          this.result = myList.slice((this.page - 1) * page_size, this.page * page_size);
-
-         
          this.page_viewing = (0).toString() + " - " + (page_size * this.page).toString();
-      
-
-       
-
-       //  this.result = 
-
-
-
-
-
-
-         
       },
+
       async searchByID(id) {
          try {
-
             const response = await axios.get(url + `cve/${id}`);
-
-            console.log(response.data);
-
             this.response = response.data;
-         
          } catch (err) {
             console.log(err);
-        } 
+         }
       },
 
       async searchProduct() {
          try {
-
             const response = await axios.post(url + "searchProduct", {
                vendor: this.vendor,
                product: this.product,
             });
-
-            console.log(response.data);
-
             this.response = response.data;
             this.paginator();
-         
          } catch (err) {
             console.log(err);
-        } 
+         }
       },
-
    }
-
 };
 </script>
-   
-<style>
 
+<style>
 #pagination {
    margin-top: 5px;
    text-align: right;
    line-height: 32px;
 }
-
-
 
 #rcm_form {
    position: absolute;
@@ -153,7 +118,7 @@ export default {
    border-width: 1px;
 }
 
-p:hover{
+p:hover {
    background-color: #D6D6D6;
    cursor: pointer;
 }
@@ -164,6 +129,4 @@ p:hover{
    top: 80px;
    z-index: 11;
 }
-
-
 </style>

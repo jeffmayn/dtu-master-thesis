@@ -1,4 +1,3 @@
-
 // "dev" = development mode
 // "prod" = production mode
 const mode = "dev";
