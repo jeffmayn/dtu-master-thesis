@@ -2,12 +2,10 @@ import {
    searchByID,
    searchByKeywords,
    searchProductByVendorAndProductNames,
-} from "../models/cveModel.js";
+} from "../models/cve_model.js";
 
+// returns a json-object of an specific CVE based on its CVE-id
 export const searchSpecificCVE = async (req, res) => {
-
-   console.log("searchCVE");
-
    const id = req.params.id;
 
    searchByID(id, (err, results) => {
@@ -17,22 +15,16 @@ export const searchSpecificCVE = async (req, res) => {
          res.json(results);
       }
    });
-
 };
 
-
-
-
-
-
-
+/*
+   return all products matching the terms based on:
+   vendor name  (e.g. 'Microsoft),
+   product name (e.g. 'windows 10')
+*/
 export const searchCVEMentioningKeywords = async (req, res) => {
-
    const vendor = req.body.vendor;
    const product = req.body.product;
-
-
-  // const final_keywords = vendor + " " + product;
 
    searchByKeywords([vendor, product], (err, results) => {
       if (err) {
@@ -43,8 +35,12 @@ export const searchCVEMentioningKeywords = async (req, res) => {
    });
 };
 
+/*
+   return all products matching the terms based on:
+   vendor name  (e.g. 'Microsoft),
+   product name (e.g. 'windows 10')
+*/
 export const searchProducts = async (req, res) => {
-
    const vendor = req.body.vendor;
    const product = req.body.product;
 
@@ -55,21 +51,4 @@ export const searchProducts = async (req, res) => {
          res.json(results);
       }
    });
-
-
 };
-
-/*
-export const trold = async (cpeName) => {
-
-   await trold2(cpeName, (err, results) => {
-      if (err) {
-         console.log(err);
-      } else {
-         console.log(results);
-      }
-   });
-
-
-};
-*/

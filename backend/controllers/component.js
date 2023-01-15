@@ -7,7 +7,7 @@ import {
 
 
 
-// get all
+// returns all components from the database (e.g. 'router', 'keyboard', 'printer')
 export const showComponents = (req, res) => {
    getComponents((err, results) => {
       if (err) {
@@ -18,7 +18,7 @@ export const showComponents = (req, res) => {
    });
 };
 
-// get single
+// returns a single component from the database based on its id
 export const showComponentById = (req, res) => {
    getComponentById(req.params.id, (err, results) => {
       if (err) {
@@ -29,9 +29,8 @@ export const showComponentById = (req, res) => {
    });
 };
 
-// create new component
+// create new component to the database
 export const createComponent = (req, res) => {
-
    const data = req.body;
 
    insertComponent(data, (err, results) => {
@@ -43,7 +42,7 @@ export const createComponent = (req, res) => {
    });
 };
 
-// delete a component
+// delete a component from the database based on it id
 export const deleteComponent = (req, res) => {
    const id = req.params.id;
    deleteComponentById(id, (err, results) => {

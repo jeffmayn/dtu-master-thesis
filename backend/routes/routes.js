@@ -13,20 +13,16 @@ import {
 } from "../controllers/cve.js";
 import { modelJson } from "../controllers/model.js";
 
+// handles the rest endpoints from the frontend
 const router = express.Router();
-
 router.get("/");
 router.get("/components", showComponents);
 router.get("/components:id", showComponentById);
 router.post("/components", createComponent);
 router.post("/model", modelJson);
 router.delete("/delete/:id", deleteComponent);
-
 router.get("/cve/:id", searchSpecificCVE);
 router.post("/cve", searchCVEMentioningKeywords);
-
 router.post("/searchProduct", searchProducts);
-
-
 
 export default router;
