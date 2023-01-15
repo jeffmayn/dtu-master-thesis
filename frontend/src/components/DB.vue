@@ -1,6 +1,6 @@
 <template>
       <br><br><br>
-   <p>DATABASE</p>
+   DATABASE
    <div>
       <form>
      <!--  <router-link :to="{ name: 'Canvas' }" class="button is-success mt-5">Create new model</router-link>&nbsp;&nbsp;

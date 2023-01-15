@@ -1,6 +1,6 @@
 <template>
    <br><br><br>
-   <p>Add new component to database</p>
+   Add new component to database
    <form>
       <div>
          <div class="field"><label class="label">Component Name</label></div>

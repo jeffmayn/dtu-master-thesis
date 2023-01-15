@@ -58,35 +58,20 @@
                               <template v-for="rowzz in components[index].products">
                                  <tr @click="toggle3(rowzz.id)" :class="{ opened3: opened3.includes(rowzz.id) }">
                                     <td style="width: 900px;">{{ rowzz.title}}</td>
-                                    
-                                   
                                     <td style="width: 140px;">{{ rowzz.vulnerabilities.length}}</td>
-                                    <td id="severity-bg-color" style="width: 120px;">HIGH</td>
+                                    <td id="severity-bg-color" style="width: 120px;">{{ rowzz.severity}}</td>
                                  </tr>
                               </template>
                            </table>
                         </td>
                      </tr>
-
-
-
-
                   </template>
                </table>
             </td>
          </tr>
-
-
-
-
-
-
       </template>
    </table>
-
-
-
-
+   
    <!-- display menu when right clicking nodes -->
 
    <div v-if="displaySearchWindow" id="menu_search">
@@ -202,16 +187,2209 @@ export default {
     "components": [
         {
             "severity": "HIGH",
-            "vulnerabilities": 2,
+            "vulnerabilities": 11,
             "id": 1,
             "component": "Network Cards",
             "products": [
                 {
-                    "severity": "",
-                    "vulnerabilities_count": 0,
+                    "severity": "HIGH",
                     "id": 1,
-                    "name": "cpe:2.3:o:intel:sinit_authenticated_code_module:2nd_gen_i5_i7_sinit_1.9.bin:*:*:*:*:*:*:*",
-                    "title": "Intel SINIT Authenticated Code Module (ACM) 2nd_gen_i5_i7_SINIT_1.9.BIN",
+                    "name": "cpe:2.3:o:amd:ryzen_firmware:-:*:*:*:*:*:*:*",
+                    "title": "AMD Ryzen Firmware",
+                    "vulnerabilities": [
+                        {
+                            "description": [
+                                {
+                                    "lang": "en",
+                                    "value": "The AMD EPYC Server, Ryzen, Ryzen Pro, and Ryzen Mobile processor chips have insufficient enforcement of Hardware Validated Boot, aka MASTERKEY-1, MASTERKEY-2, and MASTERKEY-3."
+                                },
+                                {
+                                    "lang": "es",
+                                    "value": "Los chips de procesamiento de AMD EPYC Server, Ryzen, Ryzen Pro y Ryzen Mobile no aplican Hardware Validated Boot lo suficiente. Esto también se conoce como MASTERKEY-1, MASTERKEY-2 y MASTERKEY-3."
+                                }
+                            ],
+                            "metrics": {
+                                "cvssMetricV30": [
+                                    {
+                                        "source": "nvd@nist.gov",
+                                        "type": "Primary",
+                                        "cvssData": {
+                                            "version": "3.0",
+                                            "vectorString": "CVSS:3.0/AV:N/AC:H/PR:N/UI:N/S:C/C:H/I:H/A:H",
+                                            "attackVector": "NETWORK",
+                                            "attackComplexity": "HIGH",
+                                            "privilegesRequired": "NONE",
+                                            "userInteraction": "NONE",
+                                            "scope": "CHANGED",
+                                            "confidentialityImpact": "HIGH",
+                                            "integrityImpact": "HIGH",
+                                            "availabilityImpact": "HIGH",
+                                            "baseScore": 9,
+                                            "baseSeverity": "CRITICAL"
+                                        },
+                                        "exploitabilityScore": 2.2,
+                                        "impactScore": 6
+                                    }
+                                ],
+                                "cvssMetricV2": [
+                                    {
+                                        "source": "nvd@nist.gov",
+                                        "type": "Primary",
+                                        "cvssData": {
+                                            "version": "2.0",
+                                            "vectorString": "AV:N/AC:M/Au:N/C:C/I:C/A:C",
+                                            "accessVector": "NETWORK",
+                                            "accessComplexity": "MEDIUM",
+                                            "authentication": "NONE",
+                                            "confidentialityImpact": "COMPLETE",
+                                            "integrityImpact": "COMPLETE",
+                                            "availabilityImpact": "COMPLETE",
+                                            "baseScore": 9.3
+                                        },
+                                        "baseSeverity": "HIGH",
+                                        "exploitabilityScore": 8.6,
+                                        "impactScore": 10,
+                                        "acInsufInfo": false,
+                                        "obtainAllPrivilege": false,
+                                        "obtainUserPrivilege": false,
+                                        "obtainOtherPrivilege": false,
+                                        "userInteractionRequired": false
+                                    }
+                                ]
+                            },
+                            "weaknesses": [
+                                {
+                                    "source": "nvd@nist.gov",
+                                    "type": "Primary",
+                                    "description": [
+                                        {
+                                            "lang": "en",
+                                            "value": "NVD-CWE-noinfo"
+                                        }
+                                    ]
+                                }
+                            ],
+                            "configurations": [
+                                {
+                                    "operator": "AND",
+                                    "nodes": [
+                                        {
+                                            "operator": "OR",
+                                            "negate": false,
+                                            "cpeMatch": [
+                                                {
+                                                    "vulnerable": true,
+                                                    "criteria": "cpe:2.3:o:amd:ryzen_mobile_firmware:-:*:*:*:*:*:*:*",
+                                                    "matchCriteriaId": "D6A739E0-1252-42F3-A51E-8CD6FDAC9177"
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "operator": "OR",
+                                            "negate": false,
+                                            "cpeMatch": [
+                                                {
+                                                    "vulnerable": false,
+                                                    "criteria": "cpe:2.3:h:amd:ryzen_mobile:-:*:*:*:*:*:*:*",
+                                                    "matchCriteriaId": "CC20F6FA-CAC1-4323-A5F2-F35B8F71E7F2"
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                },
+                                {
+                                    "operator": "AND",
+                                    "nodes": [
+                                        {
+                                            "operator": "OR",
+                                            "negate": false,
+                                            "cpeMatch": [
+                                                {
+                                                    "vulnerable": true,
+                                                    "criteria": "cpe:2.3:o:amd:ryzen_pro_firmware:-:*:*:*:*:*:*:*",
+                                                    "matchCriteriaId": "08E59D0B-FB2F-4C17-B9BC-462DFB366777"
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "operator": "OR",
+                                            "negate": false,
+                                            "cpeMatch": [
+                                                {
+                                                    "vulnerable": false,
+                                                    "criteria": "cpe:2.3:h:amd:ryzen_pro:-:*:*:*:*:*:*:*",
+                                                    "matchCriteriaId": "BA9541F0-5B33-4F09-B201-E887DA572571"
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                },
+                                {
+                                    "operator": "AND",
+                                    "nodes": [
+                                        {
+                                            "operator": "OR",
+                                            "negate": false,
+                                            "cpeMatch": [
+                                                {
+                                                    "vulnerable": true,
+                                                    "criteria": "cpe:2.3:o:amd:epyc_server_firmware:-:*:*:*:*:*:*:*",
+                                                    "matchCriteriaId": "AD8E1350-3128-4ECF-A6D8-D92926BD5F33"
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "operator": "OR",
+                                            "negate": false,
+                                            "cpeMatch": [
+                                                {
+                                                    "vulnerable": false,
+                                                    "criteria": "cpe:2.3:h:amd:epyc_server:-:*:*:*:*:*:*:*",
+                                                    "matchCriteriaId": "D48FA7E1-650E-4DE6-82AB-20D7A79DE443"
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                },
+                                {
+                                    "operator": "AND",
+                                    "nodes": [
+                                        {
+                                            "operator": "OR",
+                                            "negate": false,
+                                            "cpeMatch": [
+                                                {
+                                                    "vulnerable": true,
+                                                    "criteria": "cpe:2.3:o:amd:ryzen_firmware:-:*:*:*:*:*:*:*",
+                                                    "matchCriteriaId": "CAEA5209-C0F6-4645-A541-A68CBC70695B"
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "operator": "OR",
+                                            "negate": false,
+                                            "cpeMatch": [
+                                                {
+                                                    "vulnerable": false,
+                                                    "criteria": "cpe:2.3:h:amd:ryzen:-:*:*:*:*:*:*:*",
+                                                    "matchCriteriaId": "047F0F4D-DCE1-4E3F-A888-39E894DF857D"
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                }
+                            ],
+                            "references": [
+                                {
+                                    "url": "https://amdflaws.com/",
+                                    "source": "cve@mitre.org",
+                                    "tags": [
+                                        "Third Party Advisory"
+                                    ]
+                                },
+                                {
+                                    "url": "https://blog.trailofbits.com/2018/03/15/amd-flaws-technical-summary/",
+                                    "source": "cve@mitre.org",
+                                    "tags": [
+                                        "Third Party Advisory"
+                                    ]
+                                },
+                                {
+                                    "url": "https://community.amd.com/community/amd-corporate/blog/2018/03/21/initial-amd-technical-assessment-of-cts-labs-research",
+                                    "source": "cve@mitre.org",
+                                    "tags": [
+                                        "Vendor Advisory"
+                                    ]
+                                },
+                                {
+                                    "url": "https://safefirmware.com/amdflaws_whitepaper.pdf",
+                                    "source": "cve@mitre.org",
+                                    "tags": [
+                                        "Third Party Advisory"
+                                    ]
+                                },
+                                {
+                                    "url": "https://support.hpe.com/hpsc/doc/public/display?docLocale=en_US&docId=emr_na-hpesbhf03841en_us",
+                                    "source": "cve@mitre.org"
+                                }
+                            ]
+                        },
+                        {
+                            "description": [
+                                {
+                                    "lang": "en",
+                                    "value": "The AMD Ryzen, Ryzen Pro, and Ryzen Mobile processor chips have insufficient access control for the Secure Processor, aka RYZENFALL-1."
+                                },
+                                {
+                                    "lang": "es",
+                                    "value": "Los chips de procesamiento de AMD Ryzen, Ryzen Pro y Ryzen Mobile tienen un control de acceso insuficiente para Secure Processor. Esto se conoce como RYZENFALL-1."
+                                }
+                            ],
+                            "metrics": {
+                                "cvssMetricV30": [
+                                    {
+                                        "source": "nvd@nist.gov",
+                                        "type": "Primary",
+                                        "cvssData": {
+                                            "version": "3.0",
+                                            "vectorString": "CVSS:3.0/AV:N/AC:H/PR:N/UI:N/S:C/C:H/I:H/A:H",
+                                            "attackVector": "NETWORK",
+                                            "attackComplexity": "HIGH",
+                                            "privilegesRequired": "NONE",
+                                            "userInteraction": "NONE",
+                                            "scope": "CHANGED",
+                                            "confidentialityImpact": "HIGH",
+                                            "integrityImpact": "HIGH",
+                                            "availabilityImpact": "HIGH",
+                                            "baseScore": 9,
+                                            "baseSeverity": "CRITICAL"
+                                        },
+                                        "exploitabilityScore": 2.2,
+                                        "impactScore": 6
+                                    }
+                                ],
+                                "cvssMetricV2": [
+                                    {
+                                        "source": "nvd@nist.gov",
+                                        "type": "Primary",
+                                        "cvssData": {
+                                            "version": "2.0",
+                                            "vectorString": "AV:N/AC:M/Au:N/C:C/I:C/A:C",
+                                            "accessVector": "NETWORK",
+                                            "accessComplexity": "MEDIUM",
+                                            "authentication": "NONE",
+                                            "confidentialityImpact": "COMPLETE",
+                                            "integrityImpact": "COMPLETE",
+                                            "availabilityImpact": "COMPLETE",
+                                            "baseScore": 9.3
+                                        },
+                                        "baseSeverity": "HIGH",
+                                        "exploitabilityScore": 8.6,
+                                        "impactScore": 10,
+                                        "acInsufInfo": false,
+                                        "obtainAllPrivilege": false,
+                                        "obtainUserPrivilege": false,
+                                        "obtainOtherPrivilege": false,
+                                        "userInteractionRequired": false
+                                    }
+                                ]
+                            },
+                            "weaknesses": [
+                                {
+                                    "source": "nvd@nist.gov",
+                                    "type": "Primary",
+                                    "description": [
+                                        {
+                                            "lang": "en",
+                                            "value": "CWE-732"
+                                        }
+                                    ]
+                                }
+                            ],
+                            "configurations": [
+                                {
+                                    "operator": "AND",
+                                    "nodes": [
+                                        {
+                                            "operator": "OR",
+                                            "negate": false,
+                                            "cpeMatch": [
+                                                {
+                                                    "vulnerable": true,
+                                                    "criteria": "cpe:2.3:o:amd:ryzen_mobile_firmware:-:*:*:*:*:*:*:*",
+                                                    "matchCriteriaId": "D6A739E0-1252-42F3-A51E-8CD6FDAC9177"
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "operator": "OR",
+                                            "negate": false,
+                                            "cpeMatch": [
+                                                {
+                                                    "vulnerable": false,
+                                                    "criteria": "cpe:2.3:h:amd:ryzen_mobile:-:*:*:*:*:*:*:*",
+                                                    "matchCriteriaId": "CC20F6FA-CAC1-4323-A5F2-F35B8F71E7F2"
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                },
+                                {
+                                    "operator": "AND",
+                                    "nodes": [
+                                        {
+                                            "operator": "OR",
+                                            "negate": false,
+                                            "cpeMatch": [
+                                                {
+                                                    "vulnerable": true,
+                                                    "criteria": "cpe:2.3:o:amd:ryzen_pro_firmware:-:*:*:*:*:*:*:*",
+                                                    "matchCriteriaId": "08E59D0B-FB2F-4C17-B9BC-462DFB366777"
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "operator": "OR",
+                                            "negate": false,
+                                            "cpeMatch": [
+                                                {
+                                                    "vulnerable": false,
+                                                    "criteria": "cpe:2.3:h:amd:ryzen_pro:-:*:*:*:*:*:*:*",
+                                                    "matchCriteriaId": "BA9541F0-5B33-4F09-B201-E887DA572571"
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                },
+                                {
+                                    "operator": "AND",
+                                    "nodes": [
+                                        {
+                                            "operator": "OR",
+                                            "negate": false,
+                                            "cpeMatch": [
+                                                {
+                                                    "vulnerable": true,
+                                                    "criteria": "cpe:2.3:o:amd:ryzen_firmware:-:*:*:*:*:*:*:*",
+                                                    "matchCriteriaId": "CAEA5209-C0F6-4645-A541-A68CBC70695B"
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "operator": "OR",
+                                            "negate": false,
+                                            "cpeMatch": [
+                                                {
+                                                    "vulnerable": false,
+                                                    "criteria": "cpe:2.3:h:amd:ryzen:-:*:*:*:*:*:*:*",
+                                                    "matchCriteriaId": "047F0F4D-DCE1-4E3F-A888-39E894DF857D"
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                }
+                            ],
+                            "references": [
+                                {
+                                    "url": "https://amdflaws.com/",
+                                    "source": "cve@mitre.org",
+                                    "tags": [
+                                        "Third Party Advisory"
+                                    ]
+                                },
+                                {
+                                    "url": "https://blog.trailofbits.com/2018/03/15/amd-flaws-technical-summary/",
+                                    "source": "cve@mitre.org",
+                                    "tags": [
+                                        "Third Party Advisory"
+                                    ]
+                                },
+                                {
+                                    "url": "https://community.amd.com/community/amd-corporate/blog/2018/03/21/initial-amd-technical-assessment-of-cts-labs-research",
+                                    "source": "cve@mitre.org",
+                                    "tags": [
+                                        "Vendor Advisory"
+                                    ]
+                                },
+                                {
+                                    "url": "https://safefirmware.com/amdflaws_whitepaper.pdf",
+                                    "source": "cve@mitre.org",
+                                    "tags": [
+                                        "Third Party Advisory"
+                                    ]
+                                },
+                                {
+                                    "url": "https://support.hpe.com/hpsc/doc/public/display?docLocale=en_US&docId=emr_na-hpesbhf03841en_us",
+                                    "source": "cve@mitre.org"
+                                }
+                            ]
+                        },
+                        {
+                            "description": [
+                                {
+                                    "lang": "en",
+                                    "value": "The AMD Ryzen and Ryzen Pro processor chips have insufficient access control for the Secure Processor, aka RYZENFALL-2, RYZENFALL-3, and RYZENFALL-4."
+                                },
+                                {
+                                    "lang": "es",
+                                    "value": "Los chips de procesamiento de AMD Ryzen y Ryzen Pro tienen un control de acceso insuficiente para Secure Processor. Esto se conoce como RYZENFALL-2, RYZENFALL-3 y RYZENFALL-4."
+                                }
+                            ],
+                            "metrics": {
+                                "cvssMetricV30": [
+                                    {
+                                        "source": "nvd@nist.gov",
+                                        "type": "Primary",
+                                        "cvssData": {
+                                            "version": "3.0",
+                                            "vectorString": "CVSS:3.0/AV:N/AC:H/PR:N/UI:N/S:C/C:H/I:H/A:H",
+                                            "attackVector": "NETWORK",
+                                            "attackComplexity": "HIGH",
+                                            "privilegesRequired": "NONE",
+                                            "userInteraction": "NONE",
+                                            "scope": "CHANGED",
+                                            "confidentialityImpact": "HIGH",
+                                            "integrityImpact": "HIGH",
+                                            "availabilityImpact": "HIGH",
+                                            "baseScore": 9,
+                                            "baseSeverity": "CRITICAL"
+                                        },
+                                        "exploitabilityScore": 2.2,
+                                        "impactScore": 6
+                                    }
+                                ],
+                                "cvssMetricV2": [
+                                    {
+                                        "source": "nvd@nist.gov",
+                                        "type": "Primary",
+                                        "cvssData": {
+                                            "version": "2.0",
+                                            "vectorString": "AV:N/AC:M/Au:N/C:C/I:C/A:C",
+                                            "accessVector": "NETWORK",
+                                            "accessComplexity": "MEDIUM",
+                                            "authentication": "NONE",
+                                            "confidentialityImpact": "COMPLETE",
+                                            "integrityImpact": "COMPLETE",
+                                            "availabilityImpact": "COMPLETE",
+                                            "baseScore": 9.3
+                                        },
+                                        "baseSeverity": "HIGH",
+                                        "exploitabilityScore": 8.6,
+                                        "impactScore": 10,
+                                        "acInsufInfo": false,
+                                        "obtainAllPrivilege": false,
+                                        "obtainUserPrivilege": false,
+                                        "obtainOtherPrivilege": false,
+                                        "userInteractionRequired": false
+                                    }
+                                ]
+                            },
+                            "weaknesses": [
+                                {
+                                    "source": "nvd@nist.gov",
+                                    "type": "Primary",
+                                    "description": [
+                                        {
+                                            "lang": "en",
+                                            "value": "CWE-732"
+                                        }
+                                    ]
+                                }
+                            ],
+                            "configurations": [
+                                {
+                                    "operator": "AND",
+                                    "nodes": [
+                                        {
+                                            "operator": "OR",
+                                            "negate": false,
+                                            "cpeMatch": [
+                                                {
+                                                    "vulnerable": true,
+                                                    "criteria": "cpe:2.3:o:amd:ryzen_pro_firmware:-:*:*:*:*:*:*:*",
+                                                    "matchCriteriaId": "08E59D0B-FB2F-4C17-B9BC-462DFB366777"
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "operator": "OR",
+                                            "negate": false,
+                                            "cpeMatch": [
+                                                {
+                                                    "vulnerable": false,
+                                                    "criteria": "cpe:2.3:h:amd:ryzen_pro:-:*:*:*:*:*:*:*",
+                                                    "matchCriteriaId": "BA9541F0-5B33-4F09-B201-E887DA572571"
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                },
+                                {
+                                    "operator": "AND",
+                                    "nodes": [
+                                        {
+                                            "operator": "OR",
+                                            "negate": false,
+                                            "cpeMatch": [
+                                                {
+                                                    "vulnerable": true,
+                                                    "criteria": "cpe:2.3:o:amd:ryzen_firmware:-:*:*:*:*:*:*:*",
+                                                    "matchCriteriaId": "CAEA5209-C0F6-4645-A541-A68CBC70695B"
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "operator": "OR",
+                                            "negate": false,
+                                            "cpeMatch": [
+                                                {
+                                                    "vulnerable": false,
+                                                    "criteria": "cpe:2.3:h:amd:ryzen:-:*:*:*:*:*:*:*",
+                                                    "matchCriteriaId": "047F0F4D-DCE1-4E3F-A888-39E894DF857D"
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                }
+                            ],
+                            "references": [
+                                {
+                                    "url": "https://amdflaws.com/",
+                                    "source": "cve@mitre.org",
+                                    "tags": [
+                                        "Third Party Advisory"
+                                    ]
+                                },
+                                {
+                                    "url": "https://blog.trailofbits.com/2018/03/15/amd-flaws-technical-summary/",
+                                    "source": "cve@mitre.org",
+                                    "tags": [
+                                        "Third Party Advisory"
+                                    ]
+                                },
+                                {
+                                    "url": "https://community.amd.com/community/amd-corporate/blog/2018/03/21/initial-amd-technical-assessment-of-cts-labs-research",
+                                    "source": "cve@mitre.org",
+                                    "tags": [
+                                        "Vendor Advisory"
+                                    ]
+                                },
+                                {
+                                    "url": "https://safefirmware.com/amdflaws_whitepaper.pdf",
+                                    "source": "cve@mitre.org",
+                                    "tags": [
+                                        "Third Party Advisory"
+                                    ]
+                                },
+                                {
+                                    "url": "https://support.hpe.com/hpsc/doc/public/display?docLocale=en_US&docId=emr_na-hpesbhf03841en_us",
+                                    "source": "cve@mitre.org"
+                                }
+                            ]
+                        },
+                        {
+                            "description": [
+                                {
+                                    "lang": "en",
+                                    "value": "The Promontory chipset, as used in AMD Ryzen and Ryzen Pro platforms, has a backdoor in firmware, aka CHIMERA-FW."
+                                },
+                                {
+                                    "lang": "es",
+                                    "value": "El chipset Promontory, tal y como se utiliza en plataformas AMD Ryzen y Ryzen Pro, tiene una puerta trasera en el firmware. Esto también se conoce como CHIMERA-FW."
+                                }
+                            ],
+                            "metrics": {
+                                "cvssMetricV30": [
+                                    {
+                                        "source": "nvd@nist.gov",
+                                        "type": "Primary",
+                                        "cvssData": {
+                                            "version": "3.0",
+                                            "vectorString": "CVSS:3.0/AV:N/AC:H/PR:N/UI:N/S:C/C:H/I:H/A:H",
+                                            "attackVector": "NETWORK",
+                                            "attackComplexity": "HIGH",
+                                            "privilegesRequired": "NONE",
+                                            "userInteraction": "NONE",
+                                            "scope": "CHANGED",
+                                            "confidentialityImpact": "HIGH",
+                                            "integrityImpact": "HIGH",
+                                            "availabilityImpact": "HIGH",
+                                            "baseScore": 9,
+                                            "baseSeverity": "CRITICAL"
+                                        },
+                                        "exploitabilityScore": 2.2,
+                                        "impactScore": 6
+                                    }
+                                ],
+                                "cvssMetricV2": [
+                                    {
+                                        "source": "nvd@nist.gov",
+                                        "type": "Primary",
+                                        "cvssData": {
+                                            "version": "2.0",
+                                            "vectorString": "AV:N/AC:M/Au:N/C:C/I:C/A:C",
+                                            "accessVector": "NETWORK",
+                                            "accessComplexity": "MEDIUM",
+                                            "authentication": "NONE",
+                                            "confidentialityImpact": "COMPLETE",
+                                            "integrityImpact": "COMPLETE",
+                                            "availabilityImpact": "COMPLETE",
+                                            "baseScore": 9.3
+                                        },
+                                        "baseSeverity": "HIGH",
+                                        "exploitabilityScore": 8.6,
+                                        "impactScore": 10,
+                                        "acInsufInfo": false,
+                                        "obtainAllPrivilege": false,
+                                        "obtainUserPrivilege": false,
+                                        "obtainOtherPrivilege": false,
+                                        "userInteractionRequired": false
+                                    }
+                                ]
+                            },
+                            "weaknesses": [
+                                {
+                                    "source": "nvd@nist.gov",
+                                    "type": "Primary",
+                                    "description": [
+                                        {
+                                            "lang": "en",
+                                            "value": "NVD-CWE-noinfo"
+                                        }
+                                    ]
+                                }
+                            ],
+                            "configurations": [
+                                {
+                                    "operator": "AND",
+                                    "nodes": [
+                                        {
+                                            "operator": "OR",
+                                            "negate": false,
+                                            "cpeMatch": [
+                                                {
+                                                    "vulnerable": true,
+                                                    "criteria": "cpe:2.3:o:amd:ryzen_pro_firmware:-:*:*:*:*:*:*:*",
+                                                    "matchCriteriaId": "08E59D0B-FB2F-4C17-B9BC-462DFB366777"
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "operator": "OR",
+                                            "negate": false,
+                                            "cpeMatch": [
+                                                {
+                                                    "vulnerable": false,
+                                                    "criteria": "cpe:2.3:h:amd:ryzen_pro:-:*:*:*:*:*:*:*",
+                                                    "matchCriteriaId": "BA9541F0-5B33-4F09-B201-E887DA572571"
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                },
+                                {
+                                    "operator": "AND",
+                                    "nodes": [
+                                        {
+                                            "operator": "OR",
+                                            "negate": false,
+                                            "cpeMatch": [
+                                                {
+                                                    "vulnerable": true,
+                                                    "criteria": "cpe:2.3:o:amd:ryzen_firmware:-:*:*:*:*:*:*:*",
+                                                    "matchCriteriaId": "CAEA5209-C0F6-4645-A541-A68CBC70695B"
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "operator": "OR",
+                                            "negate": false,
+                                            "cpeMatch": [
+                                                {
+                                                    "vulnerable": false,
+                                                    "criteria": "cpe:2.3:h:amd:ryzen:-:*:*:*:*:*:*:*",
+                                                    "matchCriteriaId": "047F0F4D-DCE1-4E3F-A888-39E894DF857D"
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                }
+                            ],
+                            "references": [
+                                {
+                                    "url": "https://amdflaws.com/",
+                                    "source": "cve@mitre.org",
+                                    "tags": [
+                                        "Third Party Advisory"
+                                    ]
+                                },
+                                {
+                                    "url": "https://blog.trailofbits.com/2018/03/15/amd-flaws-technical-summary/",
+                                    "source": "cve@mitre.org",
+                                    "tags": [
+                                        "Third Party Advisory"
+                                    ]
+                                },
+                                {
+                                    "url": "https://community.amd.com/community/amd-corporate/blog/2018/03/21/initial-amd-technical-assessment-of-cts-labs-research",
+                                    "source": "cve@mitre.org",
+                                    "tags": [
+                                        "Vendor Advisory"
+                                    ]
+                                },
+                                {
+                                    "url": "https://safefirmware.com/amdflaws_whitepaper.pdf",
+                                    "source": "cve@mitre.org",
+                                    "tags": [
+                                        "Third Party Advisory"
+                                    ]
+                                },
+                                {
+                                    "url": "https://support.hpe.com/hpsc/doc/public/display?docLocale=en_US&docId=emr_na-hpesbhf03841en_us",
+                                    "source": "cve@mitre.org"
+                                }
+                            ]
+                        },
+                        {
+                            "description": [
+                                {
+                                    "lang": "en",
+                                    "value": "The Promontory chipset, as used in AMD Ryzen and Ryzen Pro platforms, has a backdoor in the ASIC, aka CHIMERA-HW."
+                                },
+                                {
+                                    "lang": "es",
+                                    "value": "El chipset Promontory, tal y como se utiliza en plataformas AMD Ryzen y Ryzen Pro, tiene una puerta trasera en el ASIC. Esto también se conoce como CHIMERA-FW."
+                                }
+                            ],
+                            "metrics": {
+                                "cvssMetricV30": [
+                                    {
+                                        "source": "nvd@nist.gov",
+                                        "type": "Primary",
+                                        "cvssData": {
+                                            "version": "3.0",
+                                            "vectorString": "CVSS:3.0/AV:N/AC:H/PR:N/UI:N/S:C/C:H/I:H/A:H",
+                                            "attackVector": "NETWORK",
+                                            "attackComplexity": "HIGH",
+                                            "privilegesRequired": "NONE",
+                                            "userInteraction": "NONE",
+                                            "scope": "CHANGED",
+                                            "confidentialityImpact": "HIGH",
+                                            "integrityImpact": "HIGH",
+                                            "availabilityImpact": "HIGH",
+                                            "baseScore": 9,
+                                            "baseSeverity": "CRITICAL"
+                                        },
+                                        "exploitabilityScore": 2.2,
+                                        "impactScore": 6
+                                    }
+                                ],
+                                "cvssMetricV2": [
+                                    {
+                                        "source": "nvd@nist.gov",
+                                        "type": "Primary",
+                                        "cvssData": {
+                                            "version": "2.0",
+                                            "vectorString": "AV:N/AC:M/Au:N/C:C/I:C/A:C",
+                                            "accessVector": "NETWORK",
+                                            "accessComplexity": "MEDIUM",
+                                            "authentication": "NONE",
+                                            "confidentialityImpact": "COMPLETE",
+                                            "integrityImpact": "COMPLETE",
+                                            "availabilityImpact": "COMPLETE",
+                                            "baseScore": 9.3
+                                        },
+                                        "baseSeverity": "HIGH",
+                                        "exploitabilityScore": 8.6,
+                                        "impactScore": 10,
+                                        "acInsufInfo": false,
+                                        "obtainAllPrivilege": false,
+                                        "obtainUserPrivilege": false,
+                                        "obtainOtherPrivilege": false,
+                                        "userInteractionRequired": false
+                                    }
+                                ]
+                            },
+                            "weaknesses": [
+                                {
+                                    "source": "nvd@nist.gov",
+                                    "type": "Primary",
+                                    "description": [
+                                        {
+                                            "lang": "en",
+                                            "value": "NVD-CWE-noinfo"
+                                        }
+                                    ]
+                                }
+                            ],
+                            "configurations": [
+                                {
+                                    "operator": "AND",
+                                    "nodes": [
+                                        {
+                                            "operator": "OR",
+                                            "negate": false,
+                                            "cpeMatch": [
+                                                {
+                                                    "vulnerable": true,
+                                                    "criteria": "cpe:2.3:o:amd:ryzen_pro_firmware:-:*:*:*:*:*:*:*",
+                                                    "matchCriteriaId": "08E59D0B-FB2F-4C17-B9BC-462DFB366777"
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "operator": "OR",
+                                            "negate": false,
+                                            "cpeMatch": [
+                                                {
+                                                    "vulnerable": false,
+                                                    "criteria": "cpe:2.3:h:amd:ryzen_pro:-:*:*:*:*:*:*:*",
+                                                    "matchCriteriaId": "BA9541F0-5B33-4F09-B201-E887DA572571"
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                },
+                                {
+                                    "operator": "AND",
+                                    "nodes": [
+                                        {
+                                            "operator": "OR",
+                                            "negate": false,
+                                            "cpeMatch": [
+                                                {
+                                                    "vulnerable": true,
+                                                    "criteria": "cpe:2.3:o:amd:ryzen_firmware:-:*:*:*:*:*:*:*",
+                                                    "matchCriteriaId": "CAEA5209-C0F6-4645-A541-A68CBC70695B"
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "operator": "OR",
+                                            "negate": false,
+                                            "cpeMatch": [
+                                                {
+                                                    "vulnerable": false,
+                                                    "criteria": "cpe:2.3:h:amd:ryzen:-:*:*:*:*:*:*:*",
+                                                    "matchCriteriaId": "047F0F4D-DCE1-4E3F-A888-39E894DF857D"
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                }
+                            ],
+                            "references": [
+                                {
+                                    "url": "https://amdflaws.com/",
+                                    "source": "cve@mitre.org",
+                                    "tags": [
+                                        "Third Party Advisory"
+                                    ]
+                                },
+                                {
+                                    "url": "https://blog.trailofbits.com/2018/03/15/amd-flaws-technical-summary/",
+                                    "source": "cve@mitre.org",
+                                    "tags": [
+                                        "Third Party Advisory"
+                                    ]
+                                },
+                                {
+                                    "url": "https://community.amd.com/community/amd-corporate/blog/2018/03/21/initial-amd-technical-assessment-of-cts-labs-research",
+                                    "source": "cve@mitre.org",
+                                    "tags": [
+                                        "Vendor Advisory"
+                                    ]
+                                },
+                                {
+                                    "url": "https://safefirmware.com/amdflaws_whitepaper.pdf",
+                                    "source": "cve@mitre.org",
+                                    "tags": [
+                                        "Third Party Advisory"
+                                    ]
+                                },
+                                {
+                                    "url": "https://support.hpe.com/hpsc/doc/public/display?docLocale=en_US&docId=emr_na-hpesbhf03841en_us",
+                                    "source": "cve@mitre.org"
+                                }
+                            ]
+                        },
+                        {
+                            "description": [
+                                {
+                                    "lang": "en",
+                                    "value": "The AMD EPYC Server, Ryzen, Ryzen Pro, and Ryzen Mobile processor chips allow Platform Security Processor (PSP) privilege escalation."
+                                },
+                                {
+                                    "lang": "es",
+                                    "value": "Los chips de procesamiento de AMD EPYC Server, Ryzen, Ryzen Pro y Ryzen Mobile permiten el escalado de privilegios de Platform Security Processor (PSP)."
+                                }
+                            ],
+                            "metrics": {
+                                "cvssMetricV30": [
+                                    {
+                                        "source": "nvd@nist.gov",
+                                        "type": "Primary",
+                                        "cvssData": {
+                                            "version": "3.0",
+                                            "vectorString": "CVSS:3.0/AV:N/AC:H/PR:N/UI:N/S:C/C:H/I:H/A:H",
+                                            "attackVector": "NETWORK",
+                                            "attackComplexity": "HIGH",
+                                            "privilegesRequired": "NONE",
+                                            "userInteraction": "NONE",
+                                            "scope": "CHANGED",
+                                            "confidentialityImpact": "HIGH",
+                                            "integrityImpact": "HIGH",
+                                            "availabilityImpact": "HIGH",
+                                            "baseScore": 9,
+                                            "baseSeverity": "CRITICAL"
+                                        },
+                                        "exploitabilityScore": 2.2,
+                                        "impactScore": 6
+                                    }
+                                ],
+                                "cvssMetricV2": [
+                                    {
+                                        "source": "nvd@nist.gov",
+                                        "type": "Primary",
+                                        "cvssData": {
+                                            "version": "2.0",
+                                            "vectorString": "AV:N/AC:M/Au:N/C:C/I:C/A:C",
+                                            "accessVector": "NETWORK",
+                                            "accessComplexity": "MEDIUM",
+                                            "authentication": "NONE",
+                                            "confidentialityImpact": "COMPLETE",
+                                            "integrityImpact": "COMPLETE",
+                                            "availabilityImpact": "COMPLETE",
+                                            "baseScore": 9.3
+                                        },
+                                        "baseSeverity": "HIGH",
+                                        "exploitabilityScore": 8.6,
+                                        "impactScore": 10,
+                                        "acInsufInfo": false,
+                                        "obtainAllPrivilege": false,
+                                        "obtainUserPrivilege": false,
+                                        "obtainOtherPrivilege": false,
+                                        "userInteractionRequired": false
+                                    }
+                                ]
+                            },
+                            "weaknesses": [
+                                {
+                                    "source": "nvd@nist.gov",
+                                    "type": "Primary",
+                                    "description": [
+                                        {
+                                            "lang": "en",
+                                            "value": "NVD-CWE-noinfo"
+                                        }
+                                    ]
+                                }
+                            ],
+                            "configurations": [
+                                {
+                                    "operator": "AND",
+                                    "nodes": [
+                                        {
+                                            "operator": "OR",
+                                            "negate": false,
+                                            "cpeMatch": [
+                                                {
+                                                    "vulnerable": true,
+                                                    "criteria": "cpe:2.3:o:amd:ryzen_mobile_firmware:-:*:*:*:*:*:*:*",
+                                                    "matchCriteriaId": "D6A739E0-1252-42F3-A51E-8CD6FDAC9177"
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "operator": "OR",
+                                            "negate": false,
+                                            "cpeMatch": [
+                                                {
+                                                    "vulnerable": false,
+                                                    "criteria": "cpe:2.3:h:amd:ryzen_mobile:-:*:*:*:*:*:*:*",
+                                                    "matchCriteriaId": "CC20F6FA-CAC1-4323-A5F2-F35B8F71E7F2"
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                },
+                                {
+                                    "operator": "AND",
+                                    "nodes": [
+                                        {
+                                            "operator": "OR",
+                                            "negate": false,
+                                            "cpeMatch": [
+                                                {
+                                                    "vulnerable": true,
+                                                    "criteria": "cpe:2.3:o:amd:ryzen_pro_firmware:-:*:*:*:*:*:*:*",
+                                                    "matchCriteriaId": "08E59D0B-FB2F-4C17-B9BC-462DFB366777"
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "operator": "OR",
+                                            "negate": false,
+                                            "cpeMatch": [
+                                                {
+                                                    "vulnerable": false,
+                                                    "criteria": "cpe:2.3:h:amd:ryzen_pro:-:*:*:*:*:*:*:*",
+                                                    "matchCriteriaId": "BA9541F0-5B33-4F09-B201-E887DA572571"
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                },
+                                {
+                                    "operator": "AND",
+                                    "nodes": [
+                                        {
+                                            "operator": "OR",
+                                            "negate": false,
+                                            "cpeMatch": [
+                                                {
+                                                    "vulnerable": true,
+                                                    "criteria": "cpe:2.3:o:amd:epyc_server_firmware:-:*:*:*:*:*:*:*",
+                                                    "matchCriteriaId": "AD8E1350-3128-4ECF-A6D8-D92926BD5F33"
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "operator": "OR",
+                                            "negate": false,
+                                            "cpeMatch": [
+                                                {
+                                                    "vulnerable": false,
+                                                    "criteria": "cpe:2.3:h:amd:epyc_server:-:*:*:*:*:*:*:*",
+                                                    "matchCriteriaId": "D48FA7E1-650E-4DE6-82AB-20D7A79DE443"
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                },
+                                {
+                                    "operator": "AND",
+                                    "nodes": [
+                                        {
+                                            "operator": "OR",
+                                            "negate": false,
+                                            "cpeMatch": [
+                                                {
+                                                    "vulnerable": true,
+                                                    "criteria": "cpe:2.3:o:amd:ryzen_firmware:-:*:*:*:*:*:*:*",
+                                                    "matchCriteriaId": "CAEA5209-C0F6-4645-A541-A68CBC70695B"
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "operator": "OR",
+                                            "negate": false,
+                                            "cpeMatch": [
+                                                {
+                                                    "vulnerable": false,
+                                                    "criteria": "cpe:2.3:h:amd:ryzen:-:*:*:*:*:*:*:*",
+                                                    "matchCriteriaId": "047F0F4D-DCE1-4E3F-A888-39E894DF857D"
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                }
+                            ],
+                            "references": [
+                                {
+                                    "url": "https://amdflaws.com/",
+                                    "source": "cve@mitre.org",
+                                    "tags": [
+                                        "Third Party Advisory"
+                                    ]
+                                },
+                                {
+                                    "url": "https://blog.trailofbits.com/2018/03/15/amd-flaws-technical-summary/",
+                                    "source": "cve@mitre.org",
+                                    "tags": [
+                                        "Third Party Advisory"
+                                    ]
+                                },
+                                {
+                                    "url": "https://community.amd.com/community/amd-corporate/blog/2018/03/21/initial-amd-technical-assessment-of-cts-labs-research",
+                                    "source": "cve@mitre.org",
+                                    "tags": [
+                                        "Vendor Advisory"
+                                    ]
+                                },
+                                {
+                                    "url": "https://safefirmware.com/amdflaws_whitepaper.pdf",
+                                    "source": "cve@mitre.org",
+                                    "tags": [
+                                        "Third Party Advisory"
+                                    ]
+                                },
+                                {
+                                    "url": "https://support.hpe.com/hpsc/doc/public/display?docLocale=en_US&docId=emr_na-hpesbhf03841en_us",
+                                    "source": "cve@mitre.org"
+                                }
+                            ]
+                        },
+                        {
+                            "description": [
+                                {
+                                    "lang": "en",
+                                    "value": "A timing and power-based side channel attack leveraging the x86 PREFETCH instructions on some AMD CPUs could potentially result in leaked kernel address space information."
+                                },
+                                {
+                                    "lang": "es",
+                                    "value": "Un ataque de canal lateral basado en el tiempo y la energía aprovechando las instrucciones x86 PREFETCH en algunas CPUs de AMD podría potencialmente resultar en una filtración de información del espacio de direcciones del kernel"
+                                }
+                            ],
+                            "metrics": {
+                                "cvssMetricV31": [
+                                    {
+                                        "source": "nvd@nist.gov",
+                                        "type": "Primary",
+                                        "cvssData": {
+                                            "version": "3.1",
+                                            "vectorString": "CVSS:3.1/AV:L/AC:H/PR:L/UI:N/S:U/C:H/I:N/A:N",
+                                            "attackVector": "LOCAL",
+                                            "attackComplexity": "HIGH",
+                                            "privilegesRequired": "LOW",
+                                            "userInteraction": "NONE",
+                                            "scope": "UNCHANGED",
+                                            "confidentialityImpact": "HIGH",
+                                            "integrityImpact": "NONE",
+                                            "availabilityImpact": "NONE",
+                                            "baseScore": 4.7,
+                                            "baseSeverity": "MEDIUM"
+                                        },
+                                        "exploitabilityScore": 1,
+                                        "impactScore": 3.6
+                                    }
+                                ],
+                                "cvssMetricV2": [
+                                    {
+                                        "source": "nvd@nist.gov",
+                                        "type": "Primary",
+                                        "cvssData": {
+                                            "version": "2.0",
+                                            "vectorString": "AV:L/AC:M/Au:N/C:P/I:N/A:N",
+                                            "accessVector": "LOCAL",
+                                            "accessComplexity": "MEDIUM",
+                                            "authentication": "NONE",
+                                            "confidentialityImpact": "PARTIAL",
+                                            "integrityImpact": "NONE",
+                                            "availabilityImpact": "NONE",
+                                            "baseScore": 1.9
+                                        },
+                                        "baseSeverity": "LOW",
+                                        "exploitabilityScore": 3.4,
+                                        "impactScore": 2.9,
+                                        "acInsufInfo": false,
+                                        "obtainAllPrivilege": false,
+                                        "obtainUserPrivilege": false,
+                                        "obtainOtherPrivilege": false,
+                                        "userInteractionRequired": false
+                                    }
+                                ]
+                            },
+                            "weaknesses": [
+                                {
+                                    "source": "nvd@nist.gov",
+                                    "type": "Primary",
+                                    "description": [
+                                        {
+                                            "lang": "en",
+                                            "value": "CWE-203"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "source": "psirt@amd.com",
+                                    "type": "Secondary",
+                                    "description": [
+                                        {
+                                            "lang": "en",
+                                            "value": "CWE-208"
+                                        }
+                                    ]
+                                }
+                            ],
+                            "configurations": [
+                                {
+                                    "operator": "AND",
+                                    "nodes": [
+                                        {
+                                            "operator": "OR",
+                                            "negate": false,
+                                            "cpeMatch": [
+                                                {
+                                                    "vulnerable": true,
+                                                    "criteria": "cpe:2.3:o:amd:athlon_firmware:-:*:*:*:*:*:*:*",
+                                                    "matchCriteriaId": "ED9F64FB-2B5D-4B9B-9ABD-23324005CB38"
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "operator": "OR",
+                                            "negate": false,
+                                            "cpeMatch": [
+                                                {
+                                                    "vulnerable": false,
+                                                    "criteria": "cpe:2.3:h:amd:athlon:-:*:*:*:*:*:*:*",
+                                                    "matchCriteriaId": "2C0A97A7-4790-4234-9617-B88A96C2C2F7"
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                },
+                                {
+                                    "operator": "AND",
+                                    "nodes": [
+                                        {
+                                            "operator": "OR",
+                                            "negate": false,
+                                            "cpeMatch": [
+                                                {
+                                                    "vulnerable": true,
+                                                    "criteria": "cpe:2.3:o:amd:athlon_pro_firmware:-:*:*:*:*:*:*:*",
+                                                    "matchCriteriaId": "4CDE494B-7C70-4359-856B-793AF93FECE1"
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "operator": "OR",
+                                            "negate": false,
+                                            "cpeMatch": [
+                                                {
+                                                    "vulnerable": false,
+                                                    "criteria": "cpe:2.3:h:amd:athlon_pro:-:*:*:*:*:*:*:*",
+                                                    "matchCriteriaId": "464AD06F-B6C1-4F2C-B649-DFA1AE387DD8"
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                },
+                                {
+                                    "operator": "AND",
+                                    "nodes": [
+                                        {
+                                            "operator": "OR",
+                                            "negate": false,
+                                            "cpeMatch": [
+                                                {
+                                                    "vulnerable": true,
+                                                    "criteria": "cpe:2.3:o:amd:epyc_firmware:-:*:*:*:*:*:*:*",
+                                                    "matchCriteriaId": "33B3CD35-6644-42BD-84C8-D7584178C50E"
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "operator": "OR",
+                                            "negate": false,
+                                            "cpeMatch": [
+                                                {
+                                                    "vulnerable": false,
+                                                    "criteria": "cpe:2.3:h:amd:epyc:-:*:*:*:*:*:*:*",
+                                                    "matchCriteriaId": "CF7F2DBC-56AD-4D96-AFB3-5F97FACABDC1"
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                },
+                                {
+                                    "operator": "AND",
+                                    "nodes": [
+                                        {
+                                            "operator": "OR",
+                                            "negate": false,
+                                            "cpeMatch": [
+                                                {
+                                                    "vulnerable": true,
+                                                    "criteria": "cpe:2.3:o:amd:ryzen_firmware:-:*:*:*:*:*:*:*",
+                                                    "matchCriteriaId": "CAEA5209-C0F6-4645-A541-A68CBC70695B"
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "operator": "OR",
+                                            "negate": false,
+                                            "cpeMatch": [
+                                                {
+                                                    "vulnerable": false,
+                                                    "criteria": "cpe:2.3:h:amd:ryzen:-:*:*:*:*:*:*:*",
+                                                    "matchCriteriaId": "047F0F4D-DCE1-4E3F-A888-39E894DF857D"
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                },
+                                {
+                                    "operator": "AND",
+                                    "nodes": [
+                                        {
+                                            "operator": "OR",
+                                            "negate": false,
+                                            "cpeMatch": [
+                                                {
+                                                    "vulnerable": true,
+                                                    "criteria": "cpe:2.3:o:amd:ryzen_pro_firmware:-:*:*:*:*:*:*:*",
+                                                    "matchCriteriaId": "08E59D0B-FB2F-4C17-B9BC-462DFB366777"
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "operator": "OR",
+                                            "negate": false,
+                                            "cpeMatch": [
+                                                {
+                                                    "vulnerable": false,
+                                                    "criteria": "cpe:2.3:h:amd:ryzen_pro:-:*:*:*:*:*:*:*",
+                                                    "matchCriteriaId": "BA9541F0-5B33-4F09-B201-E887DA572571"
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                }
+                            ],
+                            "references": [
+                                {
+                                    "url": "https://amdflaws.com/",
+                                    "source": "cve@mitre.org",
+                                    "tags": [
+                                        "Third Party Advisory"
+                                    ]
+                                },
+                                {
+                                    "url": "https://blog.trailofbits.com/2018/03/15/amd-flaws-technical-summary/",
+                                    "source": "cve@mitre.org",
+                                    "tags": [
+                                        "Third Party Advisory"
+                                    ]
+                                },
+                                {
+                                    "url": "https://community.amd.com/community/amd-corporate/blog/2018/03/21/initial-amd-technical-assessment-of-cts-labs-research",
+                                    "source": "cve@mitre.org",
+                                    "tags": [
+                                        "Vendor Advisory"
+                                    ]
+                                },
+                                {
+                                    "url": "https://safefirmware.com/amdflaws_whitepaper.pdf",
+                                    "source": "cve@mitre.org",
+                                    "tags": [
+                                        "Third Party Advisory"
+                                    ]
+                                },
+                                {
+                                    "url": "https://support.hpe.com/hpsc/doc/public/display?docLocale=en_US&docId=emr_na-hpesbhf03841en_us",
+                                    "source": "cve@mitre.org"
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "severity": "HIGH",
+                    "id": 2,
+                    "name": "cpe:2.3:o:amd:ryzen_mobile_firmware:-:*:*:*:*:*:*:*",
+                    "title": "AMD Ryzen Mobile Firmware",
+                    "vulnerabilities": [
+                        {
+                            "description": [
+                                {
+                                    "lang": "en",
+                                    "value": "The AMD EPYC Server, Ryzen, Ryzen Pro, and Ryzen Mobile processor chips have insufficient enforcement of Hardware Validated Boot, aka MASTERKEY-1, MASTERKEY-2, and MASTERKEY-3."
+                                },
+                                {
+                                    "lang": "es",
+                                    "value": "Los chips de procesamiento de AMD EPYC Server, Ryzen, Ryzen Pro y Ryzen Mobile no aplican Hardware Validated Boot lo suficiente. Esto también se conoce como MASTERKEY-1, MASTERKEY-2 y MASTERKEY-3."
+                                }
+                            ],
+                            "metrics": {
+                                "cvssMetricV30": [
+                                    {
+                                        "source": "nvd@nist.gov",
+                                        "type": "Primary",
+                                        "cvssData": {
+                                            "version": "3.0",
+                                            "vectorString": "CVSS:3.0/AV:N/AC:H/PR:N/UI:N/S:C/C:H/I:H/A:H",
+                                            "attackVector": "NETWORK",
+                                            "attackComplexity": "HIGH",
+                                            "privilegesRequired": "NONE",
+                                            "userInteraction": "NONE",
+                                            "scope": "CHANGED",
+                                            "confidentialityImpact": "HIGH",
+                                            "integrityImpact": "HIGH",
+                                            "availabilityImpact": "HIGH",
+                                            "baseScore": 9,
+                                            "baseSeverity": "CRITICAL"
+                                        },
+                                        "exploitabilityScore": 2.2,
+                                        "impactScore": 6
+                                    }
+                                ],
+                                "cvssMetricV2": [
+                                    {
+                                        "source": "nvd@nist.gov",
+                                        "type": "Primary",
+                                        "cvssData": {
+                                            "version": "2.0",
+                                            "vectorString": "AV:N/AC:M/Au:N/C:C/I:C/A:C",
+                                            "accessVector": "NETWORK",
+                                            "accessComplexity": "MEDIUM",
+                                            "authentication": "NONE",
+                                            "confidentialityImpact": "COMPLETE",
+                                            "integrityImpact": "COMPLETE",
+                                            "availabilityImpact": "COMPLETE",
+                                            "baseScore": 9.3
+                                        },
+                                        "baseSeverity": "HIGH",
+                                        "exploitabilityScore": 8.6,
+                                        "impactScore": 10,
+                                        "acInsufInfo": false,
+                                        "obtainAllPrivilege": false,
+                                        "obtainUserPrivilege": false,
+                                        "obtainOtherPrivilege": false,
+                                        "userInteractionRequired": false
+                                    }
+                                ]
+                            },
+                            "weaknesses": [
+                                {
+                                    "source": "nvd@nist.gov",
+                                    "type": "Primary",
+                                    "description": [
+                                        {
+                                            "lang": "en",
+                                            "value": "NVD-CWE-noinfo"
+                                        }
+                                    ]
+                                }
+                            ],
+                            "configurations": [
+                                {
+                                    "operator": "AND",
+                                    "nodes": [
+                                        {
+                                            "operator": "OR",
+                                            "negate": false,
+                                            "cpeMatch": [
+                                                {
+                                                    "vulnerable": true,
+                                                    "criteria": "cpe:2.3:o:amd:ryzen_mobile_firmware:-:*:*:*:*:*:*:*",
+                                                    "matchCriteriaId": "D6A739E0-1252-42F3-A51E-8CD6FDAC9177"
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "operator": "OR",
+                                            "negate": false,
+                                            "cpeMatch": [
+                                                {
+                                                    "vulnerable": false,
+                                                    "criteria": "cpe:2.3:h:amd:ryzen_mobile:-:*:*:*:*:*:*:*",
+                                                    "matchCriteriaId": "CC20F6FA-CAC1-4323-A5F2-F35B8F71E7F2"
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                },
+                                {
+                                    "operator": "AND",
+                                    "nodes": [
+                                        {
+                                            "operator": "OR",
+                                            "negate": false,
+                                            "cpeMatch": [
+                                                {
+                                                    "vulnerable": true,
+                                                    "criteria": "cpe:2.3:o:amd:ryzen_pro_firmware:-:*:*:*:*:*:*:*",
+                                                    "matchCriteriaId": "08E59D0B-FB2F-4C17-B9BC-462DFB366777"
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "operator": "OR",
+                                            "negate": false,
+                                            "cpeMatch": [
+                                                {
+                                                    "vulnerable": false,
+                                                    "criteria": "cpe:2.3:h:amd:ryzen_pro:-:*:*:*:*:*:*:*",
+                                                    "matchCriteriaId": "BA9541F0-5B33-4F09-B201-E887DA572571"
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                },
+                                {
+                                    "operator": "AND",
+                                    "nodes": [
+                                        {
+                                            "operator": "OR",
+                                            "negate": false,
+                                            "cpeMatch": [
+                                                {
+                                                    "vulnerable": true,
+                                                    "criteria": "cpe:2.3:o:amd:epyc_server_firmware:-:*:*:*:*:*:*:*",
+                                                    "matchCriteriaId": "AD8E1350-3128-4ECF-A6D8-D92926BD5F33"
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "operator": "OR",
+                                            "negate": false,
+                                            "cpeMatch": [
+                                                {
+                                                    "vulnerable": false,
+                                                    "criteria": "cpe:2.3:h:amd:epyc_server:-:*:*:*:*:*:*:*",
+                                                    "matchCriteriaId": "D48FA7E1-650E-4DE6-82AB-20D7A79DE443"
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                },
+                                {
+                                    "operator": "AND",
+                                    "nodes": [
+                                        {
+                                            "operator": "OR",
+                                            "negate": false,
+                                            "cpeMatch": [
+                                                {
+                                                    "vulnerable": true,
+                                                    "criteria": "cpe:2.3:o:amd:ryzen_firmware:-:*:*:*:*:*:*:*",
+                                                    "matchCriteriaId": "CAEA5209-C0F6-4645-A541-A68CBC70695B"
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "operator": "OR",
+                                            "negate": false,
+                                            "cpeMatch": [
+                                                {
+                                                    "vulnerable": false,
+                                                    "criteria": "cpe:2.3:h:amd:ryzen:-:*:*:*:*:*:*:*",
+                                                    "matchCriteriaId": "047F0F4D-DCE1-4E3F-A888-39E894DF857D"
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                }
+                            ],
+                            "references": [
+                                {
+                                    "url": "https://amdflaws.com/",
+                                    "source": "cve@mitre.org",
+                                    "tags": [
+                                        "Third Party Advisory"
+                                    ]
+                                },
+                                {
+                                    "url": "https://blog.trailofbits.com/2018/03/15/amd-flaws-technical-summary/",
+                                    "source": "cve@mitre.org",
+                                    "tags": [
+                                        "Third Party Advisory"
+                                    ]
+                                },
+                                {
+                                    "url": "https://community.amd.com/community/amd-corporate/blog/2018/03/21/initial-amd-technical-assessment-of-cts-labs-research",
+                                    "source": "cve@mitre.org",
+                                    "tags": [
+                                        "Vendor Advisory"
+                                    ]
+                                },
+                                {
+                                    "url": "https://safefirmware.com/amdflaws_whitepaper.pdf",
+                                    "source": "cve@mitre.org",
+                                    "tags": [
+                                        "Third Party Advisory"
+                                    ]
+                                },
+                                {
+                                    "url": "https://support.hpe.com/hpsc/doc/public/display?docLocale=en_US&docId=emr_na-hpesbhf03841en_us",
+                                    "source": "cve@mitre.org"
+                                }
+                            ]
+                        },
+                        {
+                            "description": [
+                                {
+                                    "lang": "en",
+                                    "value": "The AMD Ryzen, Ryzen Pro, and Ryzen Mobile processor chips have insufficient access control for the Secure Processor, aka RYZENFALL-1."
+                                },
+                                {
+                                    "lang": "es",
+                                    "value": "Los chips de procesamiento de AMD Ryzen, Ryzen Pro y Ryzen Mobile tienen un control de acceso insuficiente para Secure Processor. Esto se conoce como RYZENFALL-1."
+                                }
+                            ],
+                            "metrics": {
+                                "cvssMetricV30": [
+                                    {
+                                        "source": "nvd@nist.gov",
+                                        "type": "Primary",
+                                        "cvssData": {
+                                            "version": "3.0",
+                                            "vectorString": "CVSS:3.0/AV:N/AC:H/PR:N/UI:N/S:C/C:H/I:H/A:H",
+                                            "attackVector": "NETWORK",
+                                            "attackComplexity": "HIGH",
+                                            "privilegesRequired": "NONE",
+                                            "userInteraction": "NONE",
+                                            "scope": "CHANGED",
+                                            "confidentialityImpact": "HIGH",
+                                            "integrityImpact": "HIGH",
+                                            "availabilityImpact": "HIGH",
+                                            "baseScore": 9,
+                                            "baseSeverity": "CRITICAL"
+                                        },
+                                        "exploitabilityScore": 2.2,
+                                        "impactScore": 6
+                                    }
+                                ],
+                                "cvssMetricV2": [
+                                    {
+                                        "source": "nvd@nist.gov",
+                                        "type": "Primary",
+                                        "cvssData": {
+                                            "version": "2.0",
+                                            "vectorString": "AV:N/AC:M/Au:N/C:C/I:C/A:C",
+                                            "accessVector": "NETWORK",
+                                            "accessComplexity": "MEDIUM",
+                                            "authentication": "NONE",
+                                            "confidentialityImpact": "COMPLETE",
+                                            "integrityImpact": "COMPLETE",
+                                            "availabilityImpact": "COMPLETE",
+                                            "baseScore": 9.3
+                                        },
+                                        "baseSeverity": "HIGH",
+                                        "exploitabilityScore": 8.6,
+                                        "impactScore": 10,
+                                        "acInsufInfo": false,
+                                        "obtainAllPrivilege": false,
+                                        "obtainUserPrivilege": false,
+                                        "obtainOtherPrivilege": false,
+                                        "userInteractionRequired": false
+                                    }
+                                ]
+                            },
+                            "weaknesses": [
+                                {
+                                    "source": "nvd@nist.gov",
+                                    "type": "Primary",
+                                    "description": [
+                                        {
+                                            "lang": "en",
+                                            "value": "CWE-732"
+                                        }
+                                    ]
+                                }
+                            ],
+                            "configurations": [
+                                {
+                                    "operator": "AND",
+                                    "nodes": [
+                                        {
+                                            "operator": "OR",
+                                            "negate": false,
+                                            "cpeMatch": [
+                                                {
+                                                    "vulnerable": true,
+                                                    "criteria": "cpe:2.3:o:amd:ryzen_mobile_firmware:-:*:*:*:*:*:*:*",
+                                                    "matchCriteriaId": "D6A739E0-1252-42F3-A51E-8CD6FDAC9177"
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "operator": "OR",
+                                            "negate": false,
+                                            "cpeMatch": [
+                                                {
+                                                    "vulnerable": false,
+                                                    "criteria": "cpe:2.3:h:amd:ryzen_mobile:-:*:*:*:*:*:*:*",
+                                                    "matchCriteriaId": "CC20F6FA-CAC1-4323-A5F2-F35B8F71E7F2"
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                },
+                                {
+                                    "operator": "AND",
+                                    "nodes": [
+                                        {
+                                            "operator": "OR",
+                                            "negate": false,
+                                            "cpeMatch": [
+                                                {
+                                                    "vulnerable": true,
+                                                    "criteria": "cpe:2.3:o:amd:ryzen_pro_firmware:-:*:*:*:*:*:*:*",
+                                                    "matchCriteriaId": "08E59D0B-FB2F-4C17-B9BC-462DFB366777"
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "operator": "OR",
+                                            "negate": false,
+                                            "cpeMatch": [
+                                                {
+                                                    "vulnerable": false,
+                                                    "criteria": "cpe:2.3:h:amd:ryzen_pro:-:*:*:*:*:*:*:*",
+                                                    "matchCriteriaId": "BA9541F0-5B33-4F09-B201-E887DA572571"
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                },
+                                {
+                                    "operator": "AND",
+                                    "nodes": [
+                                        {
+                                            "operator": "OR",
+                                            "negate": false,
+                                            "cpeMatch": [
+                                                {
+                                                    "vulnerable": true,
+                                                    "criteria": "cpe:2.3:o:amd:ryzen_firmware:-:*:*:*:*:*:*:*",
+                                                    "matchCriteriaId": "CAEA5209-C0F6-4645-A541-A68CBC70695B"
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "operator": "OR",
+                                            "negate": false,
+                                            "cpeMatch": [
+                                                {
+                                                    "vulnerable": false,
+                                                    "criteria": "cpe:2.3:h:amd:ryzen:-:*:*:*:*:*:*:*",
+                                                    "matchCriteriaId": "047F0F4D-DCE1-4E3F-A888-39E894DF857D"
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                }
+                            ],
+                            "references": [
+                                {
+                                    "url": "https://amdflaws.com/",
+                                    "source": "cve@mitre.org",
+                                    "tags": [
+                                        "Third Party Advisory"
+                                    ]
+                                },
+                                {
+                                    "url": "https://blog.trailofbits.com/2018/03/15/amd-flaws-technical-summary/",
+                                    "source": "cve@mitre.org",
+                                    "tags": [
+                                        "Third Party Advisory"
+                                    ]
+                                },
+                                {
+                                    "url": "https://community.amd.com/community/amd-corporate/blog/2018/03/21/initial-amd-technical-assessment-of-cts-labs-research",
+                                    "source": "cve@mitre.org",
+                                    "tags": [
+                                        "Vendor Advisory"
+                                    ]
+                                },
+                                {
+                                    "url": "https://safefirmware.com/amdflaws_whitepaper.pdf",
+                                    "source": "cve@mitre.org",
+                                    "tags": [
+                                        "Third Party Advisory"
+                                    ]
+                                },
+                                {
+                                    "url": "https://support.hpe.com/hpsc/doc/public/display?docLocale=en_US&docId=emr_na-hpesbhf03841en_us",
+                                    "source": "cve@mitre.org"
+                                }
+                            ]
+                        },
+                        {
+                            "description": [
+                                {
+                                    "lang": "en",
+                                    "value": "The AMD EPYC Server, Ryzen, Ryzen Pro, and Ryzen Mobile processor chips allow Platform Security Processor (PSP) privilege escalation."
+                                },
+                                {
+                                    "lang": "es",
+                                    "value": "Los chips de procesamiento de AMD EPYC Server, Ryzen, Ryzen Pro y Ryzen Mobile permiten el escalado de privilegios de Platform Security Processor (PSP)."
+                                }
+                            ],
+                            "metrics": {
+                                "cvssMetricV30": [
+                                    {
+                                        "source": "nvd@nist.gov",
+                                        "type": "Primary",
+                                        "cvssData": {
+                                            "version": "3.0",
+                                            "vectorString": "CVSS:3.0/AV:N/AC:H/PR:N/UI:N/S:C/C:H/I:H/A:H",
+                                            "attackVector": "NETWORK",
+                                            "attackComplexity": "HIGH",
+                                            "privilegesRequired": "NONE",
+                                            "userInteraction": "NONE",
+                                            "scope": "CHANGED",
+                                            "confidentialityImpact": "HIGH",
+                                            "integrityImpact": "HIGH",
+                                            "availabilityImpact": "HIGH",
+                                            "baseScore": 9,
+                                            "baseSeverity": "CRITICAL"
+                                        },
+                                        "exploitabilityScore": 2.2,
+                                        "impactScore": 6
+                                    }
+                                ],
+                                "cvssMetricV2": [
+                                    {
+                                        "source": "nvd@nist.gov",
+                                        "type": "Primary",
+                                        "cvssData": {
+                                            "version": "2.0",
+                                            "vectorString": "AV:N/AC:M/Au:N/C:C/I:C/A:C",
+                                            "accessVector": "NETWORK",
+                                            "accessComplexity": "MEDIUM",
+                                            "authentication": "NONE",
+                                            "confidentialityImpact": "COMPLETE",
+                                            "integrityImpact": "COMPLETE",
+                                            "availabilityImpact": "COMPLETE",
+                                            "baseScore": 9.3
+                                        },
+                                        "baseSeverity": "HIGH",
+                                        "exploitabilityScore": 8.6,
+                                        "impactScore": 10,
+                                        "acInsufInfo": false,
+                                        "obtainAllPrivilege": false,
+                                        "obtainUserPrivilege": false,
+                                        "obtainOtherPrivilege": false,
+                                        "userInteractionRequired": false
+                                    }
+                                ]
+                            },
+                            "weaknesses": [
+                                {
+                                    "source": "nvd@nist.gov",
+                                    "type": "Primary",
+                                    "description": [
+                                        {
+                                            "lang": "en",
+                                            "value": "NVD-CWE-noinfo"
+                                        }
+                                    ]
+                                }
+                            ],
+                            "configurations": [
+                                {
+                                    "operator": "AND",
+                                    "nodes": [
+                                        {
+                                            "operator": "OR",
+                                            "negate": false,
+                                            "cpeMatch": [
+                                                {
+                                                    "vulnerable": true,
+                                                    "criteria": "cpe:2.3:o:amd:ryzen_mobile_firmware:-:*:*:*:*:*:*:*",
+                                                    "matchCriteriaId": "D6A739E0-1252-42F3-A51E-8CD6FDAC9177"
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "operator": "OR",
+                                            "negate": false,
+                                            "cpeMatch": [
+                                                {
+                                                    "vulnerable": false,
+                                                    "criteria": "cpe:2.3:h:amd:ryzen_mobile:-:*:*:*:*:*:*:*",
+                                                    "matchCriteriaId": "CC20F6FA-CAC1-4323-A5F2-F35B8F71E7F2"
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                },
+                                {
+                                    "operator": "AND",
+                                    "nodes": [
+                                        {
+                                            "operator": "OR",
+                                            "negate": false,
+                                            "cpeMatch": [
+                                                {
+                                                    "vulnerable": true,
+                                                    "criteria": "cpe:2.3:o:amd:ryzen_pro_firmware:-:*:*:*:*:*:*:*",
+                                                    "matchCriteriaId": "08E59D0B-FB2F-4C17-B9BC-462DFB366777"
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "operator": "OR",
+                                            "negate": false,
+                                            "cpeMatch": [
+                                                {
+                                                    "vulnerable": false,
+                                                    "criteria": "cpe:2.3:h:amd:ryzen_pro:-:*:*:*:*:*:*:*",
+                                                    "matchCriteriaId": "BA9541F0-5B33-4F09-B201-E887DA572571"
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                },
+                                {
+                                    "operator": "AND",
+                                    "nodes": [
+                                        {
+                                            "operator": "OR",
+                                            "negate": false,
+                                            "cpeMatch": [
+                                                {
+                                                    "vulnerable": true,
+                                                    "criteria": "cpe:2.3:o:amd:epyc_server_firmware:-:*:*:*:*:*:*:*",
+                                                    "matchCriteriaId": "AD8E1350-3128-4ECF-A6D8-D92926BD5F33"
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "operator": "OR",
+                                            "negate": false,
+                                            "cpeMatch": [
+                                                {
+                                                    "vulnerable": false,
+                                                    "criteria": "cpe:2.3:h:amd:epyc_server:-:*:*:*:*:*:*:*",
+                                                    "matchCriteriaId": "D48FA7E1-650E-4DE6-82AB-20D7A79DE443"
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                },
+                                {
+                                    "operator": "AND",
+                                    "nodes": [
+                                        {
+                                            "operator": "OR",
+                                            "negate": false,
+                                            "cpeMatch": [
+                                                {
+                                                    "vulnerable": true,
+                                                    "criteria": "cpe:2.3:o:amd:ryzen_firmware:-:*:*:*:*:*:*:*",
+                                                    "matchCriteriaId": "CAEA5209-C0F6-4645-A541-A68CBC70695B"
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "operator": "OR",
+                                            "negate": false,
+                                            "cpeMatch": [
+                                                {
+                                                    "vulnerable": false,
+                                                    "criteria": "cpe:2.3:h:amd:ryzen:-:*:*:*:*:*:*:*",
+                                                    "matchCriteriaId": "047F0F4D-DCE1-4E3F-A888-39E894DF857D"
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                }
+                            ],
+                            "references": [
+                                {
+                                    "url": "https://amdflaws.com/",
+                                    "source": "cve@mitre.org",
+                                    "tags": [
+                                        "Third Party Advisory"
+                                    ]
+                                },
+                                {
+                                    "url": "https://blog.trailofbits.com/2018/03/15/amd-flaws-technical-summary/",
+                                    "source": "cve@mitre.org",
+                                    "tags": [
+                                        "Third Party Advisory"
+                                    ]
+                                },
+                                {
+                                    "url": "https://community.amd.com/community/amd-corporate/blog/2018/03/21/initial-amd-technical-assessment-of-cts-labs-research",
+                                    "source": "cve@mitre.org",
+                                    "tags": [
+                                        "Vendor Advisory"
+                                    ]
+                                },
+                                {
+                                    "url": "https://safefirmware.com/amdflaws_whitepaper.pdf",
+                                    "source": "cve@mitre.org",
+                                    "tags": [
+                                        "Third Party Advisory"
+                                    ]
+                                },
+                                {
+                                    "url": "https://support.hpe.com/hpsc/doc/public/display?docLocale=en_US&docId=emr_na-hpesbhf03841en_us",
+                                    "source": "cve@mitre.org"
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "severity": "MEDIUM",
+                    "id": 3,
+                    "name": "cpe:2.3:o:amd:16h_model_processor_firmware:-:*:*:*:*:*:*:*",
+                    "title": "AMD 16h Model Processor Firmware",
+                    "vulnerabilities": [
+                        {
+                            "description": [
+                                {
+                                    "lang": "en",
+                                    "value": "The microcode on AMD 16h 00h through 0Fh processors does not properly handle the interaction between locked instructions and write-combined memory types, which allows local users to cause a denial of service (system hang) via a crafted application, aka the errata 793 issue."
+                                },
+                                {
+                                    "lang": "es",
+                                    "value": "El microcode en AMD 16h 00h hasta procesadores 0Fh no maneja adecuadamente la interación entre instrucciones bloqueadas y tipos de memoria de escritura combinada, lo que permite a usuarios locales provocar una denegación de servicio (caída del sistema) a través de una aplicación manipulada, también conocido como problema 793."
+                                }
+                            ],
+                            "metrics": {
+                                "cvssMetricV2": [
+                                    {
+                                        "source": "nvd@nist.gov",
+                                        "type": "Primary",
+                                        "cvssData": {
+                                            "version": "2.0",
+                                            "vectorString": "AV:L/AC:M/Au:N/C:N/I:N/A:C",
+                                            "accessVector": "LOCAL",
+                                            "accessComplexity": "MEDIUM",
+                                            "authentication": "NONE",
+                                            "confidentialityImpact": "NONE",
+                                            "integrityImpact": "NONE",
+                                            "availabilityImpact": "COMPLETE",
+                                            "baseScore": 4.7
+                                        },
+                                        "baseSeverity": "MEDIUM",
+                                        "exploitabilityScore": 3.4,
+                                        "impactScore": 6.9,
+                                        "acInsufInfo": false,
+                                        "obtainAllPrivilege": false,
+                                        "obtainUserPrivilege": false,
+                                        "obtainOtherPrivilege": false,
+                                        "userInteractionRequired": false
+                                    }
+                                ]
+                            },
+                            "weaknesses": [
+                                {
+                                    "source": "nvd@nist.gov",
+                                    "type": "Primary",
+                                    "description": [
+                                        {
+                                            "lang": "en",
+                                            "value": "CWE-399"
+                                        }
+                                    ]
+                                }
+                            ],
+                            "configurations": [
+                                {
+                                    "operator": "AND",
+                                    "nodes": [
+                                        {
+                                            "operator": "OR",
+                                            "negate": false,
+                                            "cpeMatch": [
+                                                {
+                                                    "vulnerable": true,
+                                                    "criteria": "cpe:2.3:o:amd:16h_model_processor_firmware:-:*:*:*:*:*:*:*",
+                                                    "matchCriteriaId": "4839D758-003A-449E-AFED-6D7D3F362E42"
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "operator": "OR",
+                                            "negate": false,
+                                            "cpeMatch": [
+                                                {
+                                                    "vulnerable": true,
+                                                    "criteria": "cpe:2.3:h:amd:16h_model_00h_processor:-:*:*:*:*:*:*:*",
+                                                    "matchCriteriaId": "1CB23DE5-C2A1-464C-A41A-D4D4AE786697"
+                                                },
+                                                {
+                                                    "vulnerable": true,
+                                                    "criteria": "cpe:2.3:h:amd:16h_model_0fh_processor:-:*:*:*:*:*:*:*",
+                                                    "matchCriteriaId": "1EDA8730-DE5C-4C94-B2BE-6A30D28E19FD"
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                }
+                            ],
+                            "references": [
+                                {
+                                    "url": "http://lists.dragonflybsd.org/pipermail/kernel/2011-December/046594.html",
+                                    "source": "secalert@redhat.com"
+                                },
+                                {
+                                    "url": "http://lists.fedoraproject.org/pipermail/package-announce/2013-December/123553.html",
+                                    "source": "secalert@redhat.com"
+                                },
+                                {
+                                    "url": "http://lists.fedoraproject.org/pipermail/package-announce/2013-December/124195.html",
+                                    "source": "secalert@redhat.com"
+                                },
+                                {
+                                    "url": "http://lists.fedoraproject.org/pipermail/package-announce/2013-December/124199.html",
+                                    "source": "secalert@redhat.com"
+                                },
+                                {
+                                    "url": "http://lists.opensuse.org/opensuse-security-announce/2014-03/msg00010.html",
+                                    "source": "secalert@redhat.com"
+                                },
+                                {
+                                    "url": "http://lists.opensuse.org/opensuse-security-announce/2014-03/msg00011.html",
+                                    "source": "secalert@redhat.com"
+                                },
+                                {
+                                    "url": "http://lists.opensuse.org/opensuse-security-announce/2014-03/msg00015.html",
+                                    "source": "secalert@redhat.com"
+                                },
+                                {
+                                    "url": "http://lists.opensuse.org/opensuse-security-announce/2014-03/msg00021.html",
+                                    "source": "secalert@redhat.com"
+                                },
+                                {
+                                    "url": "http://lists.opensuse.org/opensuse-security-announce/2014-03/msg00026.html",
+                                    "source": "secalert@redhat.com"
+                                },
+                                {
+                                    "url": "http://lists.opensuse.org/opensuse-security-announce/2014-04/msg00000.html",
+                                    "source": "secalert@redhat.com"
+                                },
+                                {
+                                    "url": "http://openwall.com/lists/oss-security/2013/11/28/1",
+                                    "source": "secalert@redhat.com"
+                                },
+                                {
+                                    "url": "http://rhn.redhat.com/errata/RHSA-2014-0285.html",
+                                    "source": "secalert@redhat.com"
+                                },
+                                {
+                                    "url": "http://security.gentoo.org/glsa/glsa-201407-03.xml",
+                                    "source": "secalert@redhat.com"
+                                },
+                                {
+                                    "url": "http://support.amd.com/TechDocs/51810_16h_00h-0Fh_Rev_Guide.pdf",
+                                    "source": "secalert@redhat.com"
+                                },
+                                {
+                                    "url": "http://www.debian.org/security/2015/dsa-3128",
+                                    "source": "secalert@redhat.com"
+                                },
+                                {
+                                    "url": "http://www.openwall.com/lists/oss-security/2013/12/02/1",
+                                    "source": "secalert@redhat.com"
+                                },
+                                {
+                                    "url": "http://www.securityfocus.com/bid/63983",
+                                    "source": "secalert@redhat.com"
+                                },
+                                {
+                                    "url": "http://www.securitytracker.com/id/1029415",
+                                    "source": "secalert@redhat.com"
+                                },
+                                {
+                                    "url": "http://www.zdnet.com/blog/hardware/amd-owns-up-to-cpu-bug/18924",
+                                    "source": "secalert@redhat.com"
+                                },
+                                {
+                                    "url": "https://bugzilla.redhat.com/show_bug.cgi?id=1035823",
+                                    "source": "secalert@redhat.com"
+                                },
+                                {
+                                    "url": "https://exchange.xforce.ibmcloud.com/vulnerabilities/89335",
+                                    "source": "secalert@redhat.com"
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "severity": "HIGH",
+            "vulnerabilities": 2,
+            "id": 2,
+            "component": "Keyboard",
+            "products": [
+                {
+                    "severity": "HIGH",
+                    "id": 4,
+                    "name": "cpe:2.3:o:intel:sinit_authenticated_code_module:gm45_gs45_pm45_sinit_21.bin:*:*:*:*:*:*:*",
+                    "title": "Intel SINIT Authenticated Code Module (ACM) GM45_GS45_PM45_SINIT_21.BIN",
                     "vulnerabilities": [
                         {
                             "description": [
@@ -531,11 +2709,10 @@ export default {
                     ]
                 },
                 {
-                    "severity": "",
-                    "vulnerabilities_count": 0,
-                    "id": 2,
-                    "name": "cpe:2.3:o:intel:sinit_authenticated_code_module:i5_i7_dual_sinit_18.bin:*:*:*:*:*:*:*",
-                    "title": "Intel SINIT Authenticated Code Module (ACM) i5_i7_DUAL_SINIT_18.BIN",
+                    "severity": "HIGH",
+                    "id": 5,
+                    "name": "cpe:2.3:o:intel:sinit_authenticated_code_module:2nd_gen_i5_i7_sinit_1.9.bin:*:*:*:*:*:*:*",
+                    "title": "Intel SINIT Authenticated Code Module (ACM) 2nd_gen_i5_i7_SINIT_1.9.BIN",
                     "vulnerabilities": [
                         {
                             "description": [
@@ -859,13 +3036,19 @@ export default {
         {
             "severity": "HIGH",
             "vulnerabilities": 98,
-            "id": 2,
+            "id": 3,
             "component": "Router",
             "products": [
                 {
-                    "severity": "",
-                    "vulnerabilities_count": 0,
-                    "id": 3,
+                    "severity": "LOW",
+                    "id": 6,
+                    "name": "cpe:2.3:o:microsoft:ms-dos:-:*:*:*:*:*:*:*",
+                    "title": "Microsoft ms-dos",
+                    "vulnerabilities": []
+                },
+                {
+                    "severity": "HIGH",
+                    "id": 7,
                     "name": "cpe:2.3:o:microsoft:windows_98:-:*:*:*:*:*:*:*",
                     "title": "Microsoft Windows 98",
                     "vulnerabilities": [

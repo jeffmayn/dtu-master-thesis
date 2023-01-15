@@ -18,7 +18,7 @@ export const modelJson = async (req, res) => {
       if (err) {
          res.send(err);
       } else {
-        // console.log(results);
+         // console.log(results);
          res.json(results);
       }
    });
@@ -49,7 +49,7 @@ function determine_system_severity(severities) {
 
 const fuckyou = async (graph, result) => {
 
-  
+
 
    let sub_nodes = [];
 
@@ -60,8 +60,8 @@ const fuckyou = async (graph, result) => {
    for (const node of cells) {
 
       const child_nodes = [];
-      
-      
+
+
       if (node.type == "sub_node") {
          const main_node = node.ports.items[0].id;
          subnode_count++;
@@ -84,35 +84,32 @@ const fuckyou = async (graph, result) => {
 
                         sub_node_vulnerabilities_length += results.length;
                         product_count++;
-                       // let child_node_vulnerability_count = 0;
-           
+
+                        let local_severities = [];
+
+
 
                         for (const vulnerability of results) {
                            const base_severity = vulnerability.metrics.cvssMetricV2[0].baseSeverity;
                            sub_node_severities.push(base_severity);
+                           local_severities.push(base_severity);
                         }
-/*
-                        const sub_node_children_vulnerabilities = sub_node_children[i].vulnerabilities;
 
-                        for (const child_node_vulnerability in sub_node_children_vulnerabilities) {
-                           console.log(child_node_vulnerability.length);
-                           child_node_vulnerability_count++;
 
-                        }
-                        */
-                     
 
-                    
-      
+
+                        const highest_severity = determine_system_severity(local_severities);
+
+
 
                         child_nodes.push({
-                           severity: "",
+                           severity: highest_severity,
                            id: product_count,
                            name: sub_node_children[i].name,
                            title: sub_node_children[i].title,
                            vulnerabilities: results
                         });
-                     //   all_vulnerabilities.push(results);
+                        //   all_vulnerabilities.push(results);
                      }
                   });
 
@@ -128,23 +125,23 @@ const fuckyou = async (graph, result) => {
 
 
 
-      
+
             const highest_severity = determine_system_severity(sub_node_severities);
-            
-         //   const highest_severity = determine_system_severity(sub_node_severities);
+
+            //   const highest_severity = determine_system_severity(sub_node_severities);
 
             sub_nodes.push({
                severity: highest_severity,
                vulnerabilities: sub_node_vulnerabilities_length,
-               id : subnode_count,
+               id: subnode_count,
                component: sub_node_name,
                products: child_nodes
             });
-            
+
          }
 
 
-         
+
       }
    }
    result(null, {
