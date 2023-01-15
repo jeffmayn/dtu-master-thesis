@@ -18,8 +18,8 @@ else {
 
 // to avoid crosssite-scripting etc on production build
 var corsOption = {
-   origin: [
-      "http://localhost:" + process.env.FRONTEND_PORT],
+   origin: 
+      "http://localhost:8080",
    optionSuccessStatus: 200
 };
  
