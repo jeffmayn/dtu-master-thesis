@@ -7,10 +7,9 @@
                 <th id="model" ref="model_ref"></th>
             </tr>
             <button v-if="!waiting_for_response" @click="requestVulnerabilitiesFromServer" id="btn"
-                class="button is-success mt-5">
-                ►
-            </button>
+                class="button is-success mt-5"> ► </button>
             <button v-if="waiting_for_response" id="btn" class="button is-success mt-5" disabled>processing...</button>
+            <button id="btn-demo" class="button is-info mt-5" @click="toggleLoadModelWindow">Load Demo</button>
         </thead>
     </table>
     System threat list:
@@ -47,7 +46,7 @@
                                     <table class="table is-striped is-bordered mt-2 is-fullwidth">
 
                                         <template v-for="rowzz in components[index].products">
-                                            <tr @click="toggle3(rowzz.id)"
+                                            <tr @click="openVulnerabilities(rowzz.title, rowzz.vulnerabilities)"
                                                 :class="{ opened3: opened3.includes(rowzz.id) }">
                                                 <td style="width: 900px;">{{ rowzz.title }}</td>
                                                 <td style="width: 140px;">{{ rowzz.vulnerabilities.length }}</td>
@@ -79,6 +78,10 @@
         <DisplayLoadModels :title="focused_node_title" :nodes="focused_node_children" @close="toggleLoadWindow"
             @model="loadModel"/>
     </div>
+    <div v-if="displayVulnerabilitiesWindow" id="menu_vuln">
+        <DisplayVulnerabilitiesWindow :title="focused_product" :nodes="focused_vulnerabilities" @close="toggleVulnerabilityWindow"
+            @model="loadModel"/>
+    </div>
     
 </template>
 
@@ -96,6 +99,7 @@ import RightClickMenu from './RightClickMenu.vue';
 import SearchCVE from '@/components/SearchCVE.vue';
 import DisplayNode from '@/components/DisplayNode.vue';
 import DisplayLoadModels from '@/components/LoadModels.vue';
+import DisplayVulnerabilitiesWindow from '@/components/DisplayVulnerabilities.vue';
 
 let myList = ['bob'];
 
@@ -107,7 +111,8 @@ export default {
         RightClickMenu,
         SearchCVE,
         DisplayNode,
-        DisplayLoadModels
+        DisplayLoadModels,
+        DisplayVulnerabilitiesWindow
     },
     props: {
         rightClickMenuTitle: String
@@ -126,6 +131,11 @@ export default {
             displaySearchWindow: false,
             displayNodeWindow: false,
             displayLoadModelsWindow: false,
+            displayVulnerabilitiesWindow: false,
+
+            // clicked product from vulnerabilities table
+            focused_product: "",
+            focused_vulnerabilities: [],
 
             focused_node_object: [],
             focused_node_title: "",
@@ -164,6 +174,18 @@ export default {
 
     },
     methods: {
+        openVulnerabilities(title, vulnerabilities) {
+            console.log(vulnerabilities);
+            this.focused_product = title;
+            this.focused_vulnerabilities = vulnerabilities;
+
+            
+
+            this.displayVulnerabilitiesWindow = true;
+
+
+
+        },
         loadModel(value) {
             let json = value[0].model;
             this.graph.fromJSON(json);
@@ -300,6 +322,9 @@ export default {
         toggleLoadWindow() {
             this.displayLoadModelsWindow = !this.displayLoadModelsWindow;
         },
+        toggleVulnerabilityWindow() {
+            this.displayVulnerabilitiesWindow = !this.displayVulnerabilitiesWindow;  
+        },
 
         toggleLoadModelWindow() {
             this.displayLoadModelsWindow = !this.displayLoadModelsWindow;
@@ -359,6 +384,18 @@ export default {
                     grid: true,
                     height: 600,
                     resizing: false,
+                    translating: {
+                        restrict(view) {
+                            const cell = view.cell
+                            if (cell.isNode()) {
+                                
+                                const parent = cell.getParent()
+                                if (parent) {
+                                    return parent.getBBox()
+                                }
+                            }
+                        }
+                    },
                     connecting: {
                         allowBlank: false,
                         snap: {
@@ -623,6 +660,7 @@ export default {
                     y: 140,
                     width: 200,
                     height: 200,
+                    zIndex: -1,
                     meta: {
                         id: "bobby"
                     },
@@ -635,6 +673,11 @@ export default {
                     }
                 });
 
+                system.addChild(state);
+                system.addChild(control);
+                system.addChild(output);
+                system.addChild(input)
+
                 this.graphJson = graph.toJSON();
 
                 graph.on("node:mousedown", ({ node }) => {
@@ -644,12 +687,29 @@ export default {
                 });
 
                 graph.on("node:contextmenu", ({ node }) => {
+                    
+
+
                     let menuref = this.$refs.menu_ref;
+
+            
                     this.focused_node_title = node.store.data.attrs.text.text;
                     this.focused_node_id = node.id;
 
-                    menuref.style["left"] = this.mousePosX + "px";
-                    menuref.style["top"] = this.mousePosY + "px";
+                    console.log(node.id);
+                    if (
+                        node.id == "state" ||
+                        node.id == "inpt" ||
+                        node.id == "ctrl" ||
+                        node.id == "output" ||
+                        node.id == "system") {
+                            
+                    } else {
+                        menuref.style["left"] = this.mousePosX + "px";
+                    menuref.style["top"] = this.mousePosY + "px"; 
+                        }
+
+                    
                 });
 
                 graph.on("node:mouseenter", ({ node }) => {
@@ -754,6 +814,14 @@ export default {
 }
 
 #btn {
+    position: absolute;
+
+    right: 140px;
+    top: 40px;
+    z-index: 10;
+}
+
+#btn-demo {
     position: absolute;
 
     right: 15px;

@@ -7,11 +7,6 @@
       <div @click="openSearchWindow">Add child product
       </div>
       </p>
-      <hr>
-      <p>
-      <div @click="openLoadModelsWindow">Open demo models
-      </div>
-      </p>
    </div>
 </template>
    
