@@ -25,8 +25,8 @@ var corsOption = {
  
 const app = express();
 app.use('*', cors(corsOption));
-app.use(express.json());
-app.use(Router);
+app.use(express.json(), cors(corsOption));
+app.use(Router,cors(corsOption));
 
 app.get('/', (req, res) => res.send("Server is up and running!"));
 app.listen(PORT, () => {
