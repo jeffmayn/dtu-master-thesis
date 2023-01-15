@@ -1,6 +1,6 @@
 // "dev" = development mode
 // "prod" = production mode
-const mode = "dev";
+const mode = "prod";
 
 let url = "";
 if (mode == "prod") {
