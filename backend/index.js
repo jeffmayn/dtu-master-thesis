@@ -18,7 +18,15 @@ else {
 
 // to avoid crosssite-scripting etc on production build
 var corsOption = {
-   origin: ["https://dtu-tir.netlify.app", "https://dtu-master-thesis-tir.herokuapp.com", "https://dtu-master-thesis-tir.herokuapp.com/searchProduct"],
+   origin: [
+      "https://dtu-tir.netlify.app",
+      "https://dtu-master-thesis-tir.herokuapp.com",
+      "https://dtu-master-thesis-tir.herokuapp.com/searchProduct",
+      "https://dtu-master-thesis-tir.herokuapp.com/model",
+      "https://dtu-master-thesis-tir.herokuapp.com/cve",
+      "https://dtu-master-thesis-tir.herokuapp.com//delete",
+      "https://dtu-master-thesis-tir.herokuapp.com/components"
+   ],
    optionSuccessStatus: 200
 };
  
