@@ -3,7 +3,7 @@ import {
    getComponentById,
    insertComponent,
    deleteComponentById
-} from "../models/componentModel.js";
+} from "../models/component_model.js";
 
 
 
