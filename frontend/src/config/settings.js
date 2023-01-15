@@ -2,7 +2,7 @@
 // "prod" = production mode
 const mode = "prod";
 
-let url = "https://dtu-master-thesis-tir.herokuapp.com/";
+let url = "http://localhost:3030/";
 /*
 if (mode == "prod") {
    url = "https://dtu-master-thesis-tir.herokuapp.com/"
