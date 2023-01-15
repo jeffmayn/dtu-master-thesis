@@ -19,20 +19,13 @@ else {
 // to avoid crosssite-scripting etc on production build
 var corsOption = {
    origin: [
-      "https://dtu-tir.netlify.app",
-      "https://dtu-master-thesis-tir.herokuapp.com",
-      "https://dtu-master-thesis-tir.herokuapp.com/searchProduct",
-      "https://dtu-master-thesis-tir.herokuapp.com/model",
-      "https://dtu-master-thesis-tir.herokuapp.com/cve",
-      "https://dtu-master-thesis-tir.herokuapp.com//delete",
-      "https://dtu-master-thesis-tir.herokuapp.com/components"
-   ],
+      "https://dtu-tir.netlify.app"],
    optionSuccessStatus: 200
 };
  
 const app = express();
+app.use('*', cors(corsOption));
 app.use(express.json());
-app.use(cors(corsOption));
 app.use(Router);
 
 app.get('/', (req, res) => res.send("Server is up and running!"));
