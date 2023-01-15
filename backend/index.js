@@ -24,7 +24,7 @@ var corsOption = {
 };
  
 const app = express();
-app.use('*', cors(corsOption));
+//app.use('*', cors(corsOption));
 app.use(express.json(), cors(corsOption));
 app.use(Router,cors(corsOption));
 
