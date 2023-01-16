@@ -40,325 +40,329 @@ export default {
             items: [],
             models:
                 [
-                {
-    "cells": [
-        {
-            "position": {
-                "x": 215,
-                "y": 140
-            },
-            "size": {
-                "width": 200,
-                "height": 200
-            },
-            "attrs": {
-                "text": {
-                    "text": "SYSTEM"
-                },
-                "body": {
-                    "fill": "#D7D7D7"
-                }
-            },
-            "visible": true,
-            "shape": "rect",
-            "id": "system",
-            "type": "main_node",
-            "zIndex": -1,
-            "meta": {
-                "id": "bobby"
-            }
-        },
-        {
-            "position": {
-                "x": 145,
-                "y": 140
-            },
-            "size": {
-                "width": 70,
-                "height": 200
-            },
-            "attrs": {
-                "text": {
-                    "text": "INPUT"
-                },
-                "body": {
-                    "fill": "#83E397"
-                }
-            },
-            "visible": true,
-            "shape": "rect",
-            "id": "inpt",
-            "type": "main_node",
-            "nodeMovable": false,
-            "zIndex": 1
-        },
-        {
-            "position": {
-                "x": 415,
-                "y": 140
-            },
-            "size": {
-                "width": 70,
-                "height": 200
-            },
-            "attrs": {
-                "text": {
-                    "text": "OUTPUT"
-                },
-                "body": {
-                    "fill": "#93CEFE"
-                },
-                "label": {
-                    "direction": "up"
-                }
-            },
-            "visible": true,
-            "shape": "rect",
-            "id": "outpt",
-            "type": "main_node",
-            "zIndex": 2
-        },
-        {
-            "position": {
-                "x": 215,
-                "y": 85
-            },
-            "size": {
-                "width": 200,
-                "height": 55
-            },
-            "attrs": {
-                "text": {
-                    "text": "CONTROL"
-                },
-                "body": {
-                    "fill": "#FF9494"
-                }
-            },
-            "visible": true,
-            "shape": "rect",
-            "id": "ctrl",
-            "type": "main_node",
-            "zIndex": 3
-        },
-        {
-            "position": {
-                "x": 215,
-                "y": 340
-            },
-            "size": {
-                "width": 200,
-                "height": 55
-            },
-            "attrs": {
-                "text": {
-                    "text": "STATE"
-                },
-                "body": {
-                    "fill": "#ECD333"
-                }
-            },
-            "visible": true,
-            "shape": "rect",
-            "id": "state",
-            "type": "main_node",
-            "zIndex": 4
-        },
-        {
-            "position": {
-                "x": 20,
-                "y": 80
-            },
-            "size": {
-                "width": 100,
-                "height": 25
-            },
-            "attrs": {
-                "text": {
-                    "text": "Keyboard"
-                },
-                "body": {
-                    "strokeWidth": 1,
-                    "fill": "#83E397"
-                },
-                "children": {
-                    "1": {
-                        "title": "Logitech R500 Firmware",
-                        "name": "cpe:2.3:o:logitech:r500_firmware:-:*:*:*:*:*:*:*"
-                    },
-                    "2": {
-                        "title": "Logitech K360 Firmware",
-                        "name": "cpe:2.3:o:logitech:k360_firmware:-:*:*:*:*:*:*:*"
-                    }
-                }
-            },
-            "visible": true,
-            "shape": "rect",
-            "id": "99e1c360-5bca-4227-a3ad-a10fc981e24a",
-            "type": "sub_node",
-            "ports": {
-                "groups": {
-                    "in": {
-                        "position": {
-                            "name": "right"
-                        },
-                        "attrs": {
-                            "circle": {
-                                "r": 6,
-                                "magnet": true
-                            }
-                        }
-                    }
-                },
-                "items": [
                     {
-                        "id": "input",
-                        "group": "in"
-                    }
-                ]
-            },
-            "zIndex": 5
-        },
-        {
-            "shape": "edge",
-            "id": "87e3cf54-9bef-4888-bc81-e58d0607a9e7",
-            "source": {
-                "cell": "99e1c360-5bca-4227-a3ad-a10fc981e24a",
-                "port": "input"
-            },
-            "target": {
-                "cell": "inpt"
-            },
-            "zIndex": 6
-        },
-        {
-            "position": {
-                "x": 10,
-                "y": 220
-            },
-            "size": {
-                "width": 100,
-                "height": 25
-            },
-            "attrs": {
-                "text": {
-                    "text": "Network Card"
-                },
-                "body": {
-                    "strokeWidth": 1,
-                    "fill": "#83E397"
-                },
-                "children": {
-                    "1": {
-                        "title": "TP-Link TL-SG108E Firmware 1.1.2",
-                        "name": "cpe:2.3:o:tp-link:tl-sg108e_firmware:1.1.2:*:*:*:*:*:*:*"
-                    }
-                }
-            },
-            "visible": true,
-            "shape": "rect",
-            "id": "e7e724b5-d473-40b0-bec9-4e2c384639eb",
-            "type": "sub_node",
-            "ports": {
-                "groups": {
-                    "in": {
-                        "position": {
-                            "name": "right"
-                        },
-                        "attrs": {
-                            "circle": {
-                                "r": 6,
-                                "magnet": true
-                            }
+                        "model_name": "Simple model 1",
+                        "model": {
+                            "cells": [
+                                {
+                                    "position": {
+                                        "x": 215,
+                                        "y": 140
+                                    },
+                                    "size": {
+                                        "width": 200,
+                                        "height": 200
+                                    },
+                                    "attrs": {
+                                        "text": {
+                                            "text": "SYSTEM"
+                                        },
+                                        "body": {
+                                            "fill": "#D7D7D7"
+                                        }
+                                    },
+                                    "visible": true,
+                                    "shape": "rect",
+                                    "id": "system",
+                                    "type": "main_node",
+                                    "zIndex": -1,
+                                    "meta": {
+                                        "id": "bobby"
+                                    }
+                                },
+                                {
+                                    "position": {
+                                        "x": 145,
+                                        "y": 140
+                                    },
+                                    "size": {
+                                        "width": 70,
+                                        "height": 200
+                                    },
+                                    "attrs": {
+                                        "text": {
+                                            "text": "INPUT"
+                                        },
+                                        "body": {
+                                            "fill": "#83E397"
+                                        }
+                                    },
+                                    "visible": true,
+                                    "shape": "rect",
+                                    "id": "inpt",
+                                    "type": "main_node",
+                                    "nodeMovable": false,
+                                    "zIndex": 1
+                                },
+                                {
+                                    "position": {
+                                        "x": 415,
+                                        "y": 140
+                                    },
+                                    "size": {
+                                        "width": 70,
+                                        "height": 200
+                                    },
+                                    "attrs": {
+                                        "text": {
+                                            "text": "OUTPUT"
+                                        },
+                                        "body": {
+                                            "fill": "#93CEFE"
+                                        },
+                                        "label": {
+                                            "direction": "up"
+                                        }
+                                    },
+                                    "visible": true,
+                                    "shape": "rect",
+                                    "id": "outpt",
+                                    "type": "main_node",
+                                    "zIndex": 2
+                                },
+                                {
+                                    "position": {
+                                        "x": 215,
+                                        "y": 85
+                                    },
+                                    "size": {
+                                        "width": 200,
+                                        "height": 55
+                                    },
+                                    "attrs": {
+                                        "text": {
+                                            "text": "CONTROL"
+                                        },
+                                        "body": {
+                                            "fill": "#FF9494"
+                                        }
+                                    },
+                                    "visible": true,
+                                    "shape": "rect",
+                                    "id": "ctrl",
+                                    "type": "main_node",
+                                    "zIndex": 3
+                                },
+                                {
+                                    "position": {
+                                        "x": 215,
+                                        "y": 340
+                                    },
+                                    "size": {
+                                        "width": 200,
+                                        "height": 55
+                                    },
+                                    "attrs": {
+                                        "text": {
+                                            "text": "STATE"
+                                        },
+                                        "body": {
+                                            "fill": "#ECD333"
+                                        }
+                                    },
+                                    "visible": true,
+                                    "shape": "rect",
+                                    "id": "state",
+                                    "type": "main_node",
+                                    "zIndex": 4
+                                },
+                                {
+                                    "position": {
+                                        "x": 20,
+                                        "y": 80
+                                    },
+                                    "size": {
+                                        "width": 100,
+                                        "height": 25
+                                    },
+                                    "attrs": {
+                                        "text": {
+                                            "text": "Keyboard"
+                                        },
+                                        "body": {
+                                            "strokeWidth": 1,
+                                            "fill": "#83E397"
+                                        },
+                                        "children": {
+                                            "1": {
+                                                "title": "Logitech R500 Firmware",
+                                                "name": "cpe:2.3:o:logitech:r500_firmware:-:*:*:*:*:*:*:*"
+                                            },
+                                            "2": {
+                                                "title": "Logitech K360 Firmware",
+                                                "name": "cpe:2.3:o:logitech:k360_firmware:-:*:*:*:*:*:*:*"
+                                            }
+                                        }
+                                    },
+                                    "visible": true,
+                                    "shape": "rect",
+                                    "id": "99e1c360-5bca-4227-a3ad-a10fc981e24a",
+                                    "type": "sub_node",
+                                    "ports": {
+                                        "groups": {
+                                            "in": {
+                                                "position": {
+                                                    "name": "right"
+                                                },
+                                                "attrs": {
+                                                    "circle": {
+                                                        "r": 6,
+                                                        "magnet": true
+                                                    }
+                                                }
+                                            }
+                                        },
+                                        "items": [
+                                            {
+                                                "id": "input",
+                                                "group": "in"
+                                            }
+                                        ]
+                                    },
+                                    "zIndex": 5
+                                },
+                                {
+                                    "shape": "edge",
+                                    "id": "87e3cf54-9bef-4888-bc81-e58d0607a9e7",
+                                    "source": {
+                                        "cell": "99e1c360-5bca-4227-a3ad-a10fc981e24a",
+                                        "port": "input"
+                                    },
+                                    "target": {
+                                        "cell": "inpt"
+                                    },
+                                    "zIndex": 6
+                                },
+                                {
+                                    "position": {
+                                        "x": 10,
+                                        "y": 220
+                                    },
+                                    "size": {
+                                        "width": 100,
+                                        "height": 25
+                                    },
+                                    "attrs": {
+                                        "text": {
+                                            "text": "Network Card"
+                                        },
+                                        "body": {
+                                            "strokeWidth": 1,
+                                            "fill": "#83E397"
+                                        },
+                                        "children": {
+                                            "1": {
+                                                "title": "TP-Link TL-SG108E Firmware 1.1.2",
+                                                "name": "cpe:2.3:o:tp-link:tl-sg108e_firmware:1.1.2:*:*:*:*:*:*:*"
+                                            }
+                                        }
+                                    },
+                                    "visible": true,
+                                    "shape": "rect",
+                                    "id": "e7e724b5-d473-40b0-bec9-4e2c384639eb",
+                                    "type": "sub_node",
+                                    "ports": {
+                                        "groups": {
+                                            "in": {
+                                                "position": {
+                                                    "name": "right"
+                                                },
+                                                "attrs": {
+                                                    "circle": {
+                                                        "r": 6,
+                                                        "magnet": true
+                                                    }
+                                                }
+                                            }
+                                        },
+                                        "items": [
+                                            {
+                                                "id": "input",
+                                                "group": "in"
+                                            }
+                                        ]
+                                    },
+                                    "zIndex": 7
+                                },
+                                {
+                                    "shape": "edge",
+                                    "id": "532f8e72-808c-4eb0-ab47-bc448ca63091",
+                                    "source": {
+                                        "cell": "e7e724b5-d473-40b0-bec9-4e2c384639eb",
+                                        "port": "input"
+                                    },
+                                    "target": {
+                                        "cell": "inpt"
+                                    },
+                                    "zIndex": 8
+                                },
+                                {
+                                    "position": {
+                                        "x": 0,
+                                        "y": 150
+                                    },
+                                    "size": {
+                                        "width": 100,
+                                        "height": 25
+                                    },
+                                    "attrs": {
+                                        "text": {
+                                            "text": "Router"
+                                        },
+                                        "body": {
+                                            "strokeWidth": 1,
+                                            "fill": "#83E397"
+                                        },
+                                        "children": {
+                                            "1": {
+                                                "title": "Microsoft Windows 10 1511 64-bit",
+                                                "name": "cpe:2.3:o:microsoft:windows_10:1511:*:*:*:*:*:x64:*"
+                                            }
+                                        }
+                                    },
+                                    "visible": true,
+                                    "shape": "rect",
+                                    "id": "f3b7c002-9e1b-479a-99ef-ae6ed98fad95",
+                                    "type": "sub_node",
+                                    "ports": {
+                                        "groups": {
+                                            "in": {
+                                                "position": {
+                                                    "name": "right"
+                                                },
+                                                "attrs": {
+                                                    "circle": {
+                                                        "r": 6,
+                                                        "magnet": true
+                                                    }
+                                                }
+                                            }
+                                        },
+                                        "items": [
+                                            {
+                                                "id": "input",
+                                                "group": "in"
+                                            }
+                                        ]
+                                    },
+                                    "zIndex": 9
+                                },
+                                {
+                                    "shape": "edge",
+                                    "id": "e09b7503-fb2b-4670-a4b6-6491d63b4ab5",
+                                    "source": {
+                                        "cell": "f3b7c002-9e1b-479a-99ef-ae6ed98fad95",
+                                        "port": "input"
+                                    },
+                                    "target": {
+                                        "cell": "inpt"
+                                    },
+                                    "zIndex": 10
+                                }
+                            ]
                         }
+
                     }
-                },
-                "items": [
-                    {
-                        "id": "input",
-                        "group": "in"
-                    }
-                ]
-            },
-            "zIndex": 7
-        },
-        {
-            "shape": "edge",
-            "id": "532f8e72-808c-4eb0-ab47-bc448ca63091",
-            "source": {
-                "cell": "e7e724b5-d473-40b0-bec9-4e2c384639eb",
-                "port": "input"
-            },
-            "target": {
-                "cell": "inpt"
-            },
-            "zIndex": 8
-        },
-        {
-            "position": {
-                "x": 0,
-                "y": 150
-            },
-            "size": {
-                "width": 100,
-                "height": 25
-            },
-            "attrs": {
-                "text": {
-                    "text": "Router"
-                },
-                "body": {
-                    "strokeWidth": 1,
-                    "fill": "#83E397"
-                },
-                "children": {
-                    "1": {
-                        "title": "Microsoft Windows 10 1511 64-bit",
-                        "name": "cpe:2.3:o:microsoft:windows_10:1511:*:*:*:*:*:x64:*"
-                    }
-                }
-            },
-            "visible": true,
-            "shape": "rect",
-            "id": "f3b7c002-9e1b-479a-99ef-ae6ed98fad95",
-            "type": "sub_node",
-            "ports": {
-                "groups": {
-                    "in": {
-                        "position": {
-                            "name": "right"
-                        },
-                        "attrs": {
-                            "circle": {
-                                "r": 6,
-                                "magnet": true
-                            }
-                        }
-                    }
-                },
-                "items": [
-                    {
-                        "id": "input",
-                        "group": "in"
-                    }
-                ]
-            },
-            "zIndex": 9
-        },
-        {
-            "shape": "edge",
-            "id": "e09b7503-fb2b-4670-a4b6-6491d63b4ab5",
-            "source": {
-                "cell": "f3b7c002-9e1b-479a-99ef-ae6ed98fad95",
-                "port": "input"
-            },
-            "target": {
-                "cell": "inpt"
-            },
-            "zIndex": 10
-        }
-    ]
-}
 
                 ]
         };
