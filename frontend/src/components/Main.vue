@@ -203,10 +203,12 @@ export default {
 
         response_to_display() {
             let system_severities = [];
-            for (const component in this.response[0].components) {
+            console.log("her");
+            console.log(this.resonse);
+            for (const component of this.response[0].components) {
 
                 this.components.push(component);
-                for (const product in component.products) {
+                for (const product of component.products) {
                     const name = product.name;
                     const title = product.title;
                     const vulnerabilities = product.vulnerabilities;
