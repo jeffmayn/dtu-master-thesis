@@ -206,7 +206,7 @@ export default {
             for (const component in this.response[0].components) {
 
                 this.components.push(component);
-                for (const product of component.products) {
+                for (const product in component.products) {
                     const name = product.name;
                     const title = product.title;
                     const vulnerabilities = product.vulnerabilities;
