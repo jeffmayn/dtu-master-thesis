@@ -203,7 +203,7 @@ export default {
 
         response_to_display() {
             let system_severities = [];
-            for (const component of this.response.components) {
+            for (const component of this.response[0].components) {
 
                 this.components.push(component);
                 for (const product of component.products) {
