@@ -345,6 +345,7 @@ export default {
         async requestVulnerabilitiesFromServer() {
 
             console.log(this.graph.toJSON());
+            console.log(this.graph);
 
             //   this.graph.loadModel();
 
