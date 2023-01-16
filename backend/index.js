@@ -19,7 +19,7 @@ else {
 // to avoid crosssite-scripting etc on production build
 var corsOption = {
    origin: 
-      "http://localhost:8080",
+      "https://dtu-master-thesis-tir.herokuapp.com",
    optionSuccessStatus: 200
 };
  
