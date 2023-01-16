@@ -30,13 +30,15 @@
       <div>
       </div><br>
       <div class="control">
-         <button class="button is-success" @click="saveProduct">SAVE</button>
+         <router-link :to="{ name: 'Database' }" class="button is-success mt-5" @click="saveProduct">Save</router-link>
+        
       </div>
    </form>
 </template>
 <script>
 import axios from "axios";
 import url from "../config/settings.js";
+import router from "@/router";
 
 export default {
    data() {
@@ -56,7 +58,8 @@ export default {
                component_description: this.componentDescription
             });
             (this.componentName = ""), (this.componentDescription = "");
-            this.$router.push({path: '/'});
+            //this.$router.push({ path: '/' });
+            //router.go("/");
          } catch (err) {
             console.log(err);
          }
