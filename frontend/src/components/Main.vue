@@ -63,34 +63,46 @@
             </tr>
         </template>
     </table>
-    <!-- display menu when right clicking nodes -->
+
+    <!-- 
+        SearchCVE: displays a search window.
+        node_title: argument passed to SearchCVE
+        @close: return signal, calls function: toggleSearchWindow
+        @data: return signal that also has a return value, calls function: add_child_nodes_to_graph
+    -->
     <div v-if="displaySearchWindow" id="menu_search">
         <SearchCVE :node_title="focused_node_title" @close="toggleSearchWindow" @data="add_child_nodes_to_graph" />
     </div>
+
+    <!-- display menu when right clicking nodes -->
     <div v-if="displayMenu" id="menu_rcm" ref="menu_ref" style="left:99999px">
         <RightClickMenu :rightClickMenuTitle="focused_node_title" @openSearchWindow="toggleSearchWindow"
-            @openNodeWindow="toggleNodeWindow" @openLoadModelsWindow="toggleLoadModelWindow"/>
+            @openNodeWindow="toggleNodeWindow" @openLoadModelsWindow="toggleLoadModelWindow" />
     </div>
+
+    <!-- displays a window showing the children of a component -->
     <div v-if="displayNodeWindow" id="menu_node">
         <DisplayNode :title="focused_node_title" :nodes="focused_node_children" @close="toggleNodeWindow" />
     </div>
+
+    <!-- displays a window showing demo models that can be loaded into the graph -->
     <div v-if="displayLoadModelsWindow" id="menu_load">
         <DisplayLoadModels :title="focused_node_title" :nodes="focused_node_children" @close="toggleLoadWindow"
-            @model="loadModel"/>
+            @model="loadModel" />
+
+        <!-- displays a window showing the vulnerabilities of a component -->
     </div>
     <div v-if="displayVulnerabilitiesWindow" id="menu_vuln">
-        <DisplayVulnerabilitiesWindow :title="focused_product" :nodes="focused_vulnerabilities" @close="toggleVulnerabilityWindow"
-            @model="loadModel"/>
+        <DisplayVulnerabilitiesWindow :title="focused_product" :nodes="focused_vulnerabilities"
+            @close="toggleVulnerabilityWindow" @model="loadModel" />
     </div>
-    
+
 </template>
 
 <script>
 import { assertExpressionStatement, throwStatement } from '@babel/types';
 import { Addon, Graph, Node, Shape, Edge, Cell } from '@antv/x6';
 import CVE from '@/components/SearchCVE.vue'
-import { useMouse } from '@vueuse/core'
-
 import Stencil from './Stencil.vue';
 import GraphComponent from './Graph.vue';
 import axios from "axios";
@@ -100,8 +112,6 @@ import SearchCVE from '@/components/SearchCVE.vue';
 import DisplayNode from '@/components/DisplayNode.vue';
 import DisplayLoadModels from '@/components/LoadModels.vue';
 import DisplayVulnerabilitiesWindow from '@/components/DisplayVulnerabilities.vue';
-
-let myList = ['bob'];
 
 export default {
     components: {
@@ -119,12 +129,8 @@ export default {
     },
     data() {
         return {
-            items: [], // for storing stencil components
-            graphJson: [],
-            // nodes: [],
-            //  edges: [],
-            graf: myList,
-            disabled: "disabled",
+            graph: [], // for storing the graph
+            items: [], // for storing stencil components loaded from database
 
             // booleans that determines if a window is open or closed
             displayMenu: true,
@@ -143,21 +149,21 @@ export default {
             focused_node_children: [],
             childComponentName: "",
             childComponentDescr: "",
-            x: 0,
-            y: 0,
+
+            // stores mouse position for placing right click menu
             mousePosX: 0,
             mousePosY: 0,
-            graph: [],
-            waiting_for_response: false,
+
             // response from server:
             total_vulnerabilities: 0,
+            waiting_for_response: false, // switches 'run' / 'processing' on button
             components: [],
             products: [],
             severity: "",
             response_input_products: [],
-            opened: [],
-            opened2: [],
-            opened3: [],
+            opened: [],  // 
+            opened2: [], //
+            opened3: [], //
             response: [{
                 "id": 1,
                 "name": "inputs",
@@ -165,32 +171,44 @@ export default {
             }]
         };
     },
+    mounted() {
+        // used for positioning the right-click menu 
+        document.addEventListener("mousemove", (event) => {
+            this.mousePosX = event.clientX;
+            this.mousePosY = event.clientY;
+        });
+    },
     async created() {
-        await this.setup();
-        this.response_to_display();
+        // the components that is later loaded into the stencil
+        await this.get_components_from_database(); 
+        this.create_graph();
+        this.create_stencil();
 
+        // input, output, control, state & system
+        this.create_base_model(); 
+        this.setup_graph_listeners();
 
-
-
+        // displays response data (the vulnerabilities of the system)
+        this.response_to_display(); 
     },
     methods: {
         openVulnerabilities(title, vulnerabilities) {
-            console.log(vulnerabilities);
             this.focused_product = title;
             this.focused_vulnerabilities = vulnerabilities;
-
-            
-
             this.displayVulnerabilitiesWindow = true;
-
-
-
         },
+
+        // loads a model into the graph
         loadModel(value) {
             let json = value[0].model;
             this.graph.fromJSON(json);
         },
 
+        /*
+            helper-function that takes in a list of severities and
+            returns the most severe from the list:
+            order: 'HIGH' > 'MEDIUM' > 'LOW'
+        */
         determine_system_severity(system_severities) {
             if (system_severities.includes("HIGH")) {
                 this.severity = "HIGH"
@@ -201,12 +219,10 @@ export default {
             }
         },
 
+        // displays response data (the vulnerabilities of the system)
         response_to_display() {
             let system_severities = [];
-            console.log("her");
-            console.log(this.resonse);
             for (const component of this.response[0].components) {
-
                 this.components.push(component);
                 for (const product of component.products) {
                     const name = product.name;
@@ -226,14 +242,34 @@ export default {
                     }
                 }
             }
-            /*
-            console.log("components");
-            console.log(this.components);
-            console.log("products");
-            console.log(this.products);
-            */
             this.determine_system_severity(system_severities)
+        },
 
+        toggleMenu() {
+            this.showMenu = !this.displayMenu;
+        },
+        toggleLoadWindow() {
+            this.displayLoadModelsWindow = !this.displayLoadModelsWindow;
+        },
+        toggleVulnerabilityWindow() {
+            this.displayVulnerabilitiesWindow = !this.displayVulnerabilitiesWindow;
+        },
+
+        toggleLoadModelWindow() {
+            this.displayLoadModelsWindow = !this.displayLoadModelsWindow;
+        },
+
+        toggleSearchWindow() {
+            this.displaySearchWindow = !this.displaySearchWindow;
+        },
+
+        toggleNodeWindow() {
+            if (this.displayNodeWindow == false) {
+                this.get_child_nodes();
+                this.displayNodeWindow = true;
+            } else {
+                this.displayNodeWindow = false;
+            }
         },
 
         toggle3(id) {
@@ -280,7 +316,6 @@ export default {
                     children.forEach((child) => {
                         finalList.push(child);
                     });
-
                     value.forEach((child) => {
                         finalList.push(child);
                     });
@@ -288,79 +323,15 @@ export default {
                 }
             });
         },
-        /*
-        graphToJson() {
-  
-           let nodes = [];
-           let edges = [];
-           this.graphJson.cells.forEach((cell) => {
-              if (cell.shape == 'edge') {
-                 let edge = {
-                    id: cell.id,
-                    source: cell.source.cell,
-                    target: cell.target.cell
-                 };
-                 edges.push(edge);
-              } else {
-                 let node = {
-                    id: cell.id,
-                    text: cell.attrs.text.text
-                 };
-                 nodes.push(node);
-              }
-           });
-           this.nodes = nodes;
-            this.edges = edges;
-         
-         },
-           */
 
-        setCoordinates(x, y) {
-            this.x = x;
-            this.y = y;
-        },
-
-        toggleMenu() {
-            this.showMenu = !this.displayMenu;
-        },
-        toggleLoadWindow() {
-            this.displayLoadModelsWindow = !this.displayLoadModelsWindow;
-        },
-        toggleVulnerabilityWindow() {
-            this.displayVulnerabilitiesWindow = !this.displayVulnerabilitiesWindow;  
-        },
-
-        toggleLoadModelWindow() {
-            this.displayLoadModelsWindow = !this.displayLoadModelsWindow;
-        },
-
-        toggleNodeWindow() {
-            if (this.displayNodeWindow == false) {
-                this.get_child_nodes();
-                this.displayNodeWindow = true;
-            } else {
-                this.displayNodeWindow = false;
-            }
-        },
-        toggleSearchWindow() {
-            this.displaySearchWindow = !this.displaySearchWindow;
-        },
-
+        // when model is builed and run-button is pressed, 
+        // this functions requests the vulnerability model from the server
         async requestVulnerabilitiesFromServer() {
-
-            console.log(this.graph.toJSON());
-            console.log(this.graph);
-
-            //   this.graph.loadModel();
-
-
             this.waiting_for_response = true;
-            try { // http://localhost:5003
+            try {
                 const response = await axios.post(url + "model", {
                     graph: this.graph,
                 });
-
-                //    console.log(this.graph);
 
                 // clear all variables before new data is received
                 this.opened = [];
@@ -372,413 +343,333 @@ export default {
             } catch (err) {
                 console.log(err);
             }
+            // display the results in the table at the bottom of the webpage
             this.response_to_display()
             setTimeout(() => {
                 this.waiting_for_response = false;
             }, 2000);
         },
 
-        async setup() {
+        async get_components_from_database() {
             try {
                 const response = await axios.get(url + "components");
                 this.items = response.data;
-                myList = response.data;
-
-                let graph = new Graph({
-                    container: this.$refs.model_ref,
-                    grid: true,
-                    height: 600,
-                    resizing: false,
-                    /*
-                    translating: {
-                        restrict(view) {
-                            const cell = view.cell
-                            if (cell.isNode()) {
-                                
-                                const parent = cell.getParent()
-                                if (parent) {
-                                    return parent.getBBox()
-                                }
-                            }
-                        }
-                    },
-                    */
-                    connecting: {
-                        allowBlank: false,
-                        snap: {
-                            radius: 500,
-                        },
-                        validateConnection: function (args) {
-                            if (args.sourcePort == "input") {
-                                return args.targetCell.id == "inpt";
-                            }
-                            if (args.sourcePort == "output") {
-                                return args.targetCell.id == "outpt";
-                            }
-                        }
-                    }
-                });
-
-
-
-                const stencil = new Addon.Stencil({
-                    title: 'Components',
-                    target: graph,
-                    stencilGraphHeight: 180,
-                    stencilGraphWidth: 280,
-                    search(cell, keyword) {
-                        return cell.shape.indexOf(keyword) !== -1
-                    },
-                    placeholder: 'Search all',
-                    notFoundText: 'Not Found',
-                    collapsable: true,
-                    groups: [
-                        {
-                            name: 'group1',
-                            title: 'INPUT',
-                        },
-                        {
-                            name: 'group2',
-                            title: 'OUTPUT',
-                        },
-                        {
-                            name: 'group3',
-                            title: 'STATE',
-                            collapsed: true
-                        },
-                        {
-                            name: 'group4',
-                            title: 'CONTROL',
-                            collapsed: true
-                        },
-                    ],
-                });
-
-                const inputComponents = [];
-                const outputComponents = [];
-
-                this.items.forEach((item) => {
-                    if (item.component_category == "input") {
-                        inputComponents.push(item);
-                    } else if (item.component_category == "output") {
-                        outputComponents.push(item);
-                    }
-                });
-
-                const inputs = inputComponents.map(item => new Shape.Rect({
-                    shape: 'rect',
-                    label: item.component_name,
-                    id: item.component_name,
-                    type: "sub_node",
-                    x: 5,
-                    y: 50,
-                    width: 100,
-                    height: 25,
-                    ports: {
-                        groups: {
-                            in: {
-                                position: { name: "right" },
-                                attrs: {
-
-                                    circle: {
-                                        r: 6,
-                                        magnet: true
-                                    }
-                                }
-                            },
-                        },
-                        items: [
-                            {
-                                id: 'input',
-                                group: 'in'
-                            }
-                        ]
-                    },
-                    attrs: {
-                        children: [
-                            {}
-                        ],
-                        body: {
-                            strokeWidth: 1,
-                            fill: '#83E397',
-                        }
-                    }
-                }));
-
-                const outputs = outputComponents.map(item => new Shape.Rect({
-                    shape: 'rect',
-                    label: item.component_name,
-                    id: item.component_name,
-                    type: "sub_node",
-                    x: 5,
-                    y: 50,
-                    width: 100,
-                    height: 25,
-                    children: [
-                    ],
-                    ports: {
-                        groups: {
-                            in: {
-                                position: { name: "left" },
-                                attrs: {
-
-                                    circle: {
-                                        r: 6,
-                                        magnet: true
-                                    }
-                                }
-                            },
-                        },
-                        items: [
-                            {
-                                id: 'output',
-                                group: 'in'
-                            }
-                        ]
-                    },
-                    attrs: {
-                        children: [
-                            {}
-                        ],
-                        body: {
-                            strokeWidth: 1,
-                            fill: '#93CEFE',
-                        }
-                    }
-                }));
-
-                stencil.load(inputs, 'group1');
-                stencil.load(outputs, 'group2');
-                document.getElementById("stencil").appendChild(stencil.container);
-
-                const input = graph.addNode({
-                    shape: 'rect',
-                    label: 'INPUT',
-                    id: 'inpt',
-                    type: "main_node",
-                    nodeMovable: false,
-                    /*
-                    ports: {
-                       groups: {
-                          group1: {
-                             markup: {
-                                tagName: 'circle',
-                                selector: 'circle',
-                                attrs: {
-                                   r: 6,
-                                   fill: '#FFF',
-                                   stroke: '#000'
-                                }
-                             },
-                             attrs: {},
-                             zIndex: 1,
-                             position: {
-                                name: 'left',
-                                args: {},
-                             },
-                          },
-                       },
-                       items: [
-                          { id: 'port1', group: 'group1' },
-                          { id: 'port2', group: 'group1' },
-                          { id: 'port3', group: 'group1'}
-                       ],
-                    },
-                    */
-
-                    x: 145,
-                    y: 140,
-                    width: 70,
-                    height: 200,
-                    attrs: {
-                        /*
-                        tools: [
-                           {
-                              name: 'contextmenu',
-                              args: {
-                                 menu,
-                              }
-                           }
-                        ],
-                        */
-                        body: {
-                            fill: '#83E397',
-                        }
-                    }
-                });
-
-                const output = graph.addNode({
-                    shape: 'rect',
-                    label: 'OUTPUT',
-                    id: 'outpt',
-                    type: "main_node",
-                    x: 415,
-                    y: 140,
-                    width: 70,
-                    height: 200,
-                    attrs: {
-                        label: {
-                            direction: 'up'
-                        },
-                        body: {
-                            fill: '#93CEFE',
-                        }
-                    }
-                });
-
-                const control = graph.addNode({
-                    shape: 'rect',
-                    label: 'CONTROL',
-                    id: 'ctrl',
-                    type: "main_node",
-                    x: 215,
-                    y: 85,
-                    width: 200,
-                    height: 55,
-                    attrs: {
-                        body: {
-                            fill: '#FF9494',
-                        }
-                    }
-                });
-
-                const state = graph.addNode({
-                    shape: 'rect',
-                    label: 'STATE',
-                    id: 'state',
-                    type: "main_node",
-                    x: 215,
-                    y: 340,
-                    width: 200,
-                    height: 55,
-                    attrs: {
-                        body: {
-                            fill: '#ECD333',
-                        }
-                    }
-                });
-
-                const system = graph.addNode({
-                    shape: 'rect',
-                    label: 'SYSTEM',
-                    id: 'system',
-                    type: "main_node",
-                    x: 215,
-                    y: 140,
-                    width: 200,
-                    height: 200,
-                    zIndex: -1,
-                    meta: {
-                        id: "bobby"
-                    },
-                    attrs: {
-                        body: {
-                            fill: '#D7D7D7',
-                        },
-                        children: [
-                        ]
-                    }
-                });
-/*
-                system.addChild(state);
-                system.addChild(control);
-                system.addChild(output);
-                system.addChild(input)
-                */
-
-                this.graphJson = graph.toJSON();
-
-                graph.on("node:mousedown", ({ node }) => {
-                    let menuref = this.$refs.menu_ref;
-                    menuref.style["left"] = "99999px";
-                    menuref.style["top"] = "999999px";
-                });
-
-                graph.on("node:contextmenu", ({ node }) => {
-                    
-
-
-                    let menuref = this.$refs.menu_ref;
-
-            
-                    this.focused_node_title = node.store.data.attrs.text.text;
-                    this.focused_node_id = node.id;
-
-                    console.log(node.id);
-                    if (
-                        node.id == "state" ||
-                        node.id == "inpt" ||
-                        node.id == "ctrl" ||
-                        node.id == "output" ||
-                        node.id == "system") {
-                            
-                    } else {
-                        menuref.style["left"] = this.mousePosX + "px";
-                    menuref.style["top"] = this.mousePosY + "px"; 
-                        }
-
-                    
-                });
-
-                graph.on("node:mouseenter", ({ node }) => {
-                    if (
-                        node.id == "ctrl" ||
-                        node.id == "system" ||
-                        node.id == "inpt" ||
-                        node.id == "outpt" ||
-                        node.id == "state") {
-                        // we dont want user to be able to delete these nodes
-                    } else {
-                        node.addTools({
-                            name: 'button-remove',
-                            args: {
-                                offset: { x: 10, y: 10 }
-                            }
-                        })
-                    }
-                });
-
-                graph.on("node:mouseleave", ({ node }) => {
-                    node.removeTools();
-                });
-
-                graph.on("edge:mouseenter", ({ edge }) => {
-                    edge.addTools({
-                        name: "button-remove"
-                    })
-                });
-
-                graph.on("edge:mouseleave", ({ edge }) => {
-                    edge.removeTools();
-                });
-
-                // listen for changes on the graph and create json object of it
-                graph.on("cell:changed", ({ cell }) => {
-                    //   this.graphJson = graph.parseJSON(graph.toJSON());
-                    this.graphJson = graph.toJSON();
-                });
-
-                graph.on("edge:removed", ({ edge }) => {
-                    //  this.graphJson = graph.parseJSON(graph.toJSON());
-                });
-
-                graph.on("node:removed", ({ node }) => {
-                    //  this.graphJson = graph.parseJSON(graph.toJSON());
-                });
-                graph.center;
-                this.graph = graph;
             } catch (err) {
                 console.log(err);
             }
         },
-    },
 
-    mounted() {
-        // used for positioning the right-click menu 
-        document.addEventListener("mousemove", (event) => {
-            this.mousePosX = event.clientX;
-            this.mousePosY = event.clientY;
-        });
+        // creates the graph object
+        create_graph() {
+            let graph = new Graph({
+                container: this.$refs.model_ref,
+                grid: true,
+                height: 600,
+                resizing: false,
+                connecting: {
+                    allowBlank: false,
+                    snap: {
+                        radius: 500,
+                    },
+                    validateConnection: function (args) {
+                        if (args.sourcePort == "input") {
+                            return args.targetCell.id == "inpt";
+                        }
+                        if (args.sourcePort == "output") {
+                            return args.targetCell.id == "outpt";
+                        }
+                    }
+                }
+            });
+            this.graph = graph;
+        },
+
+        // creates the stencil object
+        create_stencil() {
+            const stencil = new Addon.Stencil({
+                title: 'Components',
+                target: this.graph,
+                stencilGraphHeight: 180,
+                stencilGraphWidth: 280,
+                search(cell, keyword) {
+                    return cell.shape.indexOf(keyword) !== -1
+                },
+                placeholder: 'Search all',
+                notFoundText: 'Not Found',
+                collapsable: true,
+                groups: [
+                    {
+                        name: 'group1',
+                        title: 'INPUT',
+                    },
+                    {
+                        name: 'group2',
+                        title: 'OUTPUT',
+                    },
+                    {
+                        name: 'group3',
+                        title: 'STATE',
+                        collapsed: true
+                    },
+                    {
+                        name: 'group4',
+                        title: 'CONTROL',
+                        collapsed: true
+                    },
+                ],
+            });
+
+            const inputComponents = [];
+            const outputComponents = [];
+
+            this.items.forEach((item) => {
+                if (item.component_category == "input") {
+                    inputComponents.push(item);
+                } else if (item.component_category == "output") {
+                    outputComponents.push(item);
+                }
+            });
+
+            const inputs = inputComponents.map(item => new Shape.Rect({
+                shape: 'rect',
+                label: item.component_name,
+                id: item.component_name,
+                type: "sub_node",
+                x: 5,
+                y: 50,
+                width: 100,
+                height: 25,
+                ports: {
+                    groups: {
+                        in: {
+                            position: { name: "right" },
+                            attrs: {
+                                circle: {
+                                    r: 6,
+                                    magnet: true
+                                }
+                            }
+                        },
+                    },
+                    items: [
+                        {
+                            id: 'input',
+                            group: 'in'
+                        }
+                    ]
+                },
+                attrs: {
+                    children: [
+                        {}
+                    ],
+                    body: {
+                        strokeWidth: 1,
+                        fill: '#83E397',
+                    }
+                }
+            }));
+
+            const outputs = outputComponents.map(item => new Shape.Rect({
+                shape: 'rect',
+                label: item.component_name,
+                id: item.component_name,
+                type: "sub_node",
+                x: 5,
+                y: 50,
+                width: 100,
+                height: 25,
+                children: [
+                ],
+                ports: {
+                    groups: {
+                        in: {
+                            position: { name: "left" },
+                            attrs: {
+                                circle: {
+                                    r: 6,
+                                    magnet: true
+                                }
+                            }
+                        },
+                    },
+                    items: [
+                        {
+                            id: 'output',
+                            group: 'in'
+                        }
+                    ]
+                },
+                attrs: {
+                    children: [
+                        {}
+                    ],
+                    body: {
+                        strokeWidth: 1,
+                        fill: '#93CEFE',
+                    }
+                }
+            }));
+            stencil.load(inputs, 'group1');
+            stencil.load(outputs, 'group2');
+            document.getElementById("stencil").appendChild(stencil.container);
+        },
+
+        create_base_model() {
+            const input = this.graph.addNode({
+                shape: 'rect',
+                label: 'INPUT',
+                id: 'inpt',
+                type: "main_node",
+                nodeMovable: false,
+                x: 145,
+                y: 140,
+                width: 70,
+                height: 200,
+                attrs: {
+                    body: {
+                        fill: '#83E397',
+                    }
+                }
+            });
+
+            const output = this.graph.addNode({
+                shape: 'rect',
+                label: 'OUTPUT',
+                id: 'outpt',
+                type: "main_node",
+                x: 415,
+                y: 140,
+                width: 70,
+                height: 200,
+                attrs: {
+                    label: {
+                        direction: 'up'
+                    },
+                    body: {
+                        fill: '#93CEFE',
+                    }
+                }
+            });
+
+            const control = this.graph.addNode({
+                shape: 'rect',
+                label: 'CONTROL',
+                id: 'ctrl',
+                type: "main_node",
+                x: 215,
+                y: 85,
+                width: 200,
+                height: 55,
+                attrs: {
+                    body: {
+                        fill: '#FF9494',
+                    }
+                }
+            });
+
+            const state = this.graph.addNode({
+                shape: 'rect',
+                label: 'STATE',
+                id: 'state',
+                type: "main_node",
+                x: 215,
+                y: 340,
+                width: 200,
+                height: 55,
+                attrs: {
+                    body: {
+                        fill: '#ECD333',
+                    }
+                }
+            });
+
+            const system = this.graph.addNode({
+                shape: 'rect',
+                label: 'SYSTEM',
+                id: 'system',
+                type: "main_node",
+                x: 215,
+                y: 140,
+                width: 200,
+                height: 200,
+                zIndex: -1,
+                meta: {
+                    id: "bobby"
+                },
+                attrs: {
+                    body: {
+                        fill: '#D7D7D7',
+                    },
+                    children: [
+                    ]
+                }
+            });
+        },
+
+        setup_graph_listeners() {
+
+            // places the right-click menu outside of users view
+            // hacky solution because disabling it yielded some errors
+            this.graph.on("node:mousedown", ({ node }) => {
+                let menuref = this.$refs.menu_ref;
+                menuref.style["left"] = "99999px";
+                menuref.style["top"] = "999999px";
+            });
+
+            // right-clicking components in the graph opens the right-click menu at mouse position
+            this.graph.on("node:contextmenu", ({ node }) => {
+                let menuref = this.$refs.menu_ref;
+                this.focused_node_title = node.store.data.attrs.text.text;
+                this.focused_node_id = node.id;
+
+                // disables rightclick on the five main components
+                if (
+                    node.id == "state" ||
+                    node.id == "inpt" ||
+                    node.id == "ctrl" ||
+                    node.id == "output" ||
+                    node.id == "system") {
+                } else {
+                    menuref.style["left"] = this.mousePosX + "px";
+                    menuref.style["top"] = this.mousePosY + "px";
+                }
+            });
+
+            // when mouse hovers a component a delete icon appears
+            this.graph.on("node:mouseenter", ({ node }) => {
+                if (
+                    node.id == "ctrl" ||
+                    node.id == "system" ||
+                    node.id == "inpt" ||
+                    node.id == "outpt" ||
+                    node.id == "state") {
+                    // we dont want user to be able to delete the main components
+                } else {
+                    node.addTools({
+                        name: 'button-remove',
+                        args: {
+                            offset: { x: 10, y: 10 }
+                        }
+                    })
+                }
+            });
+
+            // when mouse hovers an edge between components, a delete icon appears
+            this.graph.on("edge:mouseenter", ({ edge }) => {
+                edge.addTools({
+                    name: "button-remove"
+                })
+            });
+
+            // removes delete icon when mouse is no longer hovering the component
+            this.graph.on("node:mouseleave", ({ node }) => {
+                node.removeTools();
+            });
+
+            this.graph.on("edge:mouseleave", ({ edge }) => {
+                edge.removeTools();
+            });
+        },
     },
 };
 

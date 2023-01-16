@@ -16,10 +16,10 @@ else {
 }
 */
 
-// to avoid crosssite-scripting etc on production build
+// https://dtu-tir.netlify.app
 var corsOption = {
    origin: 
-      "https://dtu-tir.netlify.app",
+      "http://localhost:8081",
    optionSuccessStatus: 200
 };
  
