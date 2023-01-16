@@ -17,6 +17,7 @@ const db = mysql.createConnection({
 });
 */
 var db_config = {
+   connectionLimit : 1000,
    host: process.env.DB_HOST,
    user: process.env.DB_USER,
    password: process.env.DB_PASSWORD,
@@ -34,10 +35,10 @@ const db = mysql.createConnection({
 
 
  
- var connection;
- 
+ var connection = mysql.createPool(db_config);
+ /*
  function handleDisconnect() {
-   connection = mysql.createPool(db_config); // Recreate the connection, since
+   connection = mysql.createConnection(db_config); // Recreate the connection, since
                                                    // the old one cannot be reused.
  
    connection.connect(function(err) {              // The server is either down
@@ -58,6 +59,8 @@ const db = mysql.createConnection({
  }
  
 handleDisconnect();
+
+*/
  
 
 
