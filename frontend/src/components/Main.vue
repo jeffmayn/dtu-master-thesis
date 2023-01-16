@@ -224,10 +224,12 @@ export default {
                     }
                 }
             }
+            /*
             console.log("components");
             console.log(this.components);
             console.log("products");
             console.log(this.products);
+            */
             this.determine_system_severity(system_severities)
 
         },
@@ -385,6 +387,7 @@ export default {
                     grid: true,
                     height: 600,
                     resizing: false,
+                    /*
                     translating: {
                         restrict(view) {
                             const cell = view.cell
@@ -397,6 +400,7 @@ export default {
                             }
                         }
                     },
+                    */
                     connecting: {
                         allowBlank: false,
                         snap: {
@@ -673,11 +677,12 @@ export default {
                         ]
                     }
                 });
-
+/*
                 system.addChild(state);
                 system.addChild(control);
                 system.addChild(output);
                 system.addChild(input)
+                */
 
                 this.graphJson = graph.toJSON();
 
