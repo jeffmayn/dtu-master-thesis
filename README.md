@@ -1,8 +1,18 @@
-# Master Thesis Project
+# ☣ 🔗 Threat Identification & Response 
+
+🎓 Master Thesis Project at The Technical University of Denmark (DTU) 📚
+
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
+
+
+
+## 🤔 What is this?
+
 Thesis title: Methods for exhaustive identification of attack vectors represented graphically.
-
-Place: Technical University of Denmark.
-
 
 The system is divided into a backend and frontend. Go into each folder to see intructions of how to install and run them.
 
+## ▶ Try it out:
+
+(will soon be available)
