@@ -29,28 +29,31 @@
                 <td>{{ total_vulnerabilities }}</td>
                 <td id="severity-bg-color" style="width: 143px;">{{ severity }}</td>
             </tr>
-            <!-- nested loop -->
+            <!-- outer nested loop -->
             <tr v-if="opened.includes(row.id)">
                 <td colspan="4">
                     <table class="table is-striped is-bordered mt-2 is-fullwidth">
-                        <template v-for="(rowz, index) in components" :key="rowz.id">
-                            <tr @click="toggle2(rowz.id)" :class="{ opened2: opened2.includes(rowz.id) }">
-                                <td style="width: 150px;">{{ rowz.component }} </td>
+                        <template v-for="(row_outer_nested, index) in components" :key="row_outer_nested.id">
+                            <tr @click="toggle2(row_outer_nested.id)"
+                                :class="{ opened2: opened2.includes(row_outer_nested.id) }">
+                                <td style="width: 150px;">{{ row_outer_nested.component }} </td>
                                 <td></td>
-                                <td style="width: 130px;">{{ rowz.vulnerabilities }}</td>
-                                <td id="severity-bg-color" style="width: 130px;">{{ rowz.severity }}</td>
+                                <td style="width: 130px;">{{ row_outer_nested.vulnerabilities }}</td>
+                                <td id="severity-bg-color" style="width: 130px;">{{ row_outer_nested.severity }}</td>
                             </tr>
-                            <!-- nested loop -->
+                            <!-- inner nested loop -->
                             <tr>
                                 <td colspan="4">
                                     <table class="table is-striped is-bordered mt-2 is-fullwidth">
-
-                                        <template v-for="rowzz in components[index].products">
-                                            <tr @click="openVulnerabilities(rowzz.title, rowzz.vulnerabilities)"
-                                                :class="{ opened3: opened3.includes(rowzz.id) }">
-                                                <td style="width: 900px;">{{ rowzz.title }}</td>
-                                                <td style="width: 140px;">{{ rowzz.vulnerabilities.length }}</td>
-                                                <td id="severity-bg-color" style="width: 120px;">{{ rowzz.severity }}
+                                        <template v-for="row_inner_nested in components[index].products">
+                                            <tr @click="openVulnerabilities(row_inner_nested.title, row_inner_nested.vulnerabilities)"
+                                                :class="{ opened3: opened3.includes(row_inner_nested.id) }">
+                                                <td style="width: 900px;">{{ row_inner_nested.title }}</td>
+                                                <td style="width: 140px;">{{ row_inner_nested.vulnerabilities.length }}
+                                                </td>
+                                                <td id="severity-bg-color" style="width: 120px;">{{
+                                                    row_inner_nested.severity
+                                                }}
                                                 </td>
                                             </tr>
                                         </template>
@@ -176,16 +179,16 @@ export default {
     },
     async created() {
         // the components that is later loaded into the stencil
-        await this.get_components_from_database(); 
+        await this.get_components_from_database();
         this.create_graph();
         this.create_stencil();
 
         // input, output, control, state & system
-        this.create_base_model(); 
+        this.create_base_model();
         this.setup_graph_listeners();
 
         // displays response data (the vulnerabilities of the system)
-        this.response_to_display(); 
+        this.response_to_display();
     },
     methods: {
         openVulnerabilities(title, vulnerabilities) {
@@ -537,7 +540,7 @@ export default {
                 y: 140,
                 width: 70,
                 height: 200,
-                
+
                 attrs: {
                     label: {
                         direction: 'up'
