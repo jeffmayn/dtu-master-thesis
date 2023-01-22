@@ -1,6 +1,8 @@
-# ☣ 🔗 Threat Identification & Response [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+# ☣ 🔗 Threat Identification & Response 
 
 🎓 Master Thesis Project at The Technical University of Denmark (DTU) 📚
+
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 
 
