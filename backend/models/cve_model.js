@@ -43,7 +43,9 @@ export const searchByKeywords = async (keywords, result) => {
 */
 export const searchProductByVendorAndProductNames = async (keywords, result) => {
    try {
-      const response = await axios.get(`https://services.nvd.nist.gov/rest/json/cpes/2.0?cpeMatchString=cpe:2.3:o:${keywords[0]}:${keywords[1]}`);
+      // cpe:<cpe_version>:<part>:<vendor>:<version>:<update>:<edition>:<language>:<sw_edition>:<target_sw>:<other>
+      // part: 'a' for application, 'b' for hardware, 'o' for operating systems, '*' for all
+      const response = await axios.get(`https://services.nvd.nist.gov/rest/json/cpes/2.0?cpeMatchString=cpe:2.3:*:${keywords[0]}:${keywords[1]}`);
       const products = response.data.products;
       const final_response = [];
 

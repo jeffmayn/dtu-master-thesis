@@ -1,17 +1,17 @@
 <template>
    <div>
-     <DB />
+     <Database />
    </div>
  </template>
  
  <script>
  // @ is an alias to /src
- import DB from '@/components/DB.vue'
+ import Database from '@/components/Database.vue'
  
  export default {
    name: 'Database',
    components: {
-      DB
+    Database
    }
  }
  </script>

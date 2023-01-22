@@ -1,4 +1,4 @@
-<template :showLoadingWindow="focused_node_title">
+<template>
     <div id="space"></div>
     <table class="table is-bordered mt-2 is-fullwidth">
         <thead>
@@ -103,8 +103,6 @@
 import { assertExpressionStatement, throwStatement } from '@babel/types';
 import { Addon, Graph, Node, Shape, Edge, Cell } from '@antv/x6';
 import CVE from '@/components/SearchCVE.vue'
-import Stencil from './Stencil.vue';
-import GraphComponent from './Graph.vue';
 import axios from "axios";
 import url from "../config/settings.js";
 import RightClickMenu from './RightClickMenu.vue';
@@ -115,8 +113,6 @@ import DisplayVulnerabilitiesWindow from '@/components/DisplayVulnerabilities.vu
 
 export default {
     components: {
-        Stencil,
-        GraphComponent,
         CVE,
         RightClickMenu,
         SearchCVE,
@@ -541,6 +537,7 @@ export default {
                 y: 140,
                 width: 70,
                 height: 200,
+                
                 attrs: {
                     label: {
                         direction: 'up'

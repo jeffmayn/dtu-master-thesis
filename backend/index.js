@@ -19,7 +19,7 @@ else {
 // https://dtu-tir.netlify.app
 var corsOption = {
    origin: 
-      "http://localhost:8081",
+      "http://localhost:8080",
    optionSuccessStatus: 200
 };
  
