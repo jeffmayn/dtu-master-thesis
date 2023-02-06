@@ -9,7 +9,7 @@
  import Database from '@/components/Database.vue'
  
  export default {
-   name: 'Database',
+   name: 'DB',
    components: {
     Database
    }

@@ -15,7 +15,7 @@ const routes = [
     component: Create
   },
   {
-    name: "Database",
+    name: "DB",
     path: "/database",
     component: Database
   },

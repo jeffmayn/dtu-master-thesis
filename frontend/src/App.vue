@@ -56,7 +56,7 @@ export default {
         router.push("/");
       }
 
-      if (val.name == "About") {
+      if (val.name == "About & Help") {
         router.push("/about");
       }
 
@@ -115,7 +115,7 @@ export default {
         },
         {
           name: "Help",
-          menu: [{ name: "About" }],
+          menu: [{ name: "About & Help" }],
         },
       ],
     };

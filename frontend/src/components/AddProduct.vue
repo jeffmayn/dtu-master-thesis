@@ -30,7 +30,7 @@
       <div>
       </div><br>
       <div class="control">
-         <router-link :to="{ name: 'Database' }" class="button is-success mt-5" @click="saveProduct">Save</router-link>
+         <router-link :to="{ name: 'DB' }" class="button is-success mt-5" @click="saveProduct">Save</router-link>
         
       </div>
    </form>

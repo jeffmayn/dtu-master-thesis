@@ -4,22 +4,10 @@ import Router from "./routes/routes.js";
 
 const PORT = process.env.PORT || 3030;
 
-// todo: needs fixing
-
-/*
-let origin = "";
-if (process.env.MODE == "dev") {
-   origin = "http://localhost:" + process.env.FRONTEND_PORT;
-}
-else {
-   origin = "https://dtu-master-thesis-tir.herokuapp.com";
-}
-*/
-
-// https://dtu-tir.netlify.app
+// http://localhost:8080
 var corsOption = {
    origin: 
-      "http://localhost:8080",
+      "https://dtu-tir.netlify.app",
    optionSuccessStatus: 200
 };
  

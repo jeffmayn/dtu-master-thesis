@@ -1,5 +1,5 @@
 
-// https://dtu-master-thesis-tir.herokuapp.com/
-let url = "http://localhost:3030/";
+// http://localhost:3030/
+let url = "https://dtu-master-thesis-tir.herokuapp.com/";
 
 export default url;
