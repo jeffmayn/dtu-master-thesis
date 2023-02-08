@@ -75,6 +75,7 @@ export const searchProductByVendorAndProductNames = async (keywords, result) => 
 export const getAllVulnerabilitiesFromCPEName = async (cpeName, result) => {  
      try {
         const response = await axios.get(`https://services.nvd.nist.gov/rest/json/cves/2.0?cpeName=${cpeName}`).catch(function (error) {
+         res.end();
            console.log("FEEEJL");
         });
         const vulnerabilities_data = response.data.vulnerabilities;
