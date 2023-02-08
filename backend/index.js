@@ -14,8 +14,6 @@ var corsOption = {
 };
  
 
-
-
 const app = express();
 
 app.options("/*", function (req, res, next) {
