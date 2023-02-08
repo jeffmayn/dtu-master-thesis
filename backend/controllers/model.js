@@ -18,7 +18,7 @@ export const modelJson = async (req, res) => {
             res.json(results);
          } catch (err) {
             console.log("her");
-            res.send(err);
+            res.status(500).json(err);
          }
       }
    });
