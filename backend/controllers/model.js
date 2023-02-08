@@ -11,15 +11,19 @@ export const modelJson = async (req, res) => {
    const graph = req.body.graph;
 
    await getAllVulnerabilitiesInJsonFormat(graph, (err, results) => {
-      if (err) {
-        // res.send(err);
-        //res.json({error:error});
-         return res.status(400).json({
+      try {
+         if (err) {
+            res.send(err);
+            //res.json({error:error});
+
+         } else {
+            res.json(results);
+         }
+      } catch (error) {
+                  return res.status(400).json({
             status: 'error',
             error: 'something went wrong'
          });
-      } else {
-         res.json(results);
       }
    });
 }
