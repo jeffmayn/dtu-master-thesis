@@ -12,8 +12,8 @@ export const modelJson = async (req, res) => {
 
    await getAllVulnerabilitiesInJsonFormat(graph, (err, results) => {
       if (err) {
-        // res.send(err);
-        res.json({error:error}); // hacky solution to avoid server crash on production server
+         res.send(err);
+      //  res.json({error:error}); // hacky solution to avoid server crash on production server
       } else {
          res.json(results);
       }
