@@ -49,6 +49,11 @@ function determineSystemSeverity(severities) {
    'INPUT', 'OUTPUT', 'CONTROL' and 'STATE'
 */
 const getAllVulnerabilitiesInJsonFormat = async (graph, result) => {
+
+   console.log("SERVER GRAPH:");
+   console.log(graph);
+
+
    let sub_nodes = [];
    const cells = graph.cells;
 
