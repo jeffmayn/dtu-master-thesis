@@ -82,8 +82,6 @@ const getAllVulnerabilitiesInJsonFormat = async (graph, result) => {
                // e.g. i = 'microsoft_ms_dos'
                for (const i in sub_node_children) {
 
-                  try {
-
                      // get all vulnerabilities associated with e.g. 'microsoft_ms_dos'
                      await getAllVulnerabilitiesFromCPEName(sub_node_children[i].name, (err, results) => {
                         if (err) {
@@ -112,9 +110,6 @@ const getAllVulnerabilitiesInJsonFormat = async (graph, result) => {
                            });
                         }
                      });
-                  } catch (err) {
-                     console.log(err);
-                  }
                }
             } catch (err) {
                console.log(err);
