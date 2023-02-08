@@ -81,34 +81,39 @@ const getAllVulnerabilitiesInJsonFormat = async (graph, result) => {
                // e.g. i = 'microsoft_ms_dos'
                for (const i in sub_node_children) {
 
-                  // get all vulnerabilities associated with e.g. 'microsoft_ms_dos'
-                  await getAllVulnerabilitiesFromCPEName(sub_node_children[i].name, (err, results) => {
-                     if (err) {
-                        result(err, null);
-                     } else {
-                        sub_node_vulnerabilities_length += results.length;
-                        product_count++;
-                        let local_severities = [];
+                  try {
 
-                        // pushes the severities of all child-components of e.g. 'Router' to a global list
-                        // and the severities of a single product e.g. 'microsoft_ms_dos' to a local list
-                        // this is done in order to have a cleaner way of indexing on the frontend.
-                        for (const vulnerability of results) {
-                           const base_severity = vulnerability.metrics.cvssMetricV2[0].baseSeverity;
-                           sub_node_severities.push(base_severity);
-                           local_severities.push(base_severity);
+                     // get all vulnerabilities associated with e.g. 'microsoft_ms_dos'
+                     await getAllVulnerabilitiesFromCPEName(sub_node_children[i].name, (err, results) => {
+                        if (err) {
+                           result(err, null);
+                        } else {
+                           sub_node_vulnerabilities_length += results.length;
+                           product_count++;
+                           let local_severities = [];
+
+                           // pushes the severities of all child-components of e.g. 'Router' to a global list
+                           // and the severities of a single product e.g. 'microsoft_ms_dos' to a local list
+                           // this is done in order to have a cleaner way of indexing on the frontend.
+                           for (const vulnerability of results) {
+                              const base_severity = vulnerability.metrics.cvssMetricV2[0].baseSeverity;
+                              sub_node_severities.push(base_severity);
+                              local_severities.push(base_severity);
+                           }
+                           // the local severities e.g. 'Router'
+                           const highest_severity = determineSystemSeverity(local_severities);
+                           child_nodes.push({
+                              severity: highest_severity,
+                              id: product_count,
+                              name: sub_node_children[i].name,
+                              title: sub_node_children[i].title,
+                              vulnerabilities: results
+                           });
                         }
-                        // the local severities e.g. 'Router'
-                        const highest_severity = determineSystemSeverity(local_severities);
-                        child_nodes.push({
-                           severity: highest_severity,
-                           id: product_count,
-                           name: sub_node_children[i].name,
-                           title: sub_node_children[i].title,
-                           vulnerabilities: results
-                        });
-                     }
-                  });
+                     });
+                  } catch (err) {
+                     console.log(err);
+                  }
                }
             } catch (err) {
                console.log(err);
