@@ -14,7 +14,12 @@ export const modelJson = async (req, res) => {
       if (err) {
          res.send(err);
       } else {
-         res.json(results);
+         try {
+            res.json(results);
+         } catch (err) {
+            console.log("her");
+            res.send(err);
+         }
       }
    });
 }
