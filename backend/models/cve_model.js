@@ -74,7 +74,25 @@ export const searchProductByVendorAndProductNames = async (keywords, result) => 
 */
 export const getAllVulnerabilitiesFromCPEName = async (cpeName, result) => {  
      try {
-        const response = await axios.get(`https://services.nvd.nist.gov/rest/json/cves/2.0?cpeName=${cpeName}`).catch(function (error) {
+       await axios.get(`https://services.nvd.nist.gov/rest/json/cves/2.0?cpeName=${cpeName}`)
+          .then((response) => {
+            const vulnerabilities_data = response.data.vulnerabilities;
+            const len = vulnerabilities_data.length;
+    
+            let vulnerabilities = [];
+            for (let i = 0; i < len; i++){
+             let vulnerability = {
+                "description" : response.data.vulnerabilities[i].cve.descriptions,
+                "metrics": response.data.vulnerabilities[i].cve.metrics,
+                "weaknesses" : response.data.vulnerabilities[i].cve.weaknesses,
+                "configurations": response.data.vulnerabilities[i].cve.configurations,
+                "references" : response.data.vulnerabilities[0].cve.references
+             };
+             vulnerabilities.push(vulnerability);
+            }
+            result(null, vulnerabilities);
+           })
+           .catch(function (error) {
          //res.end();
            if (error.response) {
               console.log("ERROR RESPONSE");
@@ -85,21 +103,7 @@ export const getAllVulnerabilitiesFromCPEName = async (cpeName, result) => {
               console.log("ANDEN ERROR");
            }
         });
-        const vulnerabilities_data = response.data.vulnerabilities;
-        const len = vulnerabilities_data.length;
 
-        let vulnerabilities = [];
-        for (let i = 0; i < len; i++){
-         let vulnerability = {
-            "description" : response.data.vulnerabilities[i].cve.descriptions,
-            "metrics": response.data.vulnerabilities[i].cve.metrics,
-            "weaknesses" : response.data.vulnerabilities[i].cve.weaknesses,
-            "configurations": response.data.vulnerabilities[i].cve.configurations,
-            "references" : response.data.vulnerabilities[0].cve.references
-         };
-         vulnerabilities.push(vulnerability);
-        }
-        result(null, vulnerabilities);
      } catch (err) {
         result(err, null);
      }
