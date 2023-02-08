@@ -11,19 +11,11 @@ export const modelJson = async (req, res) => {
    const graph = req.body.graph;
 
    await getAllVulnerabilitiesInJsonFormat(graph, (err, results) => {
-      try {
-         if (err) {
-            res.send(err);
-            //res.json({error:error});
-
-         } else {
-            res.json(results);
-         }
-      } catch (error) {
-                  return res.status(400).json({
-            status: 'error',
-            error: 'something went wrong'
-         });
+      if (err) {
+        // res.send(err);
+        res.json({error:error}); // hacky solution to avoid server crash on production server
+      } else {
+         res.json(results);
       }
    });
 }
@@ -58,10 +50,6 @@ function determineSystemSeverity(severities) {
    'INPUT', 'OUTPUT', 'CONTROL' and 'STATE'
 */
 const getAllVulnerabilitiesInJsonFormat = async (graph, result) => {
-
-   console.log("SERVER GRAPH:");
-   console.log(graph);
-
 
    let sub_nodes = [];
    const cells = graph.cells;

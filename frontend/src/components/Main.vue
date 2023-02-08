@@ -229,13 +229,6 @@ export default {
 		// displays response data (the vulnerabilities of the system)
 		response_to_display() {
 
-			console.log("RESPONSE");
-			console.log(this.response);
-
-
-
-
-
 			let system_severities = [];
 			for (const component of this.response[0].components) {
 				this.components.push(component);
