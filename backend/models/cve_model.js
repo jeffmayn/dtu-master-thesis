@@ -74,28 +74,22 @@ export const searchProductByVendorAndProductNames = async (keywords, result) => 
 */
 export const getAllVulnerabilitiesFromCPEName = async (cpeName, result) => {  
      try {
-       await axios.get(`https://services.nvd.nist.gov/rest/json/cves/2.0?cpeName=${cpeName}`)
-          .then((response) => {
-            const vulnerabilities_data = response.data.vulnerabilities;
-            const len = vulnerabilities_data.length;
-    
-            let vulnerabilities = [];
-            for (let i = 0; i < len; i++){
-             let vulnerability = {
-                "description" : response.data.vulnerabilities[i].cve.descriptions,
-                "metrics": response.data.vulnerabilities[i].cve.metrics,
-                "weaknesses" : response.data.vulnerabilities[i].cve.weaknesses,
-                "configurations": response.data.vulnerabilities[i].cve.configurations,
-                "references" : response.data.vulnerabilities[0].cve.references
-             };
-             vulnerabilities.push(vulnerability);
-            }
-            result(null, vulnerabilities);
-           })
-          .catch(function (error) {
-             result(err, null);
-        });
+        const response = await axios.get(`https://services.nvd.nist.gov/rest/json/cves/2.0?cpeName=${cpeName}`);
+        const vulnerabilities_data = response.data.vulnerabilities;
+        const len = vulnerabilities_data.length;
 
+        let vulnerabilities = [];
+        for (let i = 0; i < len; i++){
+         let vulnerability = {
+            "description" : response.data.vulnerabilities[i].cve.descriptions,
+            "metrics": response.data.vulnerabilities[i].cve.metrics,
+            "weaknesses" : response.data.vulnerabilities[i].cve.weaknesses,
+            "configurations": response.data.vulnerabilities[i].cve.configurations,
+            "references" : response.data.vulnerabilities[0].cve.references
+         };
+         vulnerabilities.push(vulnerability);
+        }
+        result(null, vulnerabilities);
      } catch (err) {
         result(err, null);
      }
