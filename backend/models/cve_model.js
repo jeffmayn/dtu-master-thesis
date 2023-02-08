@@ -92,16 +92,8 @@ export const getAllVulnerabilitiesFromCPEName = async (cpeName, result) => {
             }
             result(null, vulnerabilities);
            })
-           .catch(function (error) {
-         //res.end();
-           if (error.response) {
-              console.log("ERROR RESPONSE");
-              console.log(error);
-           } else if (error.request) {
-              console.log("ERROR REQUEST");
-           } else {
-              console.log("ANDEN ERROR");
-           }
+          .catch(function (error) {
+             result(err, null);
         });
 
      } catch (err) {
