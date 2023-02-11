@@ -724,7 +724,7 @@ export default {
 #btn {
 	position: absolute;
 
-	right: 140px;
+	right: 15px;
 	top: 40px;
 	z-index: 10;
 }
