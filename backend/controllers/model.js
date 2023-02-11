@@ -24,10 +24,10 @@ export const modelJson = async (req, res) => {
       count++;
       await getAllVulnerabilitiesInJsonFormat(graph, (err, results) => {
          if (err) {
-            res.send(err);
+            return res.send(err);
          //  res.json({error:error}); // hacky solution to avoid server crash on production server
          } else {
-            res.json(results);
+           return res.json(results);
          }
       });
 
