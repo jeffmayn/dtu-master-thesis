@@ -8,50 +8,22 @@ import { getAllVulnerabilitiesFromCPEName } from "../models/cve_model.js";
    of the systems vulnerabilities.
 */
 export const modelJson = async (req, res) => {
-
-  // console.log("modelJSON req:");
-  // console.log(req);
-
-   console.log("modelJSON res:");
-  // console.log(res);
+   if (!req.body) {
+      return res.status(400).json({
+         status: 'error',
+         error: 'yo error'
+      });
+   }
    const graph = req.body.graph;
-   
-   let count = 0;
 
-   if (count <= 0) {
-      console.log("count:");
-      console.log(count);
-      count++;
-      await getAllVulnerabilitiesInJsonFormat(graph, (err, results) => {
-         if (err) {
-            return res.send(err);
-         //  res.json({error:error}); // hacky solution to avoid server crash on production server
-         } else {
-           return res.json(results);
-         }
-      });
-
-   } else {
-      console.log("we outta here");
-     
-      return res.status(400).json({
-         status: 'error',
-         error: 'somting went rly wrong'
-      });
-   }
-   
-
-   /*
-   if (!req.body.name) {
-      return res.status(400).json({
-         status: 'error',
-         error: 'somting went rly wrong'
-      });
-   }
-   */
-  
-
- 
+   await getAllVulnerabilitiesInJsonFormat(graph, (err, results) => {
+      if (err) {
+         res.send(err);
+      //  res.json({error:error}); // hacky solution to avoid server crash on production server
+      } else {
+         res.json(results);
+      }
+   });
 }
 
 /*
