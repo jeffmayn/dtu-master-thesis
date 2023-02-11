@@ -77,7 +77,7 @@ The frontend and backend are two separate projects located in their respective f
 - `cd backend`
 - `sudo npm install`
 - `npm start`
-- `Note that whenever the backend detects a change to the code, e.g. you make a newline and save it, the server is refreshed live. This is handy in case of an error or server crash, and you want to refresh / restart.`
+- Note that whenever the backend detects a change to the code, e.g. you make a newline and save it, the server is refreshed live. This is handy in case of an error or server crash, and you want to refresh / restart.
 
 #### Frontend
 
