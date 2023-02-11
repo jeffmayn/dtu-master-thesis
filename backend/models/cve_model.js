@@ -1,5 +1,5 @@
 import axios from "axios";
-
+axios.defaults.withCredentials = true;
 // rest-call to the CVE-API of an specific CVE based on its it
 export const searchByID = async (id, result) => {
    try {
