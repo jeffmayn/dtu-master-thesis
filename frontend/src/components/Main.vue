@@ -344,7 +344,7 @@ export default {
 					timestamp: currentTime
 					},
 					{ withCredentials: true },
-					{ header: { 'Authorization' : 'Client' + timestamp} }
+					{ header: { 'Authorization' : 'Client' + currentTime} }
 				);
 
 				// clear all variables before new data is received
