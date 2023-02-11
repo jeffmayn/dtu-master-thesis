@@ -9,7 +9,7 @@
 			<button v-if="!waiting_for_response" @click="requestVulnerabilitiesFromServer" id="btn"
 				class="button is-success mt-5"> ► </button>
 			<button v-if="waiting_for_response" id="btn" class="button is-success mt-5" disabled>processing...</button>
-			<button id="btn-demo" class="button is-info mt-5" @click="toggleLoadModelWindow">Load Demo</button>
+			<!--<button id="btn-demo" class="button is-info mt-5" @click="toggleLoadModelWindow">Load Demo</button>-->
 		</thead>
 	</table>
 
