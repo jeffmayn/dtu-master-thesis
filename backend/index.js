@@ -16,7 +16,7 @@ var corsOption = {
 
 const app = express();
 
-app.options("/*", function (req, res, next) {
+app.options("/", function (req, res, next) {
    console.log("Got an options request yo");
    res.header('Access-Control-Allow-Origin', '*');
    res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS');
