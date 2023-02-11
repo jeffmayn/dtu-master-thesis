@@ -15,7 +15,7 @@ export const modelJson = async (req, res) => {
          res.send(err);
       //  res.json({error:error}); // hacky solution to avoid server crash on production server
       } else {
-         return res.json(results);
+         res.json(results);
       }
    });
 }
@@ -123,7 +123,7 @@ const getAllVulnerabilitiesInJsonFormat = async (graph, result) => {
          }
       }
    }
-   result(null, {
+   return result(null, {
       id: 1,
       name: "inputs",
       components: sub_nodes
