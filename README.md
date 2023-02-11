@@ -44,7 +44,7 @@ This guide is targeted Linux and MacOS distributions and have not been tested on
 
 - `apt install mysql-server`
 - `sudo mysql`
-- `CREATE DATABASE mydb;|`
+- `CREATE DATABASE mydb;`
 - `use mydb;`
 
 ```
