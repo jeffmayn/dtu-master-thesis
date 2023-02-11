@@ -12,6 +12,9 @@ export const modelJson = async (req, res) => {
    const graph = req.body.graph;
    //console.log(graph);
 
+   console.log("headers sent?");
+   console.log(res.headersSent);
+
    if (res.headersSent) {
       return res.status(400).json({
          status: 'error',
