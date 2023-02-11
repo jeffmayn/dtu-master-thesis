@@ -14,10 +14,13 @@ export const modelJson = async (req, res) => {
 
    console.log("modelJSON res:");
   // console.log(res);
-  const graph = req.body.graph;
+   const graph = req.body.graph;
+   
    let count = 0;
 
-   if (count >= 0) {
+   if (count <= 0) {
+      console.log("count:");
+      console.log(count);
       count++;
       await getAllVulnerabilitiesInJsonFormat(graph, (err, results) => {
          if (err) {
@@ -29,6 +32,8 @@ export const modelJson = async (req, res) => {
       });
 
    } else {
+      console.log("we outta here");
+     
       return res.status(400).json({
          status: 'error',
          error: 'somting went rly wrong'
