@@ -8,7 +8,7 @@ import { getAllVulnerabilitiesFromCPEName } from "../models/cve_model.js";
    of the systems vulnerabilities.
 */
 export const modelJson = async (req, res) => {
-   res.setSetHeader('Access-Control-Allow-Credentials', true);
+  // res.setSetHeader('Access-Control-Allow-Credentials', true);
    //console.log("graph:");
    const graph = req.body.graph;
    const timestamp = req.body.timestamp;
