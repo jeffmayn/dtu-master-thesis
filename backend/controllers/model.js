@@ -8,30 +8,14 @@ import { getAllVulnerabilitiesFromCPEName } from "../models/cve_model.js";
    of the systems vulnerabilities.
 */
 export const modelJson = async (req, res) => {
-  // res.setSetHeader('Access-Control-Allow-Credentials', true);
-   //console.log("graph:");
    const graph = req.body.graph;
-   const timestamp = req.body.timestamp;
-   //console.log(graph);
 
-   /*
-   if (processedRequests.includes(timestamp)) {
-      console.log("timestamp already processed");
-      return res.status(409).send({ error: 'request has already processed' });
-   }
-   */
-
-
-
-
-   getAllVulnerabilitiesInJsonFormat(graph, (err, results) => {
+   await getAllVulnerabilitiesInJsonFormat(graph, (err, results) => {
       if (err) {
          console.log("err: headers sent?");
    console.log(res.headersSent);
          res.send(err);
-      //  res.json({error:error}); // hacky solution to avoid server crash on production server
       } else {
-
          if (res.headersSent) {
             console.log("1: headers has already been sent");
             console.log(res.headersSent);

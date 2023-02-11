@@ -337,15 +337,9 @@ export default {
 		async requestVulnerabilitiesFromServer() {
 			this.waiting_for_response = true;
 			try {
-				const currentTime = new Date().getTime();
-				const response = await axios.post(url + "model",
-					{
+				const response = await axios.post(url + "model", {
 					graph: this.graph,
-					timestamp: currentTime
-					},
-					{ withCredentials: true },
-					{ header: { 'Authorization' : 'Client' + currentTime} }
-				);
+				});
 
 				// clear all variables before new data is received
 				this.opened = [];
