@@ -15,7 +15,7 @@ export const modelJson = async (req, res) => {
          res.send(err);
       //  res.json({error:error}); // hacky solution to avoid server crash on production server
       } else {
-         res.json(results);
+         return res.json(results);
       }
    });
 }
