@@ -10,7 +10,13 @@ import { getAllVulnerabilitiesFromCPEName } from "../models/cve_model.js";
 export const modelJson = async (req, res) => {
    //console.log("graph:");
    const graph = req.body.graph;
+   const timestamp = req.body.timestamp;
    //console.log(graph);
+
+   if (processedRequests.includes(timestamp)) {
+      console.log("timestamp already processed");
+      return res.status(409).send({ error: 'request has already processed' });
+   }
 
 
 
