@@ -26,10 +26,7 @@ export const modelJson = async (req, res) => {
          if (res.headersSent) {
             console.log("1: headers has already been sent");
             console.log(res.headersSent);
-            return res.status(400).json({
-               status: 'error',
-               error: 'headers already been sent'
-            });
+            return;
          } else {
             console.log("2: headers has already been sent");
             console.log(res.headersSent);
