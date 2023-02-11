@@ -12,8 +12,6 @@ export const modelJson = async (req, res) => {
    const graph = req.body.graph;
    //console.log(graph);
 
-   console.log("headers sent?");
-   console.log(res.headersSent);
 
 
 
@@ -26,11 +24,15 @@ export const modelJson = async (req, res) => {
       } else {
 
          if (res.headersSent) {
+            console.log("1: headers has already been sent");
+            console.log(res.headersSent);
             return res.status(400).json({
                status: 'error',
                error: 'headers already been sent'
             });
          } else {
+            console.log("2: headers has already been sent");
+            console.log(res.headersSent);
             res.json(results);
          }
          
