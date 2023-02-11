@@ -9,8 +9,8 @@ import { getAllVulnerabilitiesFromCPEName } from "../models/cve_model.js";
 */
 export const modelJson = async (req, res) => {
 
-   console.log("modelJSON req:");
-   console.log(req);
+  // console.log("modelJSON req:");
+  // console.log(req);
 
    console.log("modelJSON res:");
    console.log(res);
