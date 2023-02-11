@@ -8,13 +8,9 @@ import { getAllVulnerabilitiesFromCPEName } from "../models/cve_model.js";
    of the systems vulnerabilities.
 */
 export const modelJson = async (req, res) => {
-   if (!req.body) {
-      return res.status(400).json({
-         status: 'error',
-         error: 'yo error'
-      });
-   }
+   console.log("graph:");
    const graph = req.body.graph;
+   console.log(graph);
 
    await getAllVulnerabilitiesInJsonFormat(graph, (err, results) => {
       if (err) {
