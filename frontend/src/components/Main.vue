@@ -343,7 +343,8 @@ export default {
 					graph: this.graph,
 					timestamp: currentTime
 					},
-					{ withCredentials: true}
+					{ withCredentials: true },
+					{ header: { 'Authorization' : 'Client' + timestamp} }
 				);
 
 				// clear all variables before new data is received
