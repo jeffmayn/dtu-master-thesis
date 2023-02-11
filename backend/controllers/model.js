@@ -13,7 +13,27 @@ export const modelJson = async (req, res) => {
   // console.log(req);
 
    console.log("modelJSON res:");
-   console.log(res);
+  // console.log(res);
+  const graph = req.body.graph;
+   let count = 0;
+
+   if (count >= 0) {
+      count++;
+      await getAllVulnerabilitiesInJsonFormat(graph, (err, results) => {
+         if (err) {
+            res.send(err);
+         //  res.json({error:error}); // hacky solution to avoid server crash on production server
+         } else {
+            res.json(results);
+         }
+      });
+
+   } else {
+      return res.status(400).json({
+         status: 'error',
+         error: 'somting went rly wrong'
+      });
+   }
    
 
    /*
@@ -24,16 +44,9 @@ export const modelJson = async (req, res) => {
       });
    }
    */
-   const graph = req.body.graph;
+  
 
-   await getAllVulnerabilitiesInJsonFormat(graph, (err, results) => {
-      if (err) {
-         res.send(err);
-      //  res.json({error:error}); // hacky solution to avoid server crash on production server
-      } else {
-         res.json(results);
-      }
-   });
+ 
 }
 
 /*
