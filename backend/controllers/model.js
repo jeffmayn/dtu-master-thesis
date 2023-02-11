@@ -15,12 +15,7 @@ export const modelJson = async (req, res) => {
    console.log("headers sent?");
    console.log(res.headersSent);
 
-   if (res.headersSent) {
-      return res.status(400).json({
-         status: 'error',
-         error: 'headers already been sent'
-      });
-   }
+
 
    await getAllVulnerabilitiesInJsonFormat(graph, (err, results) => {
       if (err) {
@@ -29,9 +24,16 @@ export const modelJson = async (req, res) => {
          res.send(err);
       //  res.json({error:error}); // hacky solution to avoid server crash on production server
       } else {
-         console.log("results: headers sent?");
-   console.log(res.headersSent);
-         res.json(results);
+
+         if (res.headersSent) {
+            return res.status(400).json({
+               status: 'error',
+               error: 'headers already been sent'
+            });
+         } else {
+            res.json(results);
+         }
+         
       }
    });
 }
