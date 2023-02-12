@@ -12,8 +12,6 @@ export const modelJson = async (req, res) => {
 
    await getAllVulnerabilitiesInJsonFormat(graph, (err, results) => {
       if (err) {
-         console.log("err: headers sent?");
-   console.log(res.headersSent);
          res.send(err);
       } else {
          res.json(results);
