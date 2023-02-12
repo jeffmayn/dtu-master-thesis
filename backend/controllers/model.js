@@ -16,6 +16,8 @@ export const modelJson = async (req, res) => {
    console.log(res.headersSent);
          res.send(err);
       } else {
+         res.json(results);
+         /*
          if (res.headersSent) {
             console.log("1: headers has already been sent");
             console.log(res.headersSent);
@@ -25,6 +27,7 @@ export const modelJson = async (req, res) => {
             console.log(res.headersSent);
             res.json(results);
          }
+         */
          
       }
    });

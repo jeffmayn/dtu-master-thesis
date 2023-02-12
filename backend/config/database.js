@@ -1,7 +1,7 @@
 import mysql from "mysql2";
 import * as dotenv from 'dotenv';
 dotenv.config();
-/*
+
 // local config
 var db_config = {
    connectionLimit : 10000,
@@ -10,7 +10,7 @@ var db_config = {
    password: "",
    database: "mydb"
 };
-*/
+/*
 // SERVER config
 
 var db_config = {
@@ -21,7 +21,7 @@ var db_config = {
   database: process.env.DB_NAME
 };
 
- 
+ */
 var connection = mysql.createPool(db_config);
 export default connection;
 

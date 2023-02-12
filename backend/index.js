@@ -9,7 +9,7 @@ const PORT = process.env.PORT || 3030;
 // http://localhost:8080
 var corsOption = {
    origin: 
-      "https://dtu-tir.netlify.app",
+      "http://localhost:8080",
    optionSuccessStatus: 200
 };
  
